@@ -1,0 +1,15 @@
+{# src/GameBundle/Resources/views/Default/form.html.twig #}
+
+{% extends "GameBundle::layout.html.twig" %}
+
+{% block title %}{{ parent() }} - View{% endblock %}
+
+{% block body %}
+
+<h3>Formulaire d'annonce</h3>
+
+<div class="well">
+  {{ form(form) }}
+</div>
+
+{% endblock %}

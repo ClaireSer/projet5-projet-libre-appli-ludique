@@ -1,0 +1,14 @@
+{# src/GameBundle/Resources/view/Default/view.html.twig #}
+{% extends "GameBundle::layout.html.twig" %}
+
+{% block title %}{{ parent() }} - Inscription{% endblock %}
+
+{% block body %}
+ 
+    <h3>Formulaire d'inscription</h3>
+
+    <div class="well">
+    {{ form(form) }}
+    </div>
+
+{% endblock %}

@@ -1,0 +1,27 @@
+{# src/GameBundle/Resources/view/Default/view.html.twig #}
+{% extends "GameBundle::layout.html.twig" %}
+
+{% block title %}{{ parent() }} - View{% endblock %}
+
+{% block body %}
+
+    {% for message in app.session.flashbag.get('notice') %}
+      <p>Message flash : {{ message }}</p>
+    {% endfor %}
+{#
+    <p>Bonjour {{ gamer.firstname }}</p>
+    <p>Ton pseudo est {{ gamer.username }} et tu es : {{ gamer.role }}.</p>
+
+    <p>Bonjour {{ gamer2.firstname }}</p>
+    <p>Ton pseudo est {{ gamer2.username }} et tu es : {{ gamer2.role }}.</p>#}
+
+    <p>PAGE VUE</p>
+
+
+    {#{% for gamer in listGamers %}
+      <p>Gamer : {{ gamer.firstname }}</p>
+    {% endfor %}
+#}
+    <p>Compte id : {{ userCount.id }} </p>
+
+{% endblock %}
