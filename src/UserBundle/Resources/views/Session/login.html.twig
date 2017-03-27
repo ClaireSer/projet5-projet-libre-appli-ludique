@@ -1,14 +1,34 @@
-{# src/UserBundle/Resources/view/Default/view.html.twig #}
+{# src/UserBundle/Resources/views/Session/login.html.twig #}
 {% extends "UserBundle::layout.html.twig" %}
 
 {% block title %}{{ parent() }} - Connexion{% endblock %}
 
 {% block body %}
  
+    {# S'il y a une erreur, on l'affiche dans un joli cadre #}
+    {% if error %}
+        <div class="alert alert-danger">{{ error.message }}</div>
+    {% endif %}
+
     <h3>Formulaire de connexion</h3>
 
-    <div class="well">
+    {#<div class="well">
     {{ form(form) }}
     </div>
+
+{% endblock %}#}
+
+
+
+  {# Le formulaire, avec URL de soumission vers la route « login_check » comme on l'a vu #}
+  <form action="{{ path('login_check') }}" method="post">
+    <label for="username">Login :</label>
+    <input type="text" id="username" name="_username" value="{{ last_username }}" />
+
+    <label for="password">Mot de passe :</label>
+    <input type="password" id="password" name="_password" />
+    <br />
+    <input type="submit" value="Connexion" />
+  </form>
 
 {% endblock %}

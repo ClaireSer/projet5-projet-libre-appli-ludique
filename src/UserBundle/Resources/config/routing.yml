@@ -1,12 +1,12 @@
-game_homepage:
+homepage:
     path:     /
     defaults: { _controller: UserBundle:Default:index }
 
-game_signup:
+signup:
     path:     /signup
     defaults: { _controller: UserBundle:Session:signup }
 
-game_login:
+login:
     path:     /login
     defaults: { _controller: UserBundle:Session:login }
 

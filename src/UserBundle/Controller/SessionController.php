@@ -20,7 +20,7 @@ class SessionController extends Controller
             $em->persist($userCount);
             $em->flush();
             $request->getSession()->getFlashBag()->add('notice', 'Compte bien enregistré.');
-            return $this->redirectToRoute('game_homepage');
+            return $this->redirectToRoute('homepage');
         }
         return $this->render('UserBundle:Session:signup.html.twig', array(
             'form' => $form->createView()
@@ -28,8 +28,19 @@ class SessionController extends Controller
     }
 
     public function loginAction(Request $request) {
+        if ($this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
+            return $this->redirectToRoute('homepage');
+        }
+
+        $authenticationUtils = $this->get('security.authentication_utils');
+
         return $this->render('UserBundle:Session:login.html.twig', array(
-            'form' => $form->createView()
+            'last_username' => $authenticationUtils->getLastUsername(),
+            'error'         => $authenticationUtils->getLastAuthenticationError(),
         ));
+
+        // return $this->render('UserBundle:Session:login.html.twig', array(
+        //     'form' => $form->createView()
+        // ));
     }
 }
