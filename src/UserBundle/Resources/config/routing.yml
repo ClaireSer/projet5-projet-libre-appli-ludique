@@ -1,14 +1,14 @@
 game_homepage:
     path:     /
-    defaults: { _controller: GameBundle:Default:index }
+    defaults: { _controller: UserBundle:Default:index }
 
 game_signup:
     path:     /signup
-    defaults: { _controller: GameBundle:Session:signup }
+    defaults: { _controller: UserBundle:Session:signup }
 
 game_login:
     path:     /login
-    defaults: { _controller: GameBundle:Session:login }
+    defaults: { _controller: UserBundle:Session:login }
 
 login_check:
     path: /login_check
@@ -22,25 +22,25 @@ logout:
 
 gamer_view:
     path:     /{id}
-    defaults: { _controller: GameBundle:Default:view }
+    defaults: { _controller: UserBundle:Default:view }
     requirements:
         id: \d+
         
 gamer_add:
     path:      /add
     defaults:
-        _controller: GameBundle:Default:add
+        _controller: UserBundle:Default:add
 
 gamer_edit:
     path:      /edit/{id}
     defaults:
-        _controller: GameBundle:Default:edit
+        _controller: UserBundle:Default:edit
     requirements:
         id: \d+
 
 gamer_delete:
     path:      /delete/{id}
     defaults:
-        _controller: GameBundle:Default:delete
+        _controller: UserBundle:Default:delete
     requirements:
         id: \d+

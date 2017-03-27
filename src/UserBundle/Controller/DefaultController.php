@@ -1,10 +1,10 @@
 <?php
 
-namespace GameBundle\Controller;
+namespace UserBundle\Controller;
 
-use GameBundle\Entity\Gamer;
-use GameBundle\Entity\UserCount;
-use GameBundle\Form\UserCountType;
+use UserBundle\Entity\Gamer;
+use UserBundle\Entity\UserCount;
+use UserBundle\Form\UserCountType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
@@ -13,7 +13,7 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 class DefaultController extends Controller
 {
     public function indexAction() {
-        return $this->render('GameBundle:Default:index.html.twig');
+        return $this->render('UserBundle:Default:index.html.twig');
         
     }
     
@@ -21,18 +21,18 @@ class DefaultController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $userCount = $em->getRepository('GameBundle:UserCount')->find($id);
+        $userCount = $em->getRepository('UserBundle:UserCount')->find($id);
 
         if (null === $userCount) {
             throw new NotFoundHttpException("L'annonce d'id ".$id." n'existe pas.");
         }
 
         $listGamers = $em
-        ->getRepository('GameBundle:Gamer')
+        ->getRepository('UserBundle:Gamer')
         ->findBy(array('userCount' => $userCount))
         ;
 
-        return $this->render('GameBundle:Default:index.html.twig', array(
+        return $this->render('UserBundle:Default:index.html.twig', array(
             'userCount'  => $userCount,
             'listGamers' => $listGamers
         ));
@@ -49,7 +49,7 @@ class DefaultController extends Controller
             return $this->redirectToRoute('gamer_view', array('id' => $userCount->getId()));
         }
 
-        return $this->render('GameBundle:Default:add.html.twig', array(
+        return $this->render('UserBundle:Default:add.html.twig', array(
             'form' => $form->createView()
         ));
     }

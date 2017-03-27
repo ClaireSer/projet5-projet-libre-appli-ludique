@@ -1,6 +1,6 @@
 <?php
 
-namespace GameBundle\Entity;
+namespace UserBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
@@ -8,12 +8,12 @@ use Doctrine\ORM\Mapping as ORM;
  * UserCount
  *
  * @ORM\Table(name="user_count")
- * @ORM\Entity(repositoryClass="GameBundle\Repository\UserCountRepository")
+ * @ORM\Entity(repositoryClass="UserBundle\Repository\UserCountRepository")
  */
 class UserCount
 {
     /**
-     * @ORM\OneToMany(targetEntity="GameBundle\Entity\Gamer", mappedBy="UserCount")
+     * @ORM\OneToMany(targetEntity="UserBundle\Entity\Gamer", mappedBy="UserCount")
      */
     protected $gamers;
 
@@ -36,6 +36,13 @@ class UserCount
     /**
      * @var string
      *
+     * @ORM\Column(name="role", type="string", length=255)
+     */
+    protected $role = 'famille';
+
+    /**
+     * @var string
+     *
      * @ORM\Column(name="password", type="string", length=255)
      */
     protected $password;
@@ -46,13 +53,6 @@ class UserCount
      * @ORM\Column(name="salt", type="string", length=255)
      */
     protected $salt;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="role", type="string", length=255)
-     */
-    protected $role = 'famille';
 
 
     /**
@@ -66,7 +66,7 @@ class UserCount
     /**
      * Add gamer
      *
-     * @param \GameBundle\Entity\Gamer $gamer
+     * @param \UserBundle\Entity\Gamer $gamer
      *
      * @return UserCount
      */
@@ -82,7 +82,7 @@ class UserCount
     /**
      * Remove gamer
      *
-     * @param \GameBundle\Entity\Gamer $gamer
+     * @param \UserBundle\Entity\Gamer $gamer
      */
     public function removeGamer(Gamer $gamer)
     {
@@ -158,4 +158,52 @@ class UserCount
     }
 
    
+
+    /**
+     * Set password
+     *
+     * @param string $password
+     *
+     * @return UserCount
+     */
+    public function setPassword($password)
+    {
+        $this->password = $password;
+
+        return $this;
+    }
+
+    /**
+     * Get password
+     *
+     * @return string
+     */
+    public function getPassword()
+    {
+        return $this->password;
+    }
+
+    /**
+     * Set salt
+     *
+     * @param string $salt
+     *
+     * @return UserCount
+     */
+    public function setSalt($salt)
+    {
+        $this->salt = $salt;
+
+        return $this;
+    }
+
+    /**
+     * Get salt
+     *
+     * @return string
+     */
+    public function getSalt()
+    {
+        return $this->salt;
+    }
 }

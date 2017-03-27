@@ -1,6 +1,6 @@
 <?php
 
-namespace GameBundle\Form;
+namespace UserBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -37,7 +37,7 @@ class UserCountType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'GameBundle\Entity\UserCount'
+            'data_class' => 'UserBundle\Entity\UserCount'
         ));
     }
 
@@ -46,6 +46,6 @@ class UserCountType extends AbstractType
      */
     public function getBlockPrefix()
     {
-        return 'gamebundle_usercount';
+        return 'UserBundle_usercount';
     }
 }

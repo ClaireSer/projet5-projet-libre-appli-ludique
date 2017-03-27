@@ -1,10 +1,10 @@
 <?php
 
-namespace GameBundle\Controller;
+namespace UserBundle\Controller;
 
-use GameBundle\Entity\Gamer;
-use GameBundle\Entity\UserCount;
-use GameBundle\Form\UserCountType;
+use UserBundle\Entity\Gamer;
+use UserBundle\Entity\UserCount;
+use UserBundle\Form\UserCountType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
@@ -22,13 +22,13 @@ class SessionController extends Controller
             $request->getSession()->getFlashBag()->add('notice', 'Compte bien enregistré.');
             return $this->redirectToRoute('game_homepage');
         }
-        return $this->render('GameBundle:Session:signup.html.twig', array(
+        return $this->render('UserBundle:Session:signup.html.twig', array(
             'form' => $form->createView()
         ));
     }
 
     public function loginAction(Request $request) {
-        return $this->render('GameBundle:Session:login.html.twig', array(
+        return $this->render('UserBundle:Session:login.html.twig', array(
             'form' => $form->createView()
         ));
     }

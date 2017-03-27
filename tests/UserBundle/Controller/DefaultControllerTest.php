@@ -1,6 +1,6 @@
 <?php
 
-namespace GameBundle\Tests\Controller;
+namespace UserBundle\Tests\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 

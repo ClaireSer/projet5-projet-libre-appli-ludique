@@ -1,6 +1,6 @@
 <?php
 
-namespace GameBundle\Repository;
+namespace UserBundle\Repository;
 
 /**
  * UserCountRepository

@@ -1,6 +1,6 @@
 <?php
 
-namespace GameBundle\Entity;
+namespace UserBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
@@ -8,12 +8,12 @@ use Doctrine\ORM\Mapping as ORM;
  * Gamer
  *
  * @ORM\Table(name="gamer")
- * @ORM\Entity(repositoryClass="GameBundle\Repository\GamerRepository")
+ * @ORM\Entity(repositoryClass="UserBundle\Repository\GamerRepository")
  */
 class Gamer
 {
     /**
-     * @ORM\ManyToOne(targetEntity="GameBundle\Entity\UserCount", inversedBy="applications")
+     * @ORM\ManyToOne(targetEntity="UserBundle\Entity\UserCount", inversedBy="applications")
      * @ORM\JoinColumn(nullable=false)
      */
     private $userCount;
@@ -80,7 +80,7 @@ class Gamer
     /**
      * Set userCount
      *
-     * @param \GameBundle\Entity\UserCount $userCount
+     * @param \UserBundle\Entity\UserCount $userCount
      *
      * @return Gamer
      */
@@ -94,7 +94,7 @@ class Gamer
     /**
      * Get userCount
      *
-     * @return \GameBundle\Entity\UserCount
+     * @return \UserBundle\Entity\UserCount
      */
     public function getUserCount()
     {
