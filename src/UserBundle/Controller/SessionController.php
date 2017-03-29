@@ -39,9 +39,5 @@ class SessionController extends Controller
             'last_username' => $authenticationUtils->getLastUsername(),
             'error'         => $authenticationUtils->getLastAuthenticationError(),
         ));
-
-        // return $this->render('UserBundle:Session:login.html.twig', array(
-        //     'form' => $form->createView()
-        // ));
     }
 }

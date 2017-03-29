@@ -1,4 +1,7 @@
+question:
+    resource: "@GameBundle/Resources/config/routing.yml"
+    prefix:   /question    
+    
 game:
     resource: "@UserBundle/Resources/config/routing.yml"
     prefix:   /game
-

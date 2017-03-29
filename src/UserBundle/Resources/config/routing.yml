@@ -26,10 +26,10 @@ gamer_view:
     requirements:
         id: \d+
         
-gamer_add:
-    path:      /add
-    defaults:
-        _controller: UserBundle:Default:add
+# gamer_add:
+#     path:      /add
+#     defaults:
+#         _controller: UserBundle:Default:add
 
 gamer_edit:
     path:      /edit/{id}

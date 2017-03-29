@@ -1,12 +1,13 @@
 <?php
 
-namespace UserBundle\Form;
+namespace GameBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 
 class QuestionType extends AbstractType
@@ -18,10 +19,10 @@ class QuestionType extends AbstractType
     {
         $builder
         ->add('question',      TextType::class)
-        ->add('right_answer',   TextType::class)
-        ->add('wrong_answer1',   TextType::class)
-        ->add('wrong_answer2',   TextType::class)
-        ->add('wrong_answer3',   TextType::class)
+        // ->add('right_answer',   TextType::class)
+        // ->add('wrong_answer1',   TextType::class)
+        // ->add('wrong_answer2',   TextType::class)
+        // ->add('wrong_answer3',   TextType::class)
         ->add('difficulty',   ChoiceType::class, array(
             'choices'  => array(
                 'Facile'        => 'facile',
@@ -29,10 +30,10 @@ class QuestionType extends AbstractType
                 'Difficile'     => 'difficile'
             )
         ))
-        ->add('subject',      ChoiceType::class)
-        ->add('topic',      ChoiceType::class)
-        
-        ->add('connexion',      SubmitType::class)
+        // ->add('subject',      ChoiceType::class)
+        // ->add('topic',      ChoiceType::class)
+        ->add('is_valid',      CheckboxType::class)
+        ->add('Ajouter la question',      SubmitType::class)
         ;
     }
     
@@ -42,7 +43,7 @@ class QuestionType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'UserBundle\Entity\Question'
+            'data_class' => 'GameBundle\Entity\Question'
         ));
     }
 
@@ -51,6 +52,6 @@ class QuestionType extends AbstractType
      */
     public function getBlockPrefix()
     {
-        return 'UserBundle_question';
+        return 'GameBundle_question';
     }
 }

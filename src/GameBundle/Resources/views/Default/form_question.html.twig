@@ -1,0 +1,23 @@
+{# src/GameBundle/Resources/views/Default/index.html.twig #}
+
+{% extends "GameBundle::layout.html.twig" %}
+
+{% block title %}{{ parent() }} - Index{% endblock %}
+
+{% block body %}
+    {% for message in app.session.flashbag.get('notice') %}
+      <p>Message flash : {{ message }}</p>
+    {% endfor %}
+ 
+    <h2>Formulaire de questions</h2>
+    <div class="row">
+        <div class="col-lg-offset-2 col-lg-8">
+            <div class="well">
+                {{ form_start(form, {'attr': {'class': 'form-horizontal'}}) }}
+                {{ form_errors(form) }}
+                {{ form_end(form) }}
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

@@ -4,13 +4,7 @@ namespace UserBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
-
-// use UserBundle\Entity\UserInterface;
-// use Serializable;
-// use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
-// use Symfony\Component\Security\Core\Encoder\PasswordEncoderInterface;
-// use Symfony\Component\Security\Core\Role\Role;
-// use Symfony\Component\Validator\Constraints as Assert;
+use Doctrine\Common\Collections\ArrayCollection;
 
 
 /**
@@ -22,9 +16,14 @@ use Symfony\Component\Security\Core\User\UserInterface;
 class UserCount implements UserInterface
 {
     /**
-     * @ORM\OneToMany(targetEntity="UserBundle\Entity\Gamer", mappedBy="UserCount")
+     * @ORM\OneToMany(targetEntity="UserBundle\Entity\Gamer", mappedBy="userCount")
      */
     private $gamers;
+
+    /**
+     * @ORM\OneToMany(targetEntity="GameBundle\Entity\Question", mappedBy="userCount")
+     */
+    private $questions;
 
     /**
      * @var int
@@ -64,43 +63,8 @@ class UserCount implements UserInterface
      */
     public function __construct()
     {
-        $this->gamers = new \Doctrine\Common\Collections\ArrayCollection();
-    }
-
-    /**
-     * Add gamer
-     *
-     * @param \UserBundle\Entity\Gamer $gamer
-     *
-     * @return UserCount
-     */
-    public function addGamer(Gamer $gamer)
-    {
-        $this->gamers[] = $gamer;
-        
-        $gamer->setUserCount($this);
-
-        return $this;
-    }
-
-    /**
-     * Remove gamer
-     *
-     * @param \UserBundle\Entity\Gamer $gamer
-     */
-    public function removeGamer(Gamer $gamer)
-    {
-        $this->gamers->removeElement($gamer);
-    }
-
-    /**
-     * Get gamers
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getGamers()
-    {
-        return $this->gamers;
+        $this->gamers = new ArrayCollection();
+        $this->questions = new ArrayCollection();
     }
 
     /**
@@ -225,5 +189,77 @@ class UserCount implements UserInterface
 
     public function eraseCredentials() {
     
+    }
+
+    /**
+     * Add gamer
+     *
+     * @param \UserBundle\Entity\Gamer $gamer
+     *
+     * @return UserCount
+     */
+    public function addGamer(Gamer $gamer)
+    {
+        $this->gamers[] = $gamer;
+        
+        $gamer->setUserCount($this);
+
+        return $this;
+    }
+
+    /**
+     * Remove gamer
+     *
+     * @param \UserBundle\Entity\Gamer $gamer
+     */
+    public function removeGamer(Gamer $gamer)
+    {
+        $this->gamers->removeElement($gamer);
+    }
+
+    /**
+     * Get gamers
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getGamers()
+    {
+        return $this->gamers;
+    }
+
+    /**
+     * Add question
+     *
+     * @param \GameBundle\Entity\Question $question
+     *
+     * @return UserCount
+     */
+    public function addQuestion(Question $question)
+    {
+        $this->questions[] = $question;
+
+        $question->setUserCount($this);        
+
+        return $this;
+    }
+
+    /**
+     * Remove question
+     *
+     * @param \GameBundle\Entity\Question $question
+     */
+    public function removeQuestion(Question $question)
+    {
+        $this->questions->removeElement($question);
+    }
+
+    /**
+     * Get questions
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getQuestions()
+    {
+        return $this->questions;
     }
 }
