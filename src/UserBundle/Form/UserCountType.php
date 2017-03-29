@@ -19,7 +19,7 @@ class UserCountType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-        ->add('lastname',      TextType::class)
+        ->add('username',      TextType::class)
         ->add('role',     HiddenType::class)
         ->add('password',   RepeatedType::class, array(
             'type'            => PasswordType::class,

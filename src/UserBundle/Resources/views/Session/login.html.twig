@@ -7,8 +7,12 @@
  
     {# S'il y a une erreur, on l'affiche dans un joli cadre #}
     {% if error %}
-        <div class="alert alert-danger">{{ error.message }}</div>
+        <div class="alert alert-danger">{{ error.message }} 
+        {{ error.messageKey|trans(error.messageData, 'security') }}
+        </div>
+
     {% endif %}
+
 
     <h3>Formulaire de connexion</h3>
 
@@ -17,8 +21,9 @@
     </div>
 
 {% endblock %}#}
-
-
+  {% if app.user != null %}
+  <p>Bonjour {{ app.user.username }}</p>
+  {% endif %}
 
   {# Le formulaire, avec URL de soumission vers la route « login_check » comme on l'a vu #}
   <form action="{{ path('login_check') }}" method="post">
@@ -28,6 +33,8 @@
     <label for="password">Mot de passe :</label>
     <input type="password" id="password" name="_password" />
     <br />
+    <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}"/>
+
     <input type="submit" value="Connexion" />
   </form>
 

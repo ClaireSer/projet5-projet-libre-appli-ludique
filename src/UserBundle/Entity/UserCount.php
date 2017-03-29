@@ -3,6 +3,15 @@
 namespace UserBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Security\Core\User\UserInterface;
+
+// use UserBundle\Entity\UserInterface;
+// use Serializable;
+// use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+// use Symfony\Component\Security\Core\Encoder\PasswordEncoderInterface;
+// use Symfony\Component\Security\Core\Role\Role;
+// use Symfony\Component\Validator\Constraints as Assert;
+
 
 /**
  * UserCount
@@ -10,12 +19,12 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table(name="user_count")
  * @ORM\Entity(repositoryClass="UserBundle\Repository\UserCountRepository")
  */
-class UserCount
+class UserCount implements UserInterface
 {
     /**
      * @ORM\OneToMany(targetEntity="UserBundle\Entity\Gamer", mappedBy="UserCount")
      */
-    protected $gamers;
+    private $gamers;
 
     /**
      * @var int
@@ -24,36 +33,31 @@ class UserCount
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-    protected $id;
+    private $id;
 
     /**
-     * @var string
-     *
-     * @ORM\Column(name="lastname", type="string", length=255)
+     * @ORM\Column(name="username", type="string", length=255, unique=true)
      */
-    protected $lastname;
-
+    private $username;
+    
+    /**
+     * @ORM\Column(name="roles", type="array")
+     */
+    private $roles = array();
+    
     /**
      * @var string
      *
      * @ORM\Column(name="role", type="string", length=255)
      */
-    protected $role = 'famille';
+    private $role = 'famille';
 
     /**
      * @var string
      *
      * @ORM\Column(name="password", type="string", length=255)
      */
-    protected $password;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="salt", type="string", length=255)
-     */
-    protected $salt;
-
+    private $password;
 
     /**
      * Constructor
@@ -110,30 +114,6 @@ class UserCount
     }
 
     /**
-     * Set lastname
-     *
-     * @param string $lastname
-     *
-     * @return UserCount
-     */
-    public function setLastname($lastname)
-    {
-        $this->lastname = $lastname;
-
-        return $this;
-    }
-
-    /**
-     * Get lastname
-     *
-     * @return string
-     */
-    public function getLastname()
-    {
-        return $this->lastname;
-    }
-
-    /**
      * Set role
      *
      * @param string $role
@@ -156,8 +136,6 @@ class UserCount
     {
         return $this->role;
     }
-
-   
 
     /**
      * Set password
@@ -184,26 +162,68 @@ class UserCount
     }
 
     /**
-     * Set salt
-     *
-     * @param string $salt
-     *
-     * @return UserCount
-     */
-    public function setSalt($salt)
-    {
-        $this->salt = $salt;
-
-        return $this;
-    }
-
-    /**
      * Get salt
      *
      * @return string
      */
     public function getSalt()
     {
-        return $this->salt;
+        return null;
+    }
+
+    /**
+     * Set username
+     *
+     * @param string $username
+     *
+     * @return UserCount
+     */
+    public function setUsername($username)
+    {
+        $this->username = $username;
+
+        return $this;
+    }
+
+    /**
+     * Get username
+     *
+     * @return string
+     */
+    public function getUsername()
+    {
+        return $this->username;
+    }
+
+    /**
+     * Set roles
+     *
+     * @param array $roles
+     *
+     * @return UserCount
+     */
+    public function setRoles($roles)
+    {
+        $this->roles = $roles;
+
+        return $this;
+    }
+
+    /**
+     * Get roles
+     *
+     * @return array
+     */
+    public function getRoles()
+    {
+        $roles = $this->roles;
+        $roles[] = 'ROLE_USER';
+ 
+        return array_unique($roles);
+    }
+
+
+    public function eraseCredentials() {
+    
     }
 }

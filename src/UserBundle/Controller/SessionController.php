@@ -16,6 +16,8 @@ class SessionController extends Controller
         $userCount = new UserCount();
         $form = $this->createForm(UserCountType::class, $userCount);
         if ($request->isMethod('POST') && $form->handleRequest($request)->isValid()) {
+            $password = $this->get('security.password_encoder')->encodePassword($userCount, $userCount->getPassword());
+            $userCount->setPassword($password);
             $em = $this->getDoctrine()->getManager();
             $em->persist($userCount);
             $em->flush();
@@ -28,12 +30,11 @@ class SessionController extends Controller
     }
 
     public function loginAction(Request $request) {
-        if ($this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
+        if ($request->isMethod('POST') && $this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
+            $request->getSession()->getFlashBag()->add('notice', 'Vous êtes bien connecté.');            
             return $this->redirectToRoute('homepage');
         }
-
         $authenticationUtils = $this->get('security.authentication_utils');
-
         return $this->render('UserBundle:Session:login.html.twig', array(
             'last_username' => $authenticationUtils->getLastUsername(),
             'error'         => $authenticationUtils->getLastAuthenticationError(),

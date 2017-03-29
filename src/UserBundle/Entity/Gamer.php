@@ -13,7 +13,7 @@ use Doctrine\ORM\Mapping as ORM;
 class Gamer
 {
     /**
-     * @ORM\ManyToOne(targetEntity="UserBundle\Entity\UserCount", inversedBy="applications")
+     * @ORM\ManyToOne(targetEntity="UserBundle\Entity\UserCount", inversedBy="gamers")
      * @ORM\JoinColumn(nullable=false)
      */
     private $userCount;
