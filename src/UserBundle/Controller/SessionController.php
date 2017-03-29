@@ -30,7 +30,7 @@ class SessionController extends Controller
     }
 
     public function loginAction(Request $request) {
-        if ($request->isMethod('POST') && $this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
+        if ($this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
             $request->getSession()->getFlashBag()->add('notice', 'Vous êtes bien connecté.');            
             return $this->redirectToRoute('homepage');
         }
