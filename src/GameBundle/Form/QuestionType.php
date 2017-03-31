@@ -6,6 +6,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
@@ -19,21 +20,23 @@ class QuestionType extends AbstractType
     {
         $builder
         ->add('question',      TextType::class)
-        // ->add('right_answer',   TextType::class)
-        // ->add('wrong_answer1',   TextType::class)
-        // ->add('wrong_answer2',   TextType::class)
-        // ->add('wrong_answer3',   TextType::class)
+        ->add('answers',   CollectionType::class, array(
+            'entry_type'    => AnswerType::class,
+            'allow_add'     => true,
+            'allow_delete'  => true,
+            'label'         => false
+        ))
         ->add('difficulty',   ChoiceType::class, array(
-            'choices'  => array(
+            'label'         => 'Difficulté',
+            'placeholder'   => '-- Choisissez la difficulté --',
+            'choices'       => array(
                 'Facile'        => 'facile',
                 'Moyen'         => 'moyen',
                 'Difficile'     => 'difficile'
             )
         ))
-        // ->add('subject',      ChoiceType::class)
-        // ->add('topic',      ChoiceType::class)
-        ->add('is_valid',      CheckboxType::class)
-        ->add('Ajouter la question',      SubmitType::class)
+        ->add('subject',      SubjectType::class, array('label' => false))
+        ->add('save',      SubmitType::class)
         ;
     }
     

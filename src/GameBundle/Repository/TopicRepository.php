@@ -10,4 +10,11 @@ namespace GameBundle\Repository;
  */
 class TopicRepository extends \Doctrine\ORM\EntityRepository
 {
+    public function getTopicFromSubject($pattern) {
+        return $this
+        ->createQueryBuilder('t')
+        ->leftJoin('t.subject', 'topic')
+        
+        ;
+    }
 }
