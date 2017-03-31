@@ -8,14 +8,29 @@ use GameBundle\Form\QuestionType;
 use GameBundle\Entity\Question;
 
 
-class DefaultController extends Controller
+class HomeFamilyController extends Controller
 {
-    public function addQuestionAction(Request $request)
+    public function selectAction(Request $request)
+    {
+        return $this->render('GameBundle:Default:select_gamer.html.twig');
+    }
+    
+    public function checkScoresAction(Request $request)
+    {
+        return $this->render('GameBundle:Default:check_scores.html.twig');        
+    }
+
+    public function manageGamersAction(Request $request)
+    {
+        return $this->render('GameBundle:Default:admin_gamers.html.twig');
+    }
+
+    public function suggestQuestionAction(Request $request)
     {
         $question = new Question();
         $form = $this->createForm(QuestionType::class, $question);
         if ($request->isMethod('POST') && $form->handleRequest($request)->isValid()) {
-            $question->setIsValid(true);
+            $question->setIsValid(false);
             $em = $this->getDoctrine()->getManager();
             $em->persist($question);
             $em->flush();
@@ -23,7 +38,8 @@ class DefaultController extends Controller
             return $this->redirectToRoute('homepage');
         }
         return $this->render('GameBundle:Default:form_question.html.twig', array(
-            'form' => $form->createView()
+            'form'  => $form->createView(),
+            'title' => 'Proposez vos questions'
         ));
     }
 }

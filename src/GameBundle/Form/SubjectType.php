@@ -29,17 +29,17 @@ class SubjectType extends AbstractType
       ))
       ->add('topic',      TopicType::class, array('label' => false))
 
-      // ->addEventListener(FormEvents::PRE_SET_DATA, function(FormEvent $event) {
-      //     $form = $event->getForm();
-      //     $data = $event->getData();
-      //     if (null === $data) {
-      //         return;
-      //     }
-      //     $subject = $data->getSubject();
-      //     if ($subject === 'Mathématiques') {
-      //         $form->add('topic', TopicType::class, array('label' => false));
-      //     }
-      // })
+      ->addEventListener(FormEvents::PRE_SET_DATA, function(FormEvent $event) {
+          $form = $event->getForm();
+          $data = $event->getData();
+          if (null === $data) {
+              return;
+          }
+          $subject = $data->getSubject();
+          if ($subject === 'Mathématiques') {
+              $form->add('topic', TopicType::class, array('label' => false));
+          }
+      })
       ;
   }
 

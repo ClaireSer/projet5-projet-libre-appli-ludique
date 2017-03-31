@@ -1,7 +1,19 @@
 question:
     resource: "@GameBundle/Resources/config/routing.yml"
     prefix:   /question    
-    
-game:
+
+# game:
+#     resource: "@GameBundle/Resources/config/routing.yml"
+#     prefix:   /game
+
+home:
     resource: "@UserBundle/Resources/config/routing.yml"
-    prefix:   /game
+    prefix:   /
+
+signup:
+    path:     /signup
+    defaults: { _controller: UserBundle:Session:signup }
+
+login:
+    path:     /login
+    defaults: { _controller: UserBundle:Session:login }

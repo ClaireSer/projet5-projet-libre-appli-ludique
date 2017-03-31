@@ -1,0 +1,14 @@
+{# src/GameBundle/Resources/views/Default/select_gamer.html.twig #}
+
+{% extends "GameBundle::layout.html.twig" %}
+
+{% block title %}{{ parent() }} - Index{% endblock %}
+
+{% block body %}
+    {% for message in app.session.flashbag.get('notice') %}
+      <p>Message flash : {{ message }}</p>
+    {% endfor %}
+
+    <p>Bonjour, avant de jouer, il faut sélectionner les participants au jeu.</p>
+{% endblock %}
+ 

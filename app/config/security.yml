@@ -31,20 +31,20 @@ security:
                 login_path: login
                 check_path: login_check
                 always_use_default_target_path: false
-                default_target_path: login
+                default_target_path: /
                 target_path_parameter: _target_path
                 use_referer: false
                 csrf_token_generator: security.csrf.token_manager
 
             logout:
                 path:       logout
-                target:     /game
+                target:     /
             remember_me:
                 secret:     '%secret%'
     
     access_control:
      - { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY}
-     - { path: ^/admin, roles: ROLE_ADMIN}
+    #  - { path: ^/admin, roles: ROLE_ADMIN}
 
 
             # http_basic: ~

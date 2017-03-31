@@ -1,0 +1,15 @@
+{# src/GameBundle/Resources/views/Default/select_gamer.html.twig #}
+
+{% extends "GameBundle::layout.html.twig" %}
+
+{% block title %}{{ parent() }} - Index{% endblock %}
+
+{% block body %}
+    {% for message in app.session.flashbag.get('notice') %}
+      <p>Message flash : {{ message }}</p>
+    {% endfor %}
+
+    <p>Modération des questions.</p>
+    <p>Faire apparaître une liste de propositions de questions : début question, matière, auteur (nom de famille)</p>
+{% endblock %}
+ 
