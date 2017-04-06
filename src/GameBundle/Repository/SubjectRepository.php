@@ -12,11 +12,5 @@ use Doctrine\ORM\EntityRepository;
  */
 class SubjectRepository extends EntityRepository
 {
-    public function getLikeQueryBuilder($pattern) {
-        return $this
-        ->createQueryBuilder('s')
-        ->where('s.subject LIKE :pattern')
-        ->setParameter('pattern', $pattern)
-        ;
-    }
+
 }

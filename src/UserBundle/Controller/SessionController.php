@@ -18,6 +18,7 @@ class SessionController extends Controller
         if ($request->isMethod('POST') && $form->handleRequest($request)->isValid()) {
             $password = $this->get('security.password_encoder')->encodePassword($userCount, $userCount->getPassword());
             $userCount->setPassword($password);
+            $userCount->setRoles(array('ROLE_USER'));
             $em = $this->getDoctrine()->getManager();
             $em->persist($userCount);
             $em->flush();

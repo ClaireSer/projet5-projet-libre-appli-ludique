@@ -38,6 +38,19 @@ class Subject
      */
     private $subject;
 
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->topics = new ArrayCollection();
+        $this->questions = new ArrayCollection();
+    }
+
+    public function __toString()
+    {
+        return $this->subject;
+    }
 
     /**
      * Get id
@@ -71,13 +84,6 @@ class Subject
     public function getSubject()
     {
         return $this->subject;
-    }
-    /**
-     * Constructor
-     */
-    public function __construct()
-    {
-        $this->questions = new ArrayCollection();
     }
 
     /**

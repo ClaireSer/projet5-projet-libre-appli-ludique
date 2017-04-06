@@ -8,6 +8,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use GameBundle\Repository\TopicRepository;
 
 
 class TopicType extends AbstractType
@@ -20,9 +21,6 @@ class TopicType extends AbstractType
           'choice_label'  => 'topic',
           'label'         => 'Sous-matière',
           'placeholder'   => '-- Choisissez une sous-matière --'
-          // 'query_builder' => function(TopicRepository $repository) use($pattern) {
-          //   return $repository->getTopicFromSubject($pattern);
-          // }
       ));
   }
 

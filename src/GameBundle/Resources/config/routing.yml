@@ -1,3 +1,9 @@
 add_question:
     path:     /add
     defaults: { _controller: GameBundle:Default:addQuestion }
+
+combobox:
+    path: /combobox
+    defaults: { _controller: GameBundle:Admin:combobox }
+    requirements: 
+        _method: POST

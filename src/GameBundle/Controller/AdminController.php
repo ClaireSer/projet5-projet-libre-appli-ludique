@@ -6,6 +6,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use GameBundle\Form\QuestionType;
 use GameBundle\Entity\Question;
+use Symfony\Component\HttpFoundation\JsonResponse;
 
 
 class AdminController extends Controller
@@ -16,6 +17,8 @@ class AdminController extends Controller
         $form = $this->createForm(QuestionType::class, $question);
         if ($request->isMethod('POST') && $form->handleRequest($request)->isValid()) {
             $question->setIsValid(true);
+            var_dump($form->getData());
+//            $question->setUserCount($this->getUser());
             $em = $this->getDoctrine()->getManager();
             $em->persist($question);
             $em->flush();
@@ -26,6 +29,20 @@ class AdminController extends Controller
             'form'  => $form->createView(),
             'title' => 'Ajoutez vos questions'
         ));
+    }
+
+    public function comboboxAction(Request $request) {
+        $em = $this->getDoctrine()->getEntityManager();
+        if($request->isXmlHttpRequest())
+        {
+            $id = $request->get('id');
+            if ($id != null)
+            {
+                $topics = $em->getRepository('GameBundle:Topic')->getTopicsFromSubject($id);
+                return new JsonResponse($topics);
+            }
+        }
+        return new Response('Erreur');
     }
 
     public function manageUsersAction(Request $request)

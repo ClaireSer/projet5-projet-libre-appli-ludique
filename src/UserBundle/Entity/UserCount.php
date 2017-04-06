@@ -43,13 +43,6 @@ class UserCount implements UserInterface
      * @ORM\Column(name="roles", type="array")
      */
     private $roles = array();
-    
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="role", type="string", length=255)
-     */
-    private $role = 'famille';
 
     /**
      * @var string
@@ -75,30 +68,6 @@ class UserCount implements UserInterface
     public function getId()
     {
         return $this->id;
-    }
-
-    /**
-     * Set role
-     *
-     * @param string $role
-     *
-     * @return UserCount
-     */
-    public function setRole($role)
-    {
-        $this->role = $role;
-
-        return $this;
-    }
-
-    /**
-     * Get role
-     *
-     * @return string
-     */
-    public function getRole()
-    {
-        return $this->role;
     }
 
     /**
@@ -158,34 +127,6 @@ class UserCount implements UserInterface
     {
         return $this->username;
     }
-
-    /**
-     * Set roles
-     *
-     * @param array $roles
-     *
-     * @return UserCount
-     */
-    public function setRoles($roles)
-    {
-        $this->roles = $roles;
-
-        return $this;
-    }
-
-    /**
-     * Get roles
-     *
-     * @return array
-     */
-    public function getRoles()
-    {
-        $roles = $this->roles;
-        $roles[] = 'ROLE_USER';
- 
-        return array_unique($roles);
-    }
-
 
     public function eraseCredentials() {
     
@@ -261,5 +202,29 @@ class UserCount implements UserInterface
     public function getQuestions()
     {
         return $this->questions;
+    }
+
+    /**
+     * Set roles
+     *
+     * @param array $roles
+     *
+     * @return UserCount
+     */
+    public function setRoles($roles)
+    {
+        $this->roles = $roles;
+
+        return $this;
+    }
+
+    /**
+     * Get roles
+     *
+     * @return array
+     */
+    public function getRoles()
+    {
+        return $this->roles;
     }
 }

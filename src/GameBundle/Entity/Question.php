@@ -19,12 +19,12 @@ class Question
     private $userCount;
     
     /**
-     * @ORM\OneToMany(targetEntity="GameBundle\Entity\Answer", mappedBy="question")
+     * @ORM\OneToMany(targetEntity="GameBundle\Entity\Answer", mappedBy="question", cascade={"persist"})
      */
     private $answers;
 
     /**
-     * @ORM\ManyToOne(targetEntity="GameBundle\Entity\Subject", inversedBy="questions")
+     * @ORM\ManyToOne(targetEntity="GameBundle\Entity\Subject", inversedBy="questions", cascade={"persist"})
      * @ORM\JoinColumn(nullable=false)
      */
     private $subject;  

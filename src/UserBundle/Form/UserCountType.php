@@ -20,7 +20,6 @@ class UserCountType extends AbstractType
     {
         $builder
         ->add('username',      TextType::class)
-        ->add('role',     HiddenType::class)
         ->add('password',   RepeatedType::class, array(
             'type'            => PasswordType::class,
             'options'         => array('required' => true),

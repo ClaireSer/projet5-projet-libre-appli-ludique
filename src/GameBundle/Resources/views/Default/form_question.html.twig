@@ -5,6 +5,7 @@
 {% block title %}{{ parent() }} - Index{% endblock %}
 
 {% block body %}
+
     {% for message in app.session.flashbag.get('notice') %}
       <p>Message flash : {{ message }}</p>
     {% endfor %}
@@ -39,11 +40,6 @@
                     {{ form_errors(form.subject) }}
                     {{ form_widget(form.subject) }}
                 </div>
-                  <div class="form-group">
-                      {{ form_label(form.subject.topic) }}
-                      {{ form_errors(form.subject.topic) }}
-                      {{ form_widget(form.subject.topic, {'attr': {'class': 'form-control'}}) }}
-                  </div>
                 
                 {{ form_widget(form.save, {'attr': {'class': 'btn btn-primary'}}) }}
 
@@ -53,80 +49,74 @@
         </div>
     </div>
 
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+
+    <script type="text/javascript">
+    $(function () {
+        var topicField = $('#GameBundle_question_subject_topics_topic');
+        $('#GameBundle_question_subject_subject').on('change', function () {
+            var id_subject = $(this).val();
+            $.ajax({
+                url: "{{ path('combobox') }}",
+                type: 'POST',
+                data: { 'id': id_subject },
+                dataType: 'json',
+                success: function (response) {
+                    topicField.html('');
+                    $.each(response, function (index, value) {
+                        topicField.append('<option value="' + value.id + '">' + value.topic + '</option>');
+                    });
+                    $('#GameBundle_question_subject_topics').show();
+                },
+                error: function() {
+                    $('#GameBundle_question_subject_topics').hide();
+                }
+            });
+        });
 
 
+        // Ajouter ou supprimer une réponse
+        var $container = $('div#GameBundle_question_answers');
+        var index = $container.find(':input').length;
 
-<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+        $('#add_category').click(function (e) {
+            addCategory($container);
+            e.preventDefault();
+            return false;
+        });
 
-<script type="text/javascript">
-  $(document).ready(function() {
-    // On récupère la balise <div> en question qui contient l'attribut « data-prototype » qui nous intéresse.
-    var $container = $('div#GameBundle_question_answers');
+        if (index == 0) {
+            addCategory($container);
+        } else {
+            $container.children('div').each(function () {
+                addDeleteLink($(this));
+            });
 
-    // On définit un compteur unique pour nommer les champs qu'on va ajouter dynamiquement
-    var index = $container.find(':input').length;
+        }
 
-    // On ajoute un nouveau champ à chaque clic sur le lien d'ajout.
-    $('#add_category').click(function(e) {
-      addCategory($container);
 
-      e.preventDefault(); // évite qu'un # apparaisse dans l'URL
-      return false;
+        function addCategory($container) {
+            var template = $container.attr('data-prototype')
+                .replace(/__name__label__/g, 'Réponse n°' + (index + 1))
+                .replace(/__name__/g, index)
+            ;
+            var $prototype = $(template);
+            addDeleteLink($prototype);
+            $container.append($prototype);
+            index++;
+        }
+
+        function addDeleteLink($prototype) {
+            var $deleteLink = $('<a href="#" class="btn btn-danger">X</a>');
+            $prototype.append($deleteLink);
+            $deleteLink.click(function (e) {
+                $prototype.remove();
+                index--;
+                e.preventDefault();
+                return false;
+            });
+        }
     });
-
-    // On ajoute un premier champ automatiquement s'il n'en existe pas déjà un (cas d'une nouvelle annonce par exemple).
-    if (index == 0) {
-      addCategory($container);
-    } else {
-      // S'il existe déjà des catégories, on ajoute un lien de suppression pour chacune d'entre elles
-      $container.children('div').each(function() {
-        addDeleteLink($(this));
-      });
-    }
-
-    // La fonction qui ajoute un formulaire CategoryType
-    function addCategory($container) {
-      // Dans le contenu de l'attribut « data-prototype », on remplace :
-      // - le texte "__name__label__" qu'il contient par le label du champ
-      // - le texte "__name__" qu'il contient par le numéro du champ
-      var template = $container.attr('data-prototype')
-        .replace(/__name__label__/g, 'Réponse n°' + (index+1))
-        .replace(/__name__/g,        index)
-      ;
-
-      // On crée un objet jquery qui contient ce template
-      var $prototype = $(template);
-
-      // On ajoute au prototype un lien pour pouvoir supprimer la catégorie
-      addDeleteLink($prototype);
-
-      // On ajoute le prototype modifié à la fin de la balise <div>
-      $container.append($prototype);
-
-      // Enfin, on incrémente le compteur pour que le prochain ajout se fasse avec un autre numéro
-      index++;
-    }
-
-    // La fonction qui ajoute un lien de suppression d'une catégorie
-    function addDeleteLink($prototype) {
-      // Création du lien
-      var $deleteLink = $('<a href="#" class="btn btn-danger">X</a>');
-
-      // Ajout du lien
-      $prototype.append($deleteLink);
-
-      // Ajout du listener sur le clic du lien pour effectivement supprimer la catégorie
-      $deleteLink.click(function(e) {
-        $prototype.remove();
-        index--;
-
-        e.preventDefault(); // évite qu'un # apparaisse dans l'URL
-        return false;
-      });
-    }
-  });
 </script>
 
-
-
-{% endblock %}
+    {% endblock %}

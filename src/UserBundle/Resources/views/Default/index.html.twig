@@ -11,7 +11,7 @@
  
     <h2>page d'accueil</h2>
 
-    {% if app.user and app.user.role == 'famille' %}
+    {% if app.user and is_granted('ROLE_USER') %}
       <p>Bienvenue famille {{ app.user.username }} ! </p>
       <p>Faites votre choix :</p>
       <p><a href=" {{ path('select_gamers') }} ">JOUER</a></p>
@@ -19,7 +19,7 @@
       <p><a href=" {{ path('admin_gamers') }} ">GESTION DES JOUEURS</a></p>
       <p><a href=" {{ path('suggest_question') }} ">PROPOSER DES QUESTIONS</a></p>
     
-    {% elseif app.user and app.user.role == 'admin' %}
+    {% elseif app.user and is_granted('ROLE_TEACHER') %}
         <p>Bienvenue {{ app.user.username }} ! </p>
         <p>Faites votre choix :</p>        
         <p><a href=" {{ path('admin_users') }} ">GESTION DES COMPTES UTILISATEURS</a></p>
