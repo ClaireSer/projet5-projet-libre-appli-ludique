@@ -17,15 +17,15 @@ class SubjectType extends AbstractType
   public function buildForm(FormBuilderInterface $builder, array $options)
   {
     $builder
-      ->add('subject', EntityType::class, array(
+      ->add('nameSubject', EntityType::class, array(
           'class'         => 'GameBundle:Subject',
-          'choice_label'  => 'subject',
+          'choice_label'  => 'nameSubject',
           'label'         => 'Matière',
           'placeholder'   => '-- Choisissez une matière --'
       ))
       ->add('topics', EntityType::class, array(
           'class'         => 'GameBundle:Topic',
-          'choice_label'  => 'topic',
+          'choice_label'  => 'nameTopic',
           'label'         => 'Sous-matière',
           'placeholder'   => '-- Choisissez une sous-matière --',
           'mapped'        => false

@@ -29,7 +29,8 @@ class HomeFamilyController extends Controller
     {
         $question = new Question();
         $form = $this->createForm(QuestionType::class, $question);
-        if ($request->isMethod('POST') && $form->handleRequest($request)->isValid()) {
+        $formRequest = $form->handleRequest($request);
+        if ($formRequest->isSubmitted() && $formRequest->isValid()) {
             $question->setIsValid(false);
             $em = $this->getDoctrine()->getManager();
             $em->persist($question);

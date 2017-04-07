@@ -34,9 +34,9 @@ class Subject
     /**
      * @var string
      *
-     * @ORM\Column(name="subject", type="string", length=255, unique=true)
+     * @ORM\Column(name="nameSubject", type="string", length=255)
      */
-    private $subject;
+    private $nameSubject;
 
     /**
      * Constructor
@@ -49,8 +49,8 @@ class Subject
 
     public function __toString()
     {
-        if (is_null($this->subject)) return 'null';
-        return $this->subject;
+        if (is_null($this->nameSubject)) return 'null';
+        return $this->nameSubject;
     }
 
     /**
@@ -64,27 +64,27 @@ class Subject
     }
 
     /**
-     * Set subject
+     * Set nameSubject
      *
-     * @param string $subject
+     * @param string $nameSubject
      *
-     * @return Subject
+     * @return NameSubject
      */
-    public function setSubject($subject)
+    public function setNameSubject($nameSubject)
     {
-        $this->subject = $subject;
+        $this->nameSubject = $nameSubject;
 
         return $this;
     }
 
     /**
-     * Get subject
+     * Get nameSubject
      *
      * @return string
      */
-    public function getSubject()
+    public function getNameSubject()
     {
-        return $this->subject;
+        return $this->nameSubject;
     }
 
     /**

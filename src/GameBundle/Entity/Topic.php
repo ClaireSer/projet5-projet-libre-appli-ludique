@@ -30,9 +30,9 @@ class Topic
     /**
      * @var string
      *
-     * @ORM\Column(name="topic", type="string", length=255, nullable=true, unique=true)
+     * @ORM\Column(name="nameTopic", type="string", length=255, nullable=true)
      */
-    private $topic;
+    private $nameTopic;
 
 
     /**
@@ -46,27 +46,27 @@ class Topic
     }
 
     /**
-     * Set topic
+     * Set nameTopic
      *
-     * @param string $topic
+     * @param string $nameTopic
      *
-     * @return Topic
+     * @return NameTopic
      */
-    public function setTopic($topic)
+    public function setNameTopic($nameTopic)
     {
-        $this->topic = $topic;
+        $this->nameTopic = $nameTopic;
 
         return $this;
     }
 
     /**
-     * Get topic
+     * Get nameTopic
      *
      * @return string
      */
-    public function getTopic()
+    public function getNameTopic()
     {
-        return $this->topic;
+        return $this->nameTopic;
     }
 
     /**
