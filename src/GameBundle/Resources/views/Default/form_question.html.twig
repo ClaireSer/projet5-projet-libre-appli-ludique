@@ -41,9 +41,9 @@
                     {{ form_widget(form.subject.subject) }}
                 </div>
                 <div class="form-group form_subject_topic">
-                    {{ form_label(form.subject.topic) }}
-                    {{ form_errors(form.subject.topic) }}
-                    {{ form_widget(form.subject.topic) }}
+                    {{ form_label(form.subject.topics) }}
+                    {{ form_errors(form.subject.topics) }}
+                    {{ form_widget(form.subject.topics) }}
                 </div>
                 
                 {{ form_widget(form.save, {'attr': {'class': 'btn btn-primary'}}) }}
@@ -58,7 +58,7 @@
 
     <script type="text/javascript">
     $(function () {
-        var topicField = $('#GameBundle_question_subject_topic');
+        var topicField = $('#GameBundle_question_subject_topics');
         var topicGroup = $('.form_subject_topic');
 
         $('#GameBundle_question_subject_subject').on('change', function () {

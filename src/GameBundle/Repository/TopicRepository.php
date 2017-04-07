@@ -13,12 +13,12 @@ use Doctrine\ORM\EntityRepository;
 class TopicRepository extends EntityRepository
 {
     public function getTopicsFromSubject($idSubject) {
-        return $this->createQueryBuilder('t')
-        ->leftJoin('t.subject', 's')
-        ->where('s.id = :id')
-        ->setParameter('id', $idSubject)
-        ->getQuery()
-        ->getArrayResult()
-        ;
-    }
+		return $this->createQueryBuilder('t')
+            ->leftJoin('t.subject', 's')
+            ->where('s.id = :id')
+            ->setParameter('id', $idSubject)
+            ->getQuery()
+            ->getArrayResult()
+		;
+	}    
 }

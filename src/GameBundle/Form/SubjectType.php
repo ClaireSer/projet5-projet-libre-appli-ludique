@@ -23,11 +23,12 @@ class SubjectType extends AbstractType
           'label'         => 'Matière',
           'placeholder'   => '-- Choisissez une matière --'
       ))
-      ->add('topic', EntityType::class, array(
+      ->add('topics', EntityType::class, array(
           'class'         => 'GameBundle:Topic',
           'choice_label'  => 'topic',
           'label'         => 'Sous-matière',
-          'placeholder'   => '-- Choisissez une sous-matière --'
+          'placeholder'   => '-- Choisissez une sous-matière --',
+          'mapped'        => false
       ))
       ;
   }
