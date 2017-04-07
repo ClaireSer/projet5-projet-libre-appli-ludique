@@ -15,9 +15,9 @@ class AdminController extends Controller
     {
         $question = new Question();
         $form = $this->createForm(QuestionType::class, $question);
-        if ($request->isMethod('POST') && $form->handleRequest($request)->isValid()) {
+        if ($form->handleRequest($request)->isValid()) {
             $question->setIsValid(true);
-            var_dump($form->getData());
+//            var_dump($form->getData());
 //            $question->setUserCount($this->getUser());
             $em = $this->getDoctrine()->getManager();
             $em->persist($question);

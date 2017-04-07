@@ -49,6 +49,7 @@ class Subject
 
     public function __toString()
     {
+        if (is_null($this->subject)) return 'null';
         return $this->subject;
     }
 
@@ -96,7 +97,7 @@ class Subject
     public function addQuestion(Question $question)
     {
         $this->questions[] = $question;
-        
+
         $question->setSubject($this);
 
         return $this;

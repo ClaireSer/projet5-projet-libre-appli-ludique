@@ -36,9 +36,14 @@
                     {{ form_widget(form.difficulty, {'attr': {'class': 'form-control'}}) }}
                 </div>
                 <div class="form-group">
-                    {{ form_label(form.subject) }}
-                    {{ form_errors(form.subject) }}
-                    {{ form_widget(form.subject) }}
+                    {{ form_label(form.subject.subject) }}
+                    {{ form_errors(form.subject.subject) }}
+                    {{ form_widget(form.subject.subject) }}
+                </div>
+                <div class="form-group form_subject_topic">
+                    {{ form_label(form.subject.topic) }}
+                    {{ form_errors(form.subject.topic) }}
+                    {{ form_widget(form.subject.topic) }}
                 </div>
                 
                 {{ form_widget(form.save, {'attr': {'class': 'btn btn-primary'}}) }}
@@ -53,7 +58,9 @@
 
     <script type="text/javascript">
     $(function () {
-        var topicField = $('#GameBundle_question_subject_topics_topic');
+        var topicField = $('#GameBundle_question_subject_topic');
+        var topicGroup = $('.form_subject_topic');
+
         $('#GameBundle_question_subject_subject').on('change', function () {
             var id_subject = $(this).val();
             $.ajax({
@@ -66,10 +73,10 @@
                     $.each(response, function (index, value) {
                         topicField.append('<option value="' + value.id + '">' + value.topic + '</option>');
                     });
-                    $('#GameBundle_question_subject_topics').show();
+                    topicGroup.show();
                 },
                 error: function() {
-                    $('#GameBundle_question_subject_topics').hide();
+                    topicGroup.hide();
                 }
             });
         });

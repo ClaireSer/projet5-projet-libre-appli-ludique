@@ -91,7 +91,6 @@ class SchoolClass
     public function addQuestion(\GameBundle\Entity\Question $question)
     {
         $this->questions[] = $question;
-
         $question->setSchoolClass($this);
 
         return $this;
