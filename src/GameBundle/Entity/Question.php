@@ -4,6 +4,7 @@ namespace GameBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
+use UserBundle\Entity\UserCount;
 /**
  * Question
  *

@@ -18,6 +18,7 @@ class AdminController extends Controller
         $formRequest = $form->handleRequest($request);
         if ($formRequest->isSubmitted() && $formRequest->isValid()) {
             $question->setIsValid(true);
+            $question->setUserCount($this->getUser());
             $em = $this->getDoctrine()->getManager();
             $em->persist($question);
             $em->flush();

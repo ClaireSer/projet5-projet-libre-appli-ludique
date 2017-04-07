@@ -7,9 +7,12 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Doctrine\ORM\EntityRepository;
+
 
 class QuestionType extends AbstractType
 {
@@ -25,6 +28,16 @@ class QuestionType extends AbstractType
             'allow_add'     => true,
             'allow_delete'  => true,
             'label'         => false
+        ))
+        ->add('schoolClass', EntityType::class, array(
+            'class'         => 'GameBundle:SchoolClass',
+            'choice_label'  => 'schoolClass',
+            'label'         => 'Niveau',
+            'placeholder'   => '-- Choisissez le niveau --',
+            'query_builder' => function (EntityRepository $er) {
+                return $er->createQueryBuilder('s')
+                    ->orderBy('s.id', 'ASC');
+            }
         ))
         ->add('difficulty',   ChoiceType::class, array(
             'label'         => 'Difficulté',
