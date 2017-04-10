@@ -22,13 +22,11 @@
                     {{ form_errors(form.question) }}
                     {{ form_widget(form.question) }}
                 </div>
-                <div class="form-group">
+                <div class="form-group form_answers">
                     {{ form_label(form.answers) }}
                     {{ form_errors(form.answers) }}   
-                    <div class="col-sm-offset-1 col-sm-8">
-                      {{ form_row(form.answers) }}
-                      <a href="#" id="add_category" class="btn btn-default">Ajouter une réponse</a>
-                    </div>
+                    {{ form_row(form.answers) }}
+                    <a href="#" id="add_answer" class="btn btn-default">Ajouter une réponse</a>
                 </div>
                 <div class="form-group">
                     {{ form_label(form.schoolClass) }}
@@ -87,42 +85,48 @@
             });
         });
 
+        $("form[name='GameBundle_question']").on('submit', function(){
+            $("input[name='isRightOrNot']").each(function(){
+                $(this).attr('name', $(this).attr('data-oldname'));
+            });         
+        });
+
 
         // Ajouter ou supprimer une réponse
         var $container = $('div#GameBundle_question_answers');
         var index = $container.find(':input').length;
 
-        $('#add_category').click(function (e) {
-            addCategory($container);
+        addAnswer($container);
+        addAnswer($container);        
+        
+        $('#add_answer').on('click', function (e) {
+            addAnswer($container);
             e.preventDefault();
             return false;
         });
 
-        if (index == 0) {
-            addCategory($container);
-        } else {
-            $container.children('div').each(function () {
-                addDeleteLink($(this));
-            });
-
-        }
-
-
-        function addCategory($container) {
+        function addAnswer($container) {
             var template = $container.attr('data-prototype')
                 .replace(/__name__label__/g, 'Réponse n°' + (index + 1))
                 .replace(/__name__/g, index)
             ;
+            
             var $prototype = $(template);
-            addDeleteLink($prototype);
+            if (index > 1) {
+                addDeleteLink($prototype);
+            }
             $container.append($prototype);
+
+            var radio = $('#GameBundle_question_answers input:radio').last();
+            $(radio).attr('data-oldname', $(radio).attr('name'));
+            $(radio).attr('name', 'isRightOrNot');
             index++;
         }
 
         function addDeleteLink($prototype) {
             var $deleteLink = $('<a href="#" class="btn btn-danger">X</a>');
-            $prototype.append($deleteLink);
-            $deleteLink.click(function (e) {
+            $($prototype).append($deleteLink);
+            $deleteLink.on('click', function (e) {
                 $prototype.remove();
                 index--;
                 e.preventDefault();

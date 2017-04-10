@@ -15,10 +15,14 @@ class AdminController extends Controller
     {
         $question = new Question();
         $form = $this->createForm(QuestionType::class, $question);
+
         $formRequest = $form->handleRequest($request);
         if ($formRequest->isSubmitted() && $formRequest->isValid()) {
             $question->setIsValid(true);
             $question->setUserCount($this->getUser());
+            foreach($question->getAnswers() as $answer) {
+                $answer->setQuestion($question);
+            }
             $em = $this->getDoctrine()->getManager();
             $em->persist($question);
             $em->flush();
@@ -52,6 +56,31 @@ class AdminController extends Controller
 
     public function moderateQuestionAction(Request $request)
     {
-        return $this->render('GameBundle:Admin:moderate_question.html.twig');   
+        $em = $this->getDoctrine()->getEntityManager();
+        $notValidQuestions = $em->getRepository('GameBundle:Question')->getQuestionsNotValid();
+        return $this->render('GameBundle:Admin:moderate_question.html.twig', array(
+            'notValidQuestions'     => $notValidQuestions
+        ));   
+    }
+    
+    public function validQuestionAction(Request $request, $id)
+    {
+        $em = $this->getDoctrine()->getEntityManager();
+        $notValidQuestion = $em->getRepository('GameBundle:Question')->find($id);
+
+        $form = $this->createForm(QuestionType::class, $notValidQuestion);
+        $formRequest = $form->handleRequest($request);
+        if ($formRequest->isSubmitted() && $formRequest->isValid()) {
+            $notValidQuestion->setIsValid(true);
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($notValidQuestion);
+            $em->flush();
+            $request->getSession()->getFlashBag()->add('notice', 'Question bien modifiée.');
+            return $this->redirectToRoute('homepage');
+        }
+        return $this->render('GameBundle:Default:form_question.html.twig', array(
+            'form'  => $form->createView(),
+            'title' => 'Validation de questions'
+        ));
     }
 }

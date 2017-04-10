@@ -47,12 +47,6 @@ class Subject
         $this->questions = new ArrayCollection();
     }
 
-    public function __toString()
-    {
-        if (is_null($this->nameSubject)) return 'null';
-        return $this->nameSubject;
-    }
-
     /**
      * Get id
      *
@@ -68,7 +62,7 @@ class Subject
      *
      * @param string $nameSubject
      *
-     * @return NameSubject
+     * @return Subject
      */
     public function setNameSubject($nameSubject)
     {

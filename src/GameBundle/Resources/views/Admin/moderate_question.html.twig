@@ -9,7 +9,24 @@
       <p>Message flash : {{ message }}</p>
     {% endfor %}
 
-    <p>Modération des questions.</p>
-    <p>Faire apparaître une liste de propositions de questions : début question, matière, auteur (nom de famille)</p>
+    <h3>Modération des questions</h3>
+
+    <table class="table table-striped">
+      <tr>
+        <th>Question</th>
+        <th>Matière</th>
+        <th>Auteur</th>        
+        <th>Validation</th>
+      </tr>
+      {% for notValidQuestion in notValidQuestions %}
+        <tr>
+          <td>{{ notValidQuestion.question }} </td>
+          <td>{{ notValidQuestion.subject.nameSubject }} </td>
+          <td>Famille {{ notValidQuestion.userCount.username }} </td>
+          <td><a href="{{ path('validate_question', { 'id': notValidQuestion.id }) }}"><span class="glyphicon glyphicon-wrench"></span></a></td>
+        </tr>
+      {% endfor %}
+    </table>
+
 {% endblock %}
  

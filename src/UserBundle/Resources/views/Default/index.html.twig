@@ -16,15 +16,15 @@
       <p>Faites votre choix :</p>
       <p><a href=" {{ path('select_gamers') }} ">JOUER</a></p>
       <p><a href=" {{ path('check_scores') }} ">CONSULTER LES SCORES</a></p>
-      <p><a href=" {{ path('admin_gamers') }} ">GESTION DES JOUEURS</a></p>
+      <p><a href=" {{ path('admin_gamers') }} ">GÉRER LES JOUEURS</a></p>
       <p><a href=" {{ path('suggest_question') }} ">PROPOSER DES QUESTIONS</a></p>
     
     {% elseif app.user and is_granted('ROLE_TEACHER') %}
         <p>Bienvenue {{ app.user.username }} ! </p>
         <p>Faites votre choix :</p>        
-        <p><a href=" {{ path('admin_users') }} ">GESTION DES COMPTES UTILISATEURS</a></p>
+        <p><a href=" {{ path('admin_users') }} ">GÉRER LES COMPTES UTILISATEURS</a></p>
         <p><a href=" {{ path('add_question') }} ">AJOUTER DES QUESTIONS</a></p>
-        <p><a href=" {{ path('moderate_question') }} ">MODERATION DES QUESTIONS</a></p>
+        <p><a href=" {{ path('moderate_question') }} ">MODÉRER LES QUESTIONS</a></p>
         <p><a href=" {{ path('check_scores') }} ">CONSULTER LES SCORES</a></p>
     
     {% else %}
