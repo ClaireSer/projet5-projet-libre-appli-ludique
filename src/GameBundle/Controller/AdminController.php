@@ -40,21 +40,14 @@ class AdminController extends Controller
 
     public function comboboxAction(Request $request) {
         $em = $this->getDoctrine()->getManager();
-        if($request->isXmlHttpRequest())
-        {
+        if($request->isXmlHttpRequest()) {
             $id = $request->get('id');
-            if ($id != null)
-            {
+            if ($id != null) {
                 $topics = $em->getRepository('GameBundle:Topic')->getTopicsFromSubject($id);
                 return new JsonResponse($topics);
             }
         }
         return new Response('Erreur');
-    }
-
-    public function manageUsersAction(Request $request)
-    {
-        return $this->render('GameBundle:Admin:user_manager.html.twig');   
     }
 
     public function moderateQuestionAction(Request $request)
@@ -85,5 +78,10 @@ class AdminController extends Controller
             'form'  => $form->createView(),
             'title' => 'Validation de questions'
         ));
+    }
+
+    public function manageUsersAction(Request $request)
+    {
+        return $this->render('GameBundle:Admin:user_manager.html.twig');   
     }
 }

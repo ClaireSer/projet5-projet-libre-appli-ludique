@@ -51,10 +51,11 @@ class QuestionType extends AbstractType
         ->add('topic', EntityType::class, array(
           'class'         => 'GameBundle:Topic',
           'choice_label'  => 'nameTopic',
-          'group_by'      => 'subject.nameSubject',
+          'group_by'      => 'subject.nameSubject', // plan B
           'label'         => 'Matière',
           'placeholder'   => '-- Choisissez une sous-matière --'
         ))
+        // plan A not working
         // ->add('topic',      TopicType::class, array('label' => false))
         ->add('save',      SubmitType::class)
         ;
