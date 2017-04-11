@@ -3,6 +3,7 @@
 namespace GameBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * Topic
@@ -12,6 +13,11 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Topic
 {
+    /**
+     * @ORM\OneToMany(targetEntity="GameBundle\Entity\Question", mappedBy="topic")
+     */
+    private $questions;
+
     /**
      * @ORM\ManyToOne(targetEntity="GameBundle\Entity\Subject", inversedBy="topics")
      * @ORM\JoinColumn(nullable=false)
@@ -34,6 +40,46 @@ class Topic
      */
     private $nameTopic;
 
+    public function __construct()
+    {
+        $this->questions = new ArrayCollection();
+    }
+
+    /**
+     * Add question
+     *
+     * @param \GameBundle\Entity\Question $question
+     *
+     * @return Topic
+     */
+    public function addQuestion(Question $question)
+    {
+        $this->questions[] = $question;
+
+        $question->setTopic($this);
+
+        return $this;
+    }
+
+    /**
+     * Remove question
+     *
+     * @param \GameBundle\Entity\Question $question
+     */
+    public function removeQuestion(Question $question)
+    {
+        $this->questions->removeElement($question);
+    }
+
+    /**
+     * Get questions
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getQuestions()
+    {
+        return $this->questions;
+    }
 
     /**
      * Get id

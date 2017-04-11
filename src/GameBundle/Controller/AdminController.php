@@ -23,7 +23,11 @@ class AdminController extends Controller
             foreach($question->getAnswers() as $answer) {
                 $answer->setQuestion($question);
             }
+            $topic = $question->getTopic();
+            $topic->addQuestion($question);
+
             $em = $this->getDoctrine()->getManager();
+            var_dump($question->getTopic()->getSubject());
             $em->persist($question);
             $em->flush();
             $request->getSession()->getFlashBag()->add('notice', 'Question bien enregistrée.');

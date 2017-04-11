@@ -12,10 +12,6 @@ use Doctrine\Common\Collections\ArrayCollection;
  */
 class Subject
 {
-    /**
-     * @ORM\OneToMany(targetEntity="GameBundle\Entity\Question", mappedBy="subject")
-     */
-    private $questions;
 
     /**
      * @ORM\OneToMany(targetEntity="GameBundle\Entity\Topic", mappedBy="subject")
@@ -44,14 +40,13 @@ class Subject
     public function __construct()
     {
         $this->topics = new ArrayCollection();
-        $this->questions = new ArrayCollection();
     }
 
-    public function __toString()
-    {
-        if (is_null($this->nameSubject)) return 'null';
-        return $this->nameSubject;
-    }
+    // public function __toString()
+    // {
+    //     if (is_null($this->nameSubject)) return 'null';
+    //     return $this->nameSubject;
+    // }
 
     /**
      * Get id
@@ -85,42 +80,6 @@ class Subject
     public function getNameSubject()
     {
         return $this->nameSubject;
-    }
-
-    /**
-     * Add question
-     *
-     * @param \GameBundle\Entity\Question $question
-     *
-     * @return Subject
-     */
-    public function addQuestion(Question $question)
-    {
-        $this->questions[] = $question;
-
-        $question->setSubject($this);
-
-        return $this;
-    }
-
-    /**
-     * Remove question
-     *
-     * @param \GameBundle\Entity\Question $question
-     */
-    public function removeQuestion(Question $question)
-    {
-        $this->questions->removeElement($question);
-    }
-
-    /**
-     * Get questions
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getQuestions()
-    {
-        return $this->questions;
     }
 
     /**

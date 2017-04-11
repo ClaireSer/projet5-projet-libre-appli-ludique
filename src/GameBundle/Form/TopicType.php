@@ -12,23 +12,22 @@ use GameBundle\Repository\SubjectRepository;
 use GameBundle\Repository\TopicRepository;
 
 
-class SubjectType extends AbstractType
+class TopicType extends AbstractType
 {
   public function buildForm(FormBuilderInterface $builder, array $options)
   {
     $builder
-      // ->add('nameSubject', EntityType::class, array(
-      //     'class'         => 'GameBundle:Subject',
-      //     'choice_label'  => 'nameSubject',
-      //     'label'         => 'Matière',
-      //     'placeholder'   => '-- Choisissez une matière --'
-      // ))
-      ->add('topics', EntityType::class, array(
+      ->add('subject', EntityType::class, array(
+          'class'         => 'GameBundle:Subject',
+          'choice_label'  => 'nameSubject',
+          'label'         => 'Matière',
+          'placeholder'   => '-- Choisissez une matière --'
+      ))
+      ->add('nameTopic', EntityType::class, array(
           'class'         => 'GameBundle:Topic',
           'choice_label'  => 'nameTopic',
           'label'         => 'Sous-matière',
-          'placeholder'   => '-- Choisissez une sous-matière --',
-          'mapped'        => false
+          'placeholder'   => '-- Choisissez une sous-matière --'
       ))
       ;
   }
@@ -36,7 +35,7 @@ class SubjectType extends AbstractType
   public function configureOptions(OptionsResolver $resolver)
   {
     $resolver->setDefaults(array(
-      'data_class' => 'GameBundle\Entity\Subject'
+      'data_class' => 'GameBundle\Entity\Topic'
     ));
   }
 }

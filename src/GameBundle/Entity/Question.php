@@ -25,10 +25,10 @@ class Question
     private $answers;
 
     /**
-     * @ORM\ManyToOne(targetEntity="GameBundle\Entity\Subject", inversedBy="questions", cascade={"persist"})
+     * @ORM\ManyToOne(targetEntity="GameBundle\Entity\Topic", inversedBy="questions")
      * @ORM\JoinColumn(nullable=false)
      */
-    private $subject;  
+    private $topic;  
 
     /**
      * @ORM\ManyToOne(targetEntity="GameBundle\Entity\SchoolClass", inversedBy="questions")
@@ -217,27 +217,27 @@ class Question
     }
 
     /**
-     * Set subject
+     * Set topic
      *
-     * @param \GameBundle\Entity\Subject $subject
+     * @param \GameBundle\Entity\Topic $topic
      *
      * @return Question
      */
-    public function setSubject(Subject $subject)
+    public function setTopic(Topic $topic)
     {
-        $this->subject = $subject;
+        $this->topic = $topic;
 
         return $this;
     }
 
     /**
-     * Get subject
+     * Get topic
      *
-     * @return \GameBundle\Entity\Subject
+     * @return \GameBundle\Entity\Topic
      */
-    public function getSubject()
+    public function getTopic()
     {
-        return $this->subject;
+        return $this->topic;
     }
 
     /**

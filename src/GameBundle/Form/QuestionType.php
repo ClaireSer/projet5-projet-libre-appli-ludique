@@ -48,13 +48,7 @@ class QuestionType extends AbstractType
                 'Difficile'     => 'difficile'
             )
         ))
-        ->add('subject', EntityType::class, array(
-          'class'         => 'GameBundle:Subject',
-          'choice_label'  => 'nameSubject',
-          'label'         => 'Matière',
-          'placeholder'   => '-- Choisissez une matière --'
-        ))
-        // ->add('subject',      SubjectType::class, array('label' => false))
+        ->add('topic',      TopicType::class, array('label' => false))
         ->add('save',      SubmitType::class)
         ;
     }

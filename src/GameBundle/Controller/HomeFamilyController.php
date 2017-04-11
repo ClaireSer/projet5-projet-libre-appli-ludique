@@ -32,6 +32,13 @@ class HomeFamilyController extends Controller
         $formRequest = $form->handleRequest($request);
         if ($formRequest->isSubmitted() && $formRequest->isValid()) {
             $question->setIsValid(false);
+            $question->setUserCount($this->getUser());
+            foreach($question->getAnswers() as $answer) {
+                $answer->setQuestion($question);
+            }
+            $topic = $question->getTopic();
+            $topic->addQuestion($question);
+            
             $em = $this->getDoctrine()->getManager();
             $em->persist($question);
             $em->flush();
