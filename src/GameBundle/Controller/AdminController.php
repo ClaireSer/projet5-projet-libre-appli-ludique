@@ -11,7 +11,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 
 class AdminController extends Controller
 {
-    public function addQuestionAction(Request $request)
+    public function addQuestionsAction(Request $request)
     {
         $question = new Question();
         $form = $this->createForm(QuestionType::class, $question);
@@ -27,7 +27,6 @@ class AdminController extends Controller
             $topic->addQuestion($question);
 
             $em = $this->getDoctrine()->getManager();
-            var_dump($question->getTopic()->getSubject());
             $em->persist($question);
             $em->flush();
             $request->getSession()->getFlashBag()->add('notice', 'Question bien enregistrée.');
@@ -40,7 +39,7 @@ class AdminController extends Controller
     }
 
     public function comboboxAction(Request $request) {
-        $em = $this->getDoctrine()->getEntityManager();
+        $em = $this->getDoctrine()->getManager();
         if($request->isXmlHttpRequest())
         {
             $id = $request->get('id');
@@ -60,7 +59,7 @@ class AdminController extends Controller
 
     public function moderateQuestionAction(Request $request)
     {
-        $em = $this->getDoctrine()->getEntityManager();
+        $em = $this->getDoctrine()->getManager();
         $notValidQuestions = $em->getRepository('GameBundle:Question')->getQuestionsNotValid();
         return $this->render('GameBundle:Admin:moderate_question.html.twig', array(
             'notValidQuestions'     => $notValidQuestions
@@ -69,8 +68,8 @@ class AdminController extends Controller
     
     public function validQuestionAction(Request $request, $id)
     {
-        $em = $this->getDoctrine()->getEntityManager();
-        $notValidQuestion = $em->getRepository('GameBundle:Question')->find($id);
+        $em = $this->getDoctrine()->getManager();
+        $notValidQuestion = $em->getRepository('GameBundle:Question')->getQuestionById($id);
 
         $form = $this->createForm(QuestionType::class, $notValidQuestion);
         $formRequest = $form->handleRequest($request);

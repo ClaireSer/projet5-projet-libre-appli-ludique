@@ -21,7 +21,7 @@
       {% for notValidQuestion in notValidQuestions %}
         <tr>
           <td>{{ notValidQuestion.question }} </td>
-          <td>{{ notValidQuestion.subject.nameSubject }} </td>
+          <td>{{ notValidQuestion.topic.nameTopic }} </td>
           <td>Famille {{ notValidQuestion.userCount.username }} </td>
           <td><a href="{{ path('validate_question', { 'id': notValidQuestion.id }) }}"><span class="glyphicon glyphicon-wrench"></span></a></td>
         </tr>

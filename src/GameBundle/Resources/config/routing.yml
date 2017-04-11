@@ -1,6 +1,6 @@
 add_question:
     path:     /add
-    defaults: { _controller: GameBundle:Default:addQuestion }
+    defaults: { _controller: GameBundle:Default:addQuestions }
 
 combobox:
     path: /combobox

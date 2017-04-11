@@ -42,12 +42,6 @@ class Subject
         $this->topics = new ArrayCollection();
     }
 
-    // public function __toString()
-    // {
-    //     if (is_null($this->nameSubject)) return 'null';
-    //     return $this->nameSubject;
-    // }
-
     /**
      * Get id
      *

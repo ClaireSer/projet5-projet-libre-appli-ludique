@@ -12,9 +12,9 @@ class QuestionRepository extends \Doctrine\ORM\EntityRepository
 {
     public function getQuestionsNotValid() {
         return $this->createQueryBuilder('q')
-            ->leftJoin('q.subject', 's')
+            ->leftJoin('q.topic', 't')
             ->leftJoin('q.userCount', 'u')
-            ->addSelect('s')
+            ->addSelect('t')
             ->addSelect('u')
             ->where('q.isValid = :isValid')
             ->setParameter('isValid', false)
@@ -22,4 +22,20 @@ class QuestionRepository extends \Doctrine\ORM\EntityRepository
             ->getArrayResult()
 		;
     }
+
+    public function getQuestionById($id) {
+        return $this->createQueryBuilder('q')
+            ->leftJoin('q.topic', 't')
+            ->leftJoin('q.userCount', 'u')
+            ->leftJoin('q.schoolClass', 's')
+            ->addSelect('t')
+            ->addSelect('u')
+            ->addSelect('s')
+            ->where('q.id = :id')
+            ->setParameter('id', $id)
+            ->getQuery()
+            ->getSingleResult()
+		;
+    }
+
 }
