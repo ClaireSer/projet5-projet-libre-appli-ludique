@@ -34,7 +34,7 @@ class Subject
     /**
      * @var string
      *
-     * @ORM\Column(name="nameSubject", type="string", length=255)
+     * @ORM\Column(name="nameSubject", type="string", length=255, unique=true)
      */
     private $nameSubject;
 
@@ -45,6 +45,12 @@ class Subject
     {
         $this->topics = new ArrayCollection();
         $this->questions = new ArrayCollection();
+    }
+
+    public function __toString()
+    {
+        if (is_null($this->nameSubject)) return 'null';
+        return $this->nameSubject;
     }
 
     /**

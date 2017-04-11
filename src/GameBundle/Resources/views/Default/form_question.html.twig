@@ -39,15 +39,15 @@
                     {{ form_widget(form.difficulty, {'attr': {'class': 'form-control'}}) }}
                 </div>
                 <div class="form-group">
-                    {{ form_label(form.subject.nameSubject) }}
-                    {{ form_errors(form.subject.nameSubject) }}
-                    {{ form_widget(form.subject.nameSubject) }}
+                    {{ form_label(form.subject) }}
+                    {{ form_errors(form.subject) }}
+                    {{ form_widget(form.subject) }}
                 </div>
-                <div class="form-group form_subject_topic">
+                {#<div class="form-group form_subject_topic">
                     {{ form_label(form.subject.topics) }}
                     {{ form_errors(form.subject.topics) }}
                     {{ form_widget(form.subject.topics) }}
-                </div>
+                </div>#}
                 
                 {{ form_widget(form.save, {'attr': {'class': 'btn btn-primary'}}) }}
 

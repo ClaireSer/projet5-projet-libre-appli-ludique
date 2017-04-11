@@ -30,7 +30,7 @@ class Topic
     /**
      * @var string
      *
-     * @ORM\Column(name="nameTopic", type="string", length=255, nullable=true)
+     * @ORM\Column(name="nameTopic", type="string", length=255, nullable=true, unique=true)
      */
     private $nameTopic;
 
