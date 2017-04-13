@@ -67,6 +67,8 @@
 
     <script type="text/javascript">
     $(function () {
+
+//combobox subject + topic
         var subjectField = $('#GameBundle_question_topic_subject');
         var topicField = $('#GameBundle_question_topic_topic');
         var topicGroup = $('.form_subject_topic');
@@ -91,41 +93,54 @@
             });
         });
 
-        $("form[name='GameBundle_question']").on('submit', function(){
-            $("input[name='isRightOrNot']").each(function(){
-                $(this).attr('name', $(this).attr('data-oldname'));
-            });         
-        });
-
-
-        // Ajouter ou supprimer une réponse
+// Ajouter ou supprimer une réponse
         var $container = $('div#GameBundle_question_answers');
         var index = $container.find(':input').length;
 
-        addAnswer($container);
-        addAnswer($container);        
-        
+        if (document.location.href !== 'http://jeudeloie/app_dev.php/question/validate/20') {
+            addAnswer($container);
+            addAnswer($container);        
+        }
+
+        $('#valid_answer').on('click', function () {
+            var answers = $('#GameBundle_question_answers input');
+            var answersArray = [];
+
+            answers.each(function() {
+                answersArray.push($(this).val());  
+            })
+
+            $('div.form_answers').after('<div><select></select</div>');
+
+        });
+
         $('#add_answer').on('click', function (e) {
             addAnswer($container);
             e.preventDefault();
             return false;
         });
-
+        
+    // functions
         function addAnswer($container) {
-            var template = $container.attr('data-prototype')
-                .replace(/__name__label__/g, 'Réponse n°' + (index + 1))
+            var template;
+            if(index === 0) {
+                template = $container.attr('data-prototype')
+                .replace(/__name__label__/g, 'Bonne réponse')
                 .replace(/__name__/g, index)
-            ;
+                ;
+            } else {
+                template = $container.attr('data-prototype')
+                .replace(/__name__label__/g, 'Mauvaise réponse')
+                .replace(/__name__/g, index)
+                ;
+            }
+            
             
             var $prototype = $(template);
             if (index > 1) {
                 addDeleteLink($prototype);
             }
             $container.append($prototype);
-
-            var radio = $('#GameBundle_question_answers input:radio').last();
-            $(radio).attr('data-oldname', $(radio).attr('name'));
-            $(radio).attr('name', 'isRightOrNot');
             index++;
         }
 

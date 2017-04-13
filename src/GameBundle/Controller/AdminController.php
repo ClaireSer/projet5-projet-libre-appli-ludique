@@ -11,7 +11,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 
 class AdminController extends Controller
 {
-    public function addQuestionsAction(Request $request)
+    public function addQuestionAction(Request $request)
     {
         $question = new Question();
         $form = $this->createForm(QuestionType::class, $question);
@@ -23,6 +23,9 @@ class AdminController extends Controller
             foreach($question->getAnswers() as $answer) {
                 $answer->setQuestion($question);
             }
+            $firstAnswer = $question->getAnswers()->first();
+            $firstAnswer->setIsRight(true);
+            
             $topic = $question->getTopic();
             $topic->addQuestion($question);
 

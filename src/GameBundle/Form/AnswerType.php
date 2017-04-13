@@ -7,7 +7,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
-use Symfony\Component\Form\Extension\Core\Type\RadioType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 
 
 class AnswerType extends AbstractType
@@ -16,9 +16,6 @@ class AnswerType extends AbstractType
   {
     $builder
         ->add('answer', TextType::class, array(
-            'label'         => false
-        ))
-        ->add('isRight', RadioType::class, array(
             'label'         => false
         ))
         ;
