@@ -36,6 +36,9 @@ class HomeFamilyController extends Controller
             foreach($question->getAnswers() as $answer) {
                 $answer->setQuestion($question);
             }
+            $firstAnswer = $question->getAnswers()->first();
+            $firstAnswer->setIsRight(true);
+            
             $topic = $question->getTopic();
             $topic->addQuestion($question);
             

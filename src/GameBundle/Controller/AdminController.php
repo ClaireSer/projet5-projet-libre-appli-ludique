@@ -41,7 +41,8 @@ class AdminController extends Controller
         ));
     }
 
-    public function comboboxAction(Request $request) {
+    public function comboboxAction(Request $request) 
+    {
         $em = $this->getDoctrine()->getManager();
         if($request->isXmlHttpRequest()) {
             $id = $request->get('id');
@@ -71,16 +72,35 @@ class AdminController extends Controller
         $formRequest = $form->handleRequest($request);
         if ($formRequest->isSubmitted() && $formRequest->isValid()) {
             $notValidQuestion->setIsValid(true);
+
+            foreach($notValidQuestion->getAnswers() as $answer) {
+                $answer->setQuestion($notValidQuestion);
+            }
+            $firstAnswer = $notValidQuestion->getAnswers()->first();
+            $firstAnswer->setIsRight(true);
+            
+            $topic = $notValidQuestion->getTopic();
+            $topic->addQuestion($notValidQuestion);
+
             $em = $this->getDoctrine()->getManager();
             $em->persist($notValidQuestion);
             $em->flush();
             $request->getSession()->getFlashBag()->add('notice', 'Question bien modifiée.');
             return $this->redirectToRoute('homepage');
         }
+
+        $answers = $notValidQuestion->getAnswers();
+        
         return $this->render('GameBundle:Default:form_question.html.twig', array(
             'form'  => $form->createView(),
-            'title' => 'Validation de questions'
+            'title' => 'Validation de questions',
+            'answers' => $answers
         ));
+    }
+
+    public function removeAnswerAction(Request $request)
+    {
+        
     }
 
     public function manageUsersAction(Request $request)
