@@ -15,7 +15,7 @@ valid_answers:
         _method: POST
 
 remove_answer:
-    path: /remove
+    path: /remove/{id}
     defaults: { _controller: GameBundle:Admin:removeAnswer }
     requirements: 
-        _method: POST
+        _method: DELETE

@@ -97,7 +97,7 @@
 
 // Ajouter ou supprimer une réponse
         var $container = $('div#GameBundle_question_answers');
-        var index = $container.find(':input').length;
+        var index = $container.find(':input[type="text"]').length;
         var urlValidation = 'http://jeudeloie/app_dev.php/question/suggest';
         var labelAnswers = $('#GameBundle_question_answers>.form-group label');
         var deleteButton = $('.deleteButton');
@@ -121,39 +121,11 @@
             e.preventDefault();
             return false;
         });
-
-        deleteButton.on('click', function () {
-            var id_answer;
-            if (id_answer === null) {
-                return false;
-            } else {
-                {% for answer in answers %}
-                    id_answer = {{ answer.id }}
-                {% endfor %}
-            }
-
-            $.ajax({
-                url: "{{ path('remove_answer') }}",
-                type: 'POST',
-                data: { 'id': id_answer },
-                dataType: 'json',
-            });
-        });
         
     // functions
         function addAnswer($container) {
             var template;
-            if(index === 0) {
-                template = $container.attr('data-prototype')
-                .replace(/__name__label__/g, 'Bonne réponse')
-                .replace(/__name__/g, index)
-                ;
-            } else {
-                template = $container.attr('data-prototype')
-                .replace(/__name__label__/g, 'Mauvaise réponse')
-                .replace(/__name__/g, index)
-                ;
-            }            
+                   
             var $prototype = $(template);
             if (index > 1) {
                 addDeleteLink($prototype);
@@ -164,10 +136,27 @@
 
         function addDeleteLink($prototype) {
             var $deleteLink = $("<a href='#' class='btn btn-danger deleteButton'>X</a>");
+            var id_answer;
             $($prototype).append($deleteLink);
             $deleteLink.on('click', function (e) {
-                $prototype.remove();
-                index--;
+                id_answer = $($prototype).find(':input[type="hidden"]').val();
+                if (id_answer === null) {
+                    return false;
+                } else {
+                    var url = "{{ path('remove_answer', { 'id': 'id_answer' }) }}";
+                    url = url.replace('id_answer', id_answer);
+                    $.ajax({
+                        url: url,
+                        type: 'DELETE',
+                        success: function (response) {
+                            $prototype.remove();
+                            index--;
+                        },
+                        error: function () {
+                            alert('error');
+                        }
+                    });
+                }
                 e.preventDefault();
                 return false;
             });

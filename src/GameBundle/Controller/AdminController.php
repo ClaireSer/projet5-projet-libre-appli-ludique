@@ -100,7 +100,17 @@ class AdminController extends Controller
 
     public function removeAnswerAction(Request $request)
     {
-        
+        $em = $this->getDoctrine()->getManager();
+        if($request->isXmlHttpRequest()) {
+            $idAnswer = $request->get('id');
+            if ($idAnswer != null) {
+                $answer = $em->getRepository('GameBundle:Answer')->find($idAnswer);
+                $em->remove($answer);
+                $em->flush();
+                return new JsonResponse();
+            }
+        }
+        return new Response('Erreur');
     }
 
     public function manageUsersAction(Request $request)
