@@ -15,7 +15,6 @@ class AdminController extends Controller
     {
         $question = new Question();
         $form = $this->createForm(QuestionType::class, $question);
-
         $formRequest = $form->handleRequest($request);
         if ($formRequest->isSubmitted() && $formRequest->isValid()) {
             $question->setIsValid(true);
@@ -41,18 +40,18 @@ class AdminController extends Controller
         ));
     }
 
-    public function comboboxAction(Request $request) 
-    {
-        $em = $this->getDoctrine()->getManager();
-        if($request->isXmlHttpRequest()) {
-            $id = $request->get('id');
-            if ($id != null) {
-                $topics = $em->getRepository('GameBundle:Topic')->getTopicsFromSubject($id);
-                return new JsonResponse($topics);
-            }
-        }
-        return new Response('Erreur');
-    }
+    // public function comboboxAction(Request $request) 
+    // {
+    //     $em = $this->getDoctrine()->getManager();
+    //     if($request->isXmlHttpRequest()) {
+    //         $id = $request->get('id');
+    //         if ($id != null) {
+    //             $topics = $em->getRepository('GameBundle:Topic')->getTopicsFromSubject($id);
+    //             return new JsonResponse($topics);
+    //         }
+    //     }
+    //     return new Response('Erreur');
+    // }
 
     public function moderateQuestionAction(Request $request)
     {
@@ -63,13 +62,14 @@ class AdminController extends Controller
         ));   
     }
     
-    public function validQuestionAction(Request $request, $id)
+    public function validateQuestionAction(Request $request, $id)
     {
         $em = $this->getDoctrine()->getManager();
         $notValidQuestion = $em->getRepository('GameBundle:Question')->getQuestionById($id);
-
         $form = $this->createForm(QuestionType::class, $notValidQuestion);
+        
         $formRequest = $form->handleRequest($request);
+        
         if ($formRequest->isSubmitted() && $formRequest->isValid()) {
             $notValidQuestion->setIsValid(true);
 
@@ -89,12 +89,9 @@ class AdminController extends Controller
             return $this->redirectToRoute('homepage');
         }
 
-        $answers = $notValidQuestion->getAnswers();
-        
         return $this->render('GameBundle:Default:form_question.html.twig', array(
             'form'  => $form->createView(),
-            'title' => 'Validation de questions',
-            'answers' => $answers
+            'title' => 'Validation de questions'
         ));
     }
 

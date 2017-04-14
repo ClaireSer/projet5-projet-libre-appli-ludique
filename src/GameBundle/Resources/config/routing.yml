@@ -8,14 +8,9 @@ combobox:
     requirements: 
         _method: POST
 
-valid_answers:
-    path: /valid
-    defaults: { _controller: GameBundle:Admin:validAnswers }
-    requirements: 
-        _method: POST
-
 remove_answer:
     path: /remove/{id}
     defaults: { _controller: GameBundle:Admin:removeAnswer }
     requirements: 
         _method: DELETE
+

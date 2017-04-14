@@ -18,41 +18,27 @@
                 {{ form_errors(form) }}
 
                 <div class="form-group">
-                    {{ form_label(form.question) }}
-                    {{ form_errors(form.question) }}
-                    {{ form_widget(form.question) }}
+                    {{ form_row(form.question) }}
                 </div>
                 <div class="form-group form_answers">
-                    {{ form_label(form.answers) }}
-                    {{ form_errors(form.answers) }}   
                     {{ form_row(form.answers) }}
                     <a href="#" id="add_answer" class="btn btn-default">Ajouter une réponse</a>
                 </div>
                 <div class="form-group">
-                    {{ form_label(form.schoolClass) }}
-                    {{ form_errors(form.schoolClass) }}
-                    {{ form_widget(form.schoolClass, {'attr': {'class': 'form-control'}}) }}
+                    {{ form_row(form.schoolClass) }}
                 </div>
                 <div class="form-group">
-                    {{ form_label(form.difficulty) }}
-                    {{ form_errors(form.difficulty) }}
-                    {{ form_widget(form.difficulty, {'attr': {'class': 'form-control'}}) }}
+                    {{ form_row(form.difficulty) }}
                 </div>
                 <div class="form-group">
-                    {{ form_label(form.topic) }}
-                    {{ form_errors(form.topic) }}
-                    {{ form_widget(form.topic) }}
+                    {{ form_row(form.topic) }}
                 </div>
                 {#plan A not working#}
                 {#<div class="form-group">
-                    {{ form_label(form.topic.subject) }}
-                    {{ form_errors(form.topic.subject) }}
-                    {{ form_widget(form.topic.subject) }}
+                    {{ form_row(form.topic.subject) }}
                 </div>
                 <div class="form-group form_subject_topic">
-                    {{ form_label(form.topic.nameTopic) }}
-                    {{ form_errors(form.topic.nameTopic) }}
-                    {{ form_widget(form.topic.nameTopic) }}
+                    {{ form_row(form.topic.nameTopic) }}
                 </div>#}
                 
                 {{ form_widget(form.save, {'attr': {'class': 'btn btn-primary'}}) }}
@@ -97,24 +83,25 @@
 
 // Ajouter ou supprimer une réponse
         var $container = $('div#GameBundle_question_answers');
-        var index = $container.find(':input[type="text"]').length;
-        var urlValidation = 'http://jeudeloie/app_dev.php/question/suggest';
+        var nbAnswer = $container.find(':input[type="text"]').length;
+        var urlValidation = 'http://jeudeloie/app_dev.php/question/validate';
         var labelAnswers = $('#GameBundle_question_answers>.form-group label');
         var deleteButton = $('.deleteButton');
 
-        if (document.location.href.indexOf(urlValidation) > -1) {
+        if (document.location.href.indexOf(urlValidation) != 0) {
             addAnswer($container);
             addAnswer($container);        
-        } else {
-            labelAnswers.each(function(index) {
-                if (index === 0) {
-                    $(this).text('Bonne réponse');
-                } else {
-                    $(this).text('Mauvaise réponse');                    
-                }
-            });
-            addDeleteLink($('#GameBundle_question_answers>.form-group:gt(1)'));
         }
+
+        labelAnswers.each(function(index) {
+            if (index === 0) {
+                $(this).text('Bonne réponse');
+            } else {
+                $(this).text('Mauvaise réponse');                    
+            }
+        });        
+        addDeleteLink($('#GameBundle_question_answers>.form-group:gt(1)'));
+        
 
         $('#add_answer').on('click', function (e) {
             addAnswer($container);
@@ -125,13 +112,24 @@
     // functions
         function addAnswer($container) {
             var template;
+            if(nbAnswer === 0) {
+                template = $container.attr('data-prototype')
+                .replace(/__name__label__/g, 'Bonne réponse')
+                .replace(/__name__/g, nbAnswer)
+                ;
+            } else {
+                template = $container.attr('data-prototype')
+                .replace(/__name__label__/g, 'Mauvaise réponse')
+                .replace(/__name__/g, nbAnswer)
+                ;
+            }    
                    
             var $prototype = $(template);
-            if (index > 1) {
+            if (nbAnswer > 1) {
                 addDeleteLink($prototype);
             }
             $container.append($prototype);
-            index++;
+            nbAnswer++;
         }
 
         function addDeleteLink($prototype) {
@@ -139,18 +137,17 @@
             var id_answer;
             $($prototype).append($deleteLink);
             $deleteLink.on('click', function (e) {
+                $prototype.remove();                    
                 id_answer = $($prototype).find(':input[type="hidden"]').val();
-                if (id_answer === null) {
-                    return false;
-                } else {
-                    var url = "{{ path('remove_answer', { 'id': 'id_answer' }) }}";
-                    url = url.replace('id_answer', id_answer);
+                if (id_answer !== '') {
+                    var url = "{{ path('remove_answer', { 'id': 0 }) }}";
+                    url = url.replace('0', id_answer);
                     $.ajax({
                         url: url,
                         type: 'DELETE',
                         success: function (response) {
                             $prototype.remove();
-                            index--;
+                            nbAnswer--;
                         },
                         error: function () {
                             alert('error');
