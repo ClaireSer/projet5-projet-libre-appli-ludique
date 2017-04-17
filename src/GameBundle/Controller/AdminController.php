@@ -67,7 +67,6 @@ class AdminController extends Controller
         $em = $this->getDoctrine()->getManager();
         $notValidQuestion = $em->getRepository('GameBundle:Question')->getQuestionById($id);
         $form = $this->createForm(QuestionType::class, $notValidQuestion);
-        
         $formRequest = $form->handleRequest($request);
         
         if ($formRequest->isSubmitted() && $formRequest->isValid()) {

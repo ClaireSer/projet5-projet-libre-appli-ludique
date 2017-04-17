@@ -14,3 +14,8 @@ remove_answer:
     requirements: 
         _method: DELETE
 
+validate_question:
+    path: /validate/{id}
+    defaults: { _controller: GameBundle:Admin:validateQuestion }
+    requirements:
+        id: \d+

@@ -36,15 +36,15 @@ moderate_question:
     path:    /question/moderate
     defaults: { _controller: GameBundle:Admin:moderateQuestion }
 
-validate_question:
-    path: question/validate/{id}
-    defaults: { _controller: GameBundle:Admin:validateQuestion }
-    requirements:
-        _methods: GET
-        id: \d+
+# validate_question:
+#     path: question/validate/{id}
+#     defaults: { _controller: GameBundle:Admin:validateQuestion }
+#     requirements:
+#         _methods: GET
+#         id: \d+
 
-validate_question:
-    path: question/valid
-    defaults: { _controller: GameBundle:Admin:validateQuestion }
-    requirements:
-        _method: POST
+# validate_question:
+#     path: question/valid
+#     defaults: { _controller: GameBundle:Admin:validateQuestion }
+#     requirements:
+#         _method: POST

@@ -53,6 +53,20 @@ class Answer
     }
 
     /**
+     * Set id
+     *
+     * @param string $id
+     *
+     * @return Answer
+     */
+    public function setId($id)
+    {
+        $this->id = $id;
+
+        return $this->id;
+    }
+
+    /**
      * Set answer
      *
      * @param string $answer
