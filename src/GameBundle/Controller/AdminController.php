@@ -56,9 +56,11 @@ class AdminController extends Controller
     public function moderateQuestionAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
-        $notValidQuestions = $em->getRepository('GameBundle:Question')->getQuestionsNotValid();
+        $notValidQuestions = $em->getRepository('GameBundle:Question')->getQuestionsByValidity(false);
+        $validQuestions = $em->getRepository('GameBundle:Question')->getQuestionsByValidity(true);
         return $this->render('GameBundle:Admin:moderate_question.html.twig', array(
-            'notValidQuestions'     => $notValidQuestions
+            'notValidQuestions'     => $notValidQuestions,
+            'validQuestions'     => $validQuestions
         ));   
     }
     

@@ -16,6 +16,8 @@ remove_answer:
 
 validate_question:
     path: /validate/{id}
-    defaults: { _controller: GameBundle:Admin:validateQuestion }
+    defaults:
+        _controller: GameBundle:Admin:validateQuestion
+        id: 1            
     requirements:
         id: \d+

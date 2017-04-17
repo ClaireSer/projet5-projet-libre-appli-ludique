@@ -5,10 +5,86 @@
 {% block title %}{{ parent() }} - Index{% endblock %}
 
 {% block body %}
+  <div class="container-fluid">
+
     {% for message in app.session.flashbag.get('notice') %}
       <p>Message flash : {{ message }}</p>
     {% endfor %}
 
-    <p>GESTION DES UTILISATEURS (famille et enseignants).</p>
+    <h3>GESTION DES UTILISATEURS</h3>
+  
+    <div class="row">
+      <div class="col-sm-offset-4 col-sm-4" >
+        <ul class="nav nav-pills nav-justified">
+          <li role="presentation" class="active"><a href="#users" data-toggle="pill">Comptes famille</a></li>
+          <li role="presentation"><a href="#teachers" data-toggle="pill">Comptes enseignants</a></li>
+          <li role="presentation"><a href="#admin" data-toggle="pill">Comptes administrateur</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="tab-content">
+      <div class="row tab-pane fade in active" id="validQuestions">
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th>Question</th>
+              <th>Matière</th>
+              <th>Sous-matière</th>
+              <th>Auteur</th>        
+              <th>Modération</th>
+            </tr>
+          </thead>
+          <tbody>      
+            {% for validQuestion in validQuestions %}
+              <tr>
+                <td>{{ validQuestion.question }} </td>
+                <td>{{ validQuestion.topic.subject.nameSubject }} </td>
+                <td>{{ validQuestion.topic.nameTopic }} </td>
+                <td>
+                  {% if "ROLE_USER" in validQuestion.userCount.roles %}
+                    Famille {{ validQuestion.userCount.username }} 
+                  {% elseif "ROLE_TEACHER" in validQuestion.userCount.roles %}
+                    M. / Mme {{ validQuestion.userCount.username }} 
+                  {% else %}                  
+                    {{ validQuestion.userCount.username }} 
+                  {% endif %}                  
+                </td>
+                <td><a href="{{ path('validate_question', { 'id': validQuestion.id }) }}"><span class="glyphicon glyphicon-wrench"></span></a></td>
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+
+      <div class="row tab-pane fade" id="notValidQuestions">
+        <table class="table table-striped">
+          {% for notValidQuestion in notValidQuestions %}
+          <thead>
+            <tr>
+              <th>Question</th>
+              <th>Matière</th>
+              <th>Sous-matière</th>
+              <th>Auteur</th>        
+              <th>Modération</th>
+            </tr>
+          </thead>
+          <tbody>      
+              <tr>
+                <td>{{ notValidQuestion.question }} </td>
+                <td>{{ notValidQuestion.topic.subject.nameSubject }} </td>
+                <td>{{ notValidQuestion.topic.nameTopic }} </td>
+                <td>Famille {{ notValidQuestion.userCount.username }} </td>
+                <td><a href="{{ path('validate_question', { 'id': notValidQuestion.id }) }}"><span class="glyphicon glyphicon-wrench"></span></a></td>
+              </tr>
+          <tbody>            
+          {% else %}
+              <p>Toutes les questions ont été validées.</p>
+          {% endfor %}
+        </table>
+      </div>
+    </div>
+  </div>    
 {% endblock %}
+ 
  

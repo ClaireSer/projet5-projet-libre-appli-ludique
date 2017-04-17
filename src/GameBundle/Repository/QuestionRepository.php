@@ -10,14 +10,16 @@ namespace GameBundle\Repository;
  */
 class QuestionRepository extends \Doctrine\ORM\EntityRepository
 {
-    public function getQuestionsNotValid() {
+    public function getQuestionsByValidity($validity) {
         return $this->createQueryBuilder('q')
             ->leftJoin('q.topic', 't')
             ->leftJoin('q.userCount', 'u')
+            ->leftJoin('t.subject', 's')
             ->addSelect('t')
             ->addSelect('u')
+            ->addSelect('s')
             ->where('q.isValid = :isValid')
-            ->setParameter('isValid', false)
+            ->setParameter('isValid', $validity)
             ->getQuery()
             ->getArrayResult()
 		;
