@@ -10,4 +10,13 @@ namespace UserBundle\Repository;
  */
 class UserCountRepository extends \Doctrine\ORM\EntityRepository
 {
+    public function getUserByRole($role) {
+        return $this->createQueryBuilder('u')
+            ->where('u.roles LIKE :role')
+            ->setParameter('role', '%' . $role . '%')
+            ->getQuery()
+            ->getResult()
+		;
+    }
+
 }

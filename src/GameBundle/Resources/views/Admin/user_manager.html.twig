@@ -16,73 +16,155 @@
     <div class="row">
       <div class="col-sm-offset-4 col-sm-4" >
         <ul class="nav nav-pills nav-justified">
-          <li role="presentation" class="active"><a href="#users" data-toggle="pill">Comptes famille</a></li>
-          <li role="presentation"><a href="#teachers" data-toggle="pill">Comptes enseignants</a></li>
-          <li role="presentation"><a href="#admin" data-toggle="pill">Comptes administrateur</a></li>
+          <li role="presentation" class="active"><a href="#families" data-toggle="pill">Comptes famille</a></li>
+          <li role="presentation"><a href="#teachers" data-toggle="pill">Comptes enseignant</a></li>
+          <li role="presentation"><a href="#admins" data-toggle="pill">Comptes administrateur</a></li>
         </ul>
       </div>
     </div>
 
     <div class="tab-content">
-      <div class="row tab-pane fade in active" id="validQuestions">
+      <div class="row tab-pane fade in active" id="families">
         <table class="table table-striped">
           <thead>
             <tr>
-              <th>Question</th>
-              <th>Matière</th>
-              <th>Sous-matière</th>
-              <th>Auteur</th>        
-              <th>Modération</th>
+              <th>Nom de famille</th>
+              <th>Modifier</th>
+              <th>Supprimer</th>
             </tr>
           </thead>
           <tbody>      
-            {% for validQuestion in validQuestions %}
+            {% for family in families %}
               <tr>
-                <td>{{ validQuestion.question }} </td>
-                <td>{{ validQuestion.topic.subject.nameSubject }} </td>
-                <td>{{ validQuestion.topic.nameTopic }} </td>
-                <td>
-                  {% if "ROLE_USER" in validQuestion.userCount.roles %}
-                    Famille {{ validQuestion.userCount.username }} 
-                  {% elseif "ROLE_TEACHER" in validQuestion.userCount.roles %}
-                    M. / Mme {{ validQuestion.userCount.username }} 
-                  {% else %}                  
-                    {{ validQuestion.userCount.username }} 
-                  {% endif %}                  
-                </td>
-                <td><a href="{{ path('validate_question', { 'id': validQuestion.id }) }}"><span class="glyphicon glyphicon-wrench"></span></a></td>
+                <td>{{ family.username }} </td>
+                <td><a href="{{ path('user_edit', { 'id': family.id }) }}"><span class="glyphicon glyphicon-wrench"></span></a></td>
+                <td><a data-toggle="modal" data-target="#modalDeleteFamily{{ family.id }}"><span class="glyphicon glyphicon-trash"></span></a></td>
+
+                <!-- Modal -->
+                  <div class="modal fade" id="modalDeleteFamily{{ family.id }}" tabindex="-1" role="dialog" aria-labelledby="modalDeleteFamilyLabel" aria-hidden="true">
+                      <div class="modal-dialog">
+                          <div class="modal-content">
+                              <div class="modal-header">
+                                  <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                  <h4 class="modal-title" id="modalDeleteFamilyLabel">Confirmation requise</h4>
+                              </div>
+                              <div class="modal-body">
+                                  Etes-vous sûr de vouloir supprimer l'utilisateur ?
+                              </div>
+                              <div class="modal-footer">
+                                  <a href="{{ path('user_delete', { 'id': family.id }) }}">
+                                      {% if app.user.username == "Visiteur" and is_granted('ROLE_ADMIN') %}
+                                          <button class="btn btn-danger btn-lg disabled">Supprimer</button>
+                                      {% else %}
+                                          <button class="btn btn-danger btn-lg">Supprimer</button>
+                                      {% endif %}
+                                  </a>
+                              </div>
+                          </div><!-- /.modal-content -->
+                      </div><!-- /.modal-dialog -->
+                  </div><!-- /.modal -->
+
               </tr>
             {% endfor %}
           </tbody>
         </table>
       </div>
 
-      <div class="row tab-pane fade" id="notValidQuestions">
+      <div class="row tab-pane fade" id="teachers">
         <table class="table table-striped">
-          {% for notValidQuestion in notValidQuestions %}
           <thead>
             <tr>
-              <th>Question</th>
-              <th>Matière</th>
-              <th>Sous-matière</th>
-              <th>Auteur</th>        
-              <th>Modération</th>
+              <th>Nom de famille</th>
+              <th>Modifier</th>
+              <th>Supprimer</th>
             </tr>
           </thead>
           <tbody>      
+            {% for teacher in teachers %}
               <tr>
-                <td>{{ notValidQuestion.question }} </td>
-                <td>{{ notValidQuestion.topic.subject.nameSubject }} </td>
-                <td>{{ notValidQuestion.topic.nameTopic }} </td>
-                <td>Famille {{ notValidQuestion.userCount.username }} </td>
-                <td><a href="{{ path('validate_question', { 'id': notValidQuestion.id }) }}"><span class="glyphicon glyphicon-wrench"></span></a></td>
+                <td>{{ teacher.username }} </td>
+                <td><a href="{{ path('user_edit', { 'id': teacher.id }) }}"><span class="glyphicon glyphicon-wrench"></span></a></td>
+                <td><a data-toggle="modal" data-target="#modalDeleteTeacher{{ teacher.id }}"><span class="glyphicon glyphicon-trash"></span></a></td>
+
+                <!-- Modal -->
+                  <div class="modal fade" id="modalDeleteTeacher{{ teacher.id }}" tabindex="-1" role="dialog" aria-labelledby="modalDeleteTeacherLabel" aria-hidden="true">
+                      <div class="modal-dialog">
+                          <div class="modal-content">
+                              <div class="modal-header">
+                                  <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                  <h4 class="modal-title" id="modalDeleteTeacherLabel">Confirmation requise</h4>
+                              </div>
+                              <div class="modal-body">
+                                  Etes-vous sûr de vouloir supprimer l'utilisateur ?
+                              </div>
+                              <div class="modal-footer">
+                                  <a href="{{ path('user_delete', { 'id': teacher.id }) }}">
+                                      {% if app.user.username == "Visiteur" and is_granted('ROLE_ADMIN') %}
+                                          <button class="btn btn-danger btn-lg disabled">Supprimer</button>
+                                      {% else %}
+                                          <button class="btn btn-danger btn-lg">Supprimer</button>
+                                      {% endif %}
+                                  </a>
+                              </div>
+                          </div><!-- /.modal-content -->
+                      </div><!-- /.modal-dialog -->
+                  </div><!-- /.modal -->
+
+
+
               </tr>
-          <tbody>            
-          {% else %}
-              <p>Toutes les questions ont été validées.</p>
-          {% endfor %}
+            {% endfor %}
+          </tbody>
         </table>
       </div>
+
+      <div class="row tab-pane fade" id="admins">
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th>Nom de famille</th>
+              <th>Modifier</th>
+              <th>Supprimer</th>
+            </tr>
+          </thead>
+          <tbody>      
+            {% for admin in admins %}
+              <tr>
+                <td>{{ admin.username }} </td>
+                <td><a href="{{ path('user_edit', { 'id': admin.id }) }}"><span class="glyphicon glyphicon-wrench"></span></a></td>
+                <td><a data-toggle="modal" data-target="#modalDeleteAdmin{{ admin.id }}"><span class="glyphicon glyphicon-trash"></span></a></td>
+
+                <!-- Modal -->
+                  <div class="modal fade" id="modalDeleteAdmin{{ admin.id }}" tabindex="-1" role="dialog" aria-labelledby="modalDeleteAdminLabel" aria-hidden="true">
+                      <div class="modal-dialog">
+                          <div class="modal-content">
+                              <div class="modal-header">
+                                  <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                  <h4 class="modal-title" id="modalDeleteAdminLabel">Confirmation requise</h4>
+                              </div>
+                              <div class="modal-body">
+                                  Etes-vous sûr de vouloir supprimer l'utilisateur ?
+                              </div>
+                              <div class="modal-footer">
+                                  <a href="{{ path('user_delete', { 'id': admin.id }) }}">
+                                      {% if app.user.username == "Visiteur" and is_granted('ROLE_ADMIN') %}
+                                          <button class="btn btn-danger btn-lg disabled">Supprimer</button>
+                                      {% else %}
+                                          <button class="btn btn-danger btn-lg">Supprimer</button>
+                                      {% endif %}
+                                  </a>
+                              </div>
+                          </div><!-- /.modal-content -->
+                      </div><!-- /.modal-dialog -->
+                  </div><!-- /.modal -->
+
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+
+      
     </div>
   </div>    
 {% endblock %}

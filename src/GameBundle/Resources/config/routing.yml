@@ -1,6 +1,6 @@
-add_question:
-    path:     /add
-    defaults: { _controller: GameBundle:Default:addQuestion }
+# add_question:
+#     path:     /add
+#     defaults: { _controller: GameBundle:Default:addQuestion }
 
 combobox:
     path: /combobox
@@ -21,3 +21,15 @@ validate_question:
         id: 1            
     requirements:
         id: \d+
+
+suggest_question:
+   path:    /suggest
+   defaults: { _controller: GameBundle:HomeFamily:suggestQuestion }
+
+add_question:
+    path:    /add
+    defaults: { _controller: GameBundle:Admin:addQuestion }
+
+moderate_question:
+    path:    /moderate
+    defaults: { _controller: GameBundle:Admin:moderateQuestion }

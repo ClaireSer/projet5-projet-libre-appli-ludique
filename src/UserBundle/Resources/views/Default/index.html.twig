@@ -6,10 +6,18 @@
 
 {% block body %}
     {% for message in app.session.flashbag.get('notice') %}
-      <p>Message flash : {{ message }}</p>
+      <div class="alert alert-danger">
+        <p>{{ message }}</p>
+      </div>
+    {% endfor %}
+
+    {% for message in app.session.flashbag.get('success') %}
+      <div class="alert alert-success">
+        <p>{{ message }}</p>
+      </div>
     {% endfor %}
  
-    <h2>page d'accueil</h2>
+    <h2>Page d'accueil</h2>
 
     {% if app.user and is_granted('ROLE_USER') %}
       <p>Bienvenue famille {{ app.user.username }} ! </p>

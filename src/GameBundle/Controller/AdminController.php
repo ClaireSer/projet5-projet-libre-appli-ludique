@@ -110,9 +110,4 @@ class AdminController extends Controller
         }
         return new Response('Erreur');
     }
-
-    public function manageUsersAction(Request $request)
-    {
-        return $this->render('GameBundle:Admin:user_manager.html.twig');   
-    }
 }

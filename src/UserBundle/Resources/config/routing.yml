@@ -22,29 +22,16 @@ admin_gamers:
 
 admin_users:
    path:    /administration
-   defaults: { _controller: GameBundle:Admin:manageUsers }
-      
-suggest_question:
-   path:    /question/suggest
-   defaults: { _controller: GameBundle:HomeFamily:suggestQuestion }
+   defaults: { _controller: UserBundle:Default:manageUsers }
 
-add_question:
-    path:    /question/add
-    defaults: { _controller: GameBundle:Admin:addQuestion }
+user_edit:
+    path:   /edit/{id}
+    defaults: { _controller: UserBundle:Default:editUser }
+    requirements:
+        id: \d+
 
-moderate_question:
-    path:    /question/moderate
-    defaults: { _controller: GameBundle:Admin:moderateQuestion }
-
-# validate_question:
-#     path: question/validate/{id}
-#     defaults: { _controller: GameBundle:Admin:validateQuestion }
-#     requirements:
-#         _methods: GET
-#         id: \d+
-
-# validate_question:
-#     path: question/valid
-#     defaults: { _controller: GameBundle:Admin:validateQuestion }
-#     requirements:
-#         _method: POST
+user_delete:
+    path:   /delete/{id}
+    defaults: { _controller: UserBundle:Default:deleteUser }
+    requirements:
+        id: \d+

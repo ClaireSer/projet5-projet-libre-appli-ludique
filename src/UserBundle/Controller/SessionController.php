@@ -4,7 +4,7 @@ namespace UserBundle\Controller;
 
 use UserBundle\Entity\Gamer;
 use UserBundle\Entity\UserCount;
-use UserBundle\Form\UserCountType;
+use UserBundle\Form\UserCountSignupType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
@@ -14,8 +14,9 @@ class SessionController extends Controller
 {
     public function signupAction(Request $request) {
         $userCount = new UserCount();
-        $form = $this->createForm(UserCountType::class, $userCount);
-        if ($request->isMethod('POST') && $form->handleRequest($request)->isValid()) {
+        $form = $this->createForm(UserCountSignupType::class, $userCount);
+        $formRequest = $form->handleRequest($request);
+        if ($formRequest->isSubmitted() && $formRequest->isValid()) {
             $password = $this->get('security.password_encoder')->encodePassword($userCount, $userCount->getPassword());
             $userCount->setPassword($password);
             $userCount->setRoles(array('ROLE_USER'));
