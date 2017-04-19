@@ -23,25 +23,25 @@
 
   {# Le formulaire, avec URL de soumission vers la route « login_check » comme on l'a vu #}
   <div class="row">
-        <div class="col-lg-offset-2 col-lg-8">
-            <div class="well">
+    <div class="col-lg-offset-2 col-lg-8">
+      <div class="well">
 
-  <form action="{{ path('login_check') }}" method="post">
-    <label for="username">Login :</label>
-    <input type="text" id="username" name="_username" value="{{ last_username }}" />
-    <br />
+        <form action="{{ path('login_check') }}" method="post">
+          <label for="username">Login :</label>
+          <input type="text" id="username" name="_username" value="{{ last_username }}" />
+          <br />
 
-    <label for="password">Mot de passe :</label>
-    <input type="password" id="password" name="_password" />
-    <br />
-    
-    <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}"/>
+          <label for="password">Mot de passe :</label>
+          <input type="password" id="password" name="_password" />
+          <br />
+          
+          <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}"/>
 
-    <input type="submit" value="Connexion" />
-  </form>
+          <input type="submit" value="Connexion" />
+        </form>
 
-  </div>
-  </div>
+      </div>
+    </div>
   </div>
 
 {% endblock %}

@@ -31,6 +31,7 @@
               <th>Sous-matière</th>
               <th>Auteur</th>        
               <th>Modération</th>
+              <th>Suppression</th>
             </tr>
           </thead>
           <tbody>      
@@ -49,6 +50,32 @@
                   {% endif %}                  
                 </td>
                 <td><a href="{{ path('validate_question', { 'id': validQuestion.id }) }}"><span class="glyphicon glyphicon-wrench"></span></a></td>
+                <td><a data-toggle="modal" data-target="#modalDeleteValidQuestion{{ validQuestion.id }}"><span class="glyphicon glyphicon-trash"></span></a></td>
+
+                <!-- Modal -->
+                  <div class="modal fade" id="modalDeleteValidQuestion{{ validQuestion.id }}" tabindex="-1" role="dialog" aria-labelledby="modalDeleteValidQuestionLabel" aria-hidden="true">
+                      <div class="modal-dialog">
+                          <div class="modal-content">
+                              <div class="modal-header">
+                                  <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                  <h4 class="modal-title" id="modalDeleteValidQuestionLabel">Confirmation requise</h4>
+                              </div>
+                              <div class="modal-body">
+                                  Etes-vous sûr de vouloir supprimer la question ?
+                              </div>
+                              <div class="modal-footer">
+                                  <a href="{{ path('question_delete', { 'id': validQuestion.id }) }}">
+                                      {% if app.user.username == "Visiteur" and is_granted('ROLE_ADMIN') %}
+                                          <button class="btn btn-danger btn-lg disabled">Supprimer</button>
+                                      {% else %}
+                                          <button class="btn btn-danger btn-lg">Supprimer</button>
+                                      {% endif %}
+                                  </a>
+                              </div>
+                          </div><!-- /.modal-content -->
+                      </div><!-- /.modal-dialog -->
+                  </div><!-- /.modal -->
+
               </tr>
             {% endfor %}
           </tbody>
@@ -65,6 +92,7 @@
               <th>Sous-matière</th>
               <th>Auteur</th>        
               <th>Modération</th>
+              <th>Suppression</th>
             </tr>
           </thead>
           <tbody>      
@@ -74,6 +102,32 @@
                 <td>{{ notValidQuestion.topic.nameTopic }} </td>
                 <td>Famille {{ notValidQuestion.userCount.username }} </td>
                 <td><a href="{{ path('validate_question', { 'id': notValidQuestion.id }) }}"><span class="glyphicon glyphicon-wrench"></span></a></td>
+                <td><a data-toggle="modal" data-target="#modalDeleteQuestion{{ notValidQuestion.id }}"><span class="glyphicon glyphicon-trash"></span></a></td>
+
+                <!-- Modal -->
+                  <div class="modal fade" id="modalDeleteNotValidQuestion{{ notValidQuestion.id }}" tabindex="-1" role="dialog" aria-labelledby="modalDeleteNotValidQuestionLabel" aria-hidden="true">
+                      <div class="modal-dialog">
+                          <div class="modal-content">
+                              <div class="modal-header">
+                                  <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                  <h4 class="modal-title" id="modalDeleteNotValidQuestionLabel">Confirmation requise</h4>
+                              </div>
+                              <div class="modal-body">
+                                  Etes-vous sûr de vouloir supprimer la question ?
+                              </div>
+                              <div class="modal-footer">
+                                  <a href="{{ path('question_delete', { 'id': notValidQuestion.id }) }}">
+                                      {% if app.user.username == "Visiteur" and is_granted('ROLE_ADMIN') %}
+                                          <button class="btn btn-danger btn-lg disabled">Supprimer</button>
+                                      {% else %}
+                                          <button class="btn btn-danger btn-lg">Supprimer</button>
+                                      {% endif %}
+                                  </a>
+                              </div>
+                          </div><!-- /.modal-content -->
+                      </div><!-- /.modal-dialog -->
+                  </div><!-- /.modal -->
+
               </tr>
           <tbody>            
           {% else %}

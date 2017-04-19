@@ -110,4 +110,15 @@ class AdminController extends Controller
         }
         return new Response('Erreur');
     }
+
+    public function deleteQuestionAction(Request $request, $id)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $question = $em->getRepository('GameBundle:Question')->getQuestionById($id);
+
+        $em->remove($question);
+        $em->flush();
+        $request->getSession()->getFlashBag()->add('success', 'La question a bien été supprimée.');
+        return $this->redirectToRoute('homepage');
+    }
 }

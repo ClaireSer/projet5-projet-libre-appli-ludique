@@ -33,3 +33,9 @@ add_question:
 moderate_question:
     path:    /moderate
     defaults: { _controller: GameBundle:Admin:moderateQuestion }
+
+question_delete:
+    path:   /delete/{id}
+    defaults: { _controller: GameBundle:Admin:deleteQuestion }
+    requirements:
+        id: \d+
