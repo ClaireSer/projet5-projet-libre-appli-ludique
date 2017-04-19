@@ -1,5 +1,5 @@
 <?php
-// src/GameBundle/Form/TopicType.php
+// src/GameBundle/Form/ThemeType.php
 
 namespace GameBundle\Form;
 
@@ -14,29 +14,12 @@ use GameBundle\Repository\SubjectRepository;
 use GameBundle\Repository\TopicRepository;
 
 
-class TopicType extends AbstractType
+class ThemeType extends AbstractType
 {
   public function buildForm(FormBuilderInterface $builder, array $options)
   {
     $builder
-      // ->add('subject', EntityType::class, array(
-      //     'class'         => 'GameBundle:Subject',
-      //     'choice_label'  => 'nameSubject',
-      //     'label'         => 'Matière',
-      //     'placeholder'   => '-- Choisissez une matière --'
-      // ))
-      // ->add('nameTopic', EntityType::class, array(
-      //     'class'         => 'GameBundle:Topic',
-      //     'choice_label'  => 'nameTopic',
-      //     'label'         => 'Sous-matière',
-      //     'placeholder'   => '-- Choisissez une sous-matière --'
-      // ))
-      ->add('subject', EntityType::class, array(
-          'class'         => 'GameBundle:Subject',
-          'choice_label'  => 'nameSubject',
-          'label'         => 'Matière',
-          'placeholder'   => '-- Choisissez une matière --'
-      ))
+      ->add('subject', SubjectType::class, array('label' => false))
       ->add('nameTopic', TextType::class, array(
         'label' => 'Sous-Matière',
         'attr'  => array(

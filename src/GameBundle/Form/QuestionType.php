@@ -55,10 +55,6 @@ class QuestionType extends AbstractType
           'label'         => 'Matière',
           'placeholder'   => '-- Choisissez une sous-matière --'
         ))
-        ->add('addTopic', TextType::class, array(
-            'mapped'    => false,
-            'label'     => 'Ajoutez une sous-matière'
-        ))
         // plan A not working
         // ->add('topic',      TopicType::class, array('label' => false))
         ->add('save',      SubmitType::class)

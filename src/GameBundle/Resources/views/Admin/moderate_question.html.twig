@@ -7,7 +7,15 @@
 {% block body %}
   <div class="container-fluid">
     {% for message in app.session.flashbag.get('notice') %}
-      <p>Message flash : {{ message }}</p>
+      <div class="alert alert-danger">
+        <p>{{ message }}</p>
+      </div>
+    {% endfor %}
+
+    {% for message in app.session.flashbag.get('success') %}
+      <div class="alert alert-success">
+        <p>{{ message }}</p>
+      </div>
     {% endfor %}
 
     <h3>Modération des questions</h3>

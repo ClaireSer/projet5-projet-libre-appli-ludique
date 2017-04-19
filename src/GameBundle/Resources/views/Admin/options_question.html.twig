@@ -1,0 +1,87 @@
+{# src/GameBundle/Resources/views/Admin/options_question.html.twig #}
+
+{% extends "GameBundle::layout.html.twig" %}
+
+{% block title %}{{ parent() }} - Options{% endblock %}
+
+{% block body %}
+  <div class="container-fluid">
+    {% for message in app.session.flashbag.get('notice') %}
+      <div class="alert alert-danger">
+        <p>{{ message }}</p>
+      </div>
+    {% endfor %}
+
+    {% for message in app.session.flashbag.get('success') %}
+      <div class="alert alert-success">
+        <p>{{ message }}</p>
+      </div>
+    {% endfor %}
+
+    <h3>Options des questions</h3>
+    <div class="row list-group">
+    <div class="col-sm-offset-4 col-sm-4">
+      <a href="#themesList" class="list-group-item active">Voir la liste des thèmes</a>
+      <a href="#" class="list-group-item">Ajouter un nouveau thème</a>
+      <a href="#" class="list-group-item">Ajouter une nouvelle catégorie</a>
+      <a href="#" class="list-group-item">Supprimer un thème</a>
+      <a href="#" class="list-group-item">Supprimer une catégorie</a>
+    </div>
+    </div>
+
+    <div class="row center" id="themesList">
+      {% for subject in subjects %}
+        <div class="theme">
+          <h5> {{ subject.nameSubject }} </h5>
+
+          {% for topic in subject.topics %}
+            <p>{{ topic.nameTopic }}</p>
+          {% endfor %}
+
+        </div>
+      {% endfor %}
+    </div>
+
+    <div class="row">
+      <div class="col-sm-offset-2 col-sm-4">
+        <h4>Ajout d'un nouveau thème</h4>
+        <div class="well">
+          {{ form_start(formTheme, {'attr': {'class': 'form-horizontal'}}) }}
+          {{ form_errors(formTheme) }}
+
+          <div class="form-group">
+              {{ form_row(formTheme.subject) }}
+          </div>
+          <div class="form-group">
+              {{ form_row(formTheme.nameTopic) }}
+          </div>
+          
+          {{ form_widget(formTheme.save, {'attr': {'class': 'btn btn-primary'}}) }}
+
+          {{ form_rest(formTheme) }}
+          {{ form_end(formTheme) }}        
+        </div>
+      </div>
+
+      <div class="col-sm-4">
+        <h4>Ajout d'une nouvelle sous-matière</h4>        
+        <div class="well">
+          {{ form_start(formTopic, {'attr': {'class': 'form-horizontal'}}) }}
+          {{ form_errors(formTopic) }}
+
+          <div class="form-group">
+              {{ form_row(formTopic.subject) }}
+          </div>
+          <div class="form-group">
+              {{ form_row(formTopic.nameTopic) }}
+          </div>
+          
+          {{ form_widget(formTopic.save, {'attr': {'class': 'btn btn-primary'}}) }}
+
+          {{ form_rest(formTopic) }}
+          {{ form_end(formTopic) }}  
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}

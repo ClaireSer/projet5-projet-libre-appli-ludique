@@ -19,7 +19,7 @@ class Topic
     private $questions;
 
     /**
-     * @ORM\ManyToOne(targetEntity="GameBundle\Entity\Subject", inversedBy="topics")
+     * @ORM\ManyToOne(targetEntity="GameBundle\Entity\Subject", inversedBy="topics", cascade={"persist"})
      * @ORM\JoinColumn(nullable=false)
      */
     private $subject; 
@@ -40,10 +40,7 @@ class Topic
      */
     private $nameTopic;
 
-    public function __construct()
-    {
-        $this->questions = new ArrayCollection();
-    }
+
 
     /**
      * Add question

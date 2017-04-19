@@ -6,7 +6,15 @@
 
 {% block body %}
     {% for message in app.session.flashbag.get('notice') %}
-      <p>Message flash : {{ message }}</p>
+      <div class="alert alert-danger">
+        <p>{{ message }}</p>
+      </div>
+    {% endfor %}
+
+    {% for message in app.session.flashbag.get('success') %}
+      <div class="alert alert-success">
+        <p>{{ message }}</p>
+      </div>
     {% endfor %}
 
     <p>Bonjour, avant de jouer, il faut sélectionner les participants au jeu.</p>

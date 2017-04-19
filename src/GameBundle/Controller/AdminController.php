@@ -5,7 +5,10 @@ namespace GameBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use GameBundle\Form\QuestionType;
+use GameBundle\Form\TopicType;
+use GameBundle\Form\ThemeType;
 use GameBundle\Entity\Question;
+use GameBundle\Entity\Topic;
 use Symfony\Component\HttpFoundation\JsonResponse;
 
 
@@ -31,7 +34,7 @@ class AdminController extends Controller
             $em = $this->getDoctrine()->getManager();
             $em->persist($question);
             $em->flush();
-            $request->getSession()->getFlashBag()->add('notice', 'Question bien enregistrée.');
+            $request->getSession()->getFlashBag()->add('success', 'Question bien enregistrée.');
             return $this->redirectToRoute('homepage');
         }
         return $this->render('GameBundle:Default:form_question.html.twig', array(
@@ -120,5 +123,45 @@ class AdminController extends Controller
         $em->flush();
         $request->getSession()->getFlashBag()->add('success', 'La question a bien été supprimée.');
         return $this->redirectToRoute('homepage');
+    }
+
+    public function optionsQuestionAction(Request $request) 
+    {
+        $em = $this->getDoctrine()->getManager();
+        $topic = new Topic();
+        $formTheme = $this->createForm(ThemeType::class, $topic);
+        $formTopic = $this->createForm(TopicType::class, $topic);
+        $formThemeRequest = $formTheme->handleRequest($request);
+        $formTopicRequest = $formTopic->handleRequest($request);
+
+        if ($formThemeRequest->isSubmitted() AND $formThemeRequest->isValid()) {
+            $subject = $topic->getSubject();
+            $subject->addTopic($topic);
+
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($topic);
+            $em->flush();
+            $request->getSession()->getFlashBag()->add('success', 'Le nouveau thème a bien été enregistré.');
+            return $this->redirectToRoute('homepage');
+        }
+
+        if ($formTopicRequest->isSubmitted() AND $formTopicRequest->isValid()) {
+            $subject = $topic->getSubject();
+            $subject->addTopic($topic);
+
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($topic);
+            $em->flush();
+            $request->getSession()->getFlashBag()->add('success', 'La nouvelle catégorie a bien été enregistrée.');
+            return $this->redirectToRoute('homepage');
+        }
+
+        $subjects = $em->getRepository('GameBundle:Subject')->findBy(array(), array('id' => 'ASC'));
+
+        return $this->render('GameBundle:Admin:options_question.html.twig', array(
+            'formTheme'     => $formTheme->createView(),
+            'formTopic'     => $formTopic->createView(),
+            'subjects'      => $subjects
+        ));
     }
 }

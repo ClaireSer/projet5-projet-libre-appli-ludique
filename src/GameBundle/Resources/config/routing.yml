@@ -39,3 +39,7 @@ question_delete:
     defaults: { _controller: GameBundle:Admin:deleteQuestion }
     requirements:
         id: \d+
+
+options_question:
+    path:    /options
+    defaults: { _controller: GameBundle:Admin:optionsQuestion }
