@@ -16,26 +16,32 @@
 
     <h3>Formulaire de connexion</h3>
 
-    {#<div class="well">
-    {{ form(form) }}
-    </div>
 
-{% endblock %}#}
   {% if app.user != null %}
   <p>Bonjour {{ app.user.username }}</p>
   {% endif %}
 
   {# Le formulaire, avec URL de soumission vers la route « login_check » comme on l'a vu #}
+  <div class="row">
+        <div class="col-lg-offset-2 col-lg-8">
+            <div class="well">
+
   <form action="{{ path('login_check') }}" method="post">
     <label for="username">Login :</label>
     <input type="text" id="username" name="_username" value="{{ last_username }}" />
+    <br />
 
     <label for="password">Mot de passe :</label>
     <input type="password" id="password" name="_password" />
     <br />
+    
     <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}"/>
 
     <input type="submit" value="Connexion" />
   </form>
+
+  </div>
+  </div>
+  </div>
 
 {% endblock %}

@@ -16,12 +16,12 @@ use Doctrine\Common\Collections\ArrayCollection;
 class UserCount implements UserInterface
 {
     /**
-     * @ORM\OneToMany(targetEntity="UserBundle\Entity\Gamer", mappedBy="userCount")
+     * @ORM\OneToMany(targetEntity="UserBundle\Entity\Gamer", mappedBy="userCount", cascade={"remove"})
      */
     private $gamers;
 
     /**
-     * @ORM\OneToMany(targetEntity="GameBundle\Entity\Question", mappedBy="userCount")
+     * @ORM\OneToMany(targetEntity="GameBundle\Entity\Question", mappedBy="userCount", cascade={"remove"})
      */
     private $questions;
 

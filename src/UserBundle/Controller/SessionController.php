@@ -23,17 +23,19 @@ class SessionController extends Controller
             $em = $this->getDoctrine()->getManager();
             $em->persist($userCount);
             $em->flush();
-            $request->getSession()->getFlashBag()->add('notice', 'Compte bien enregistré.');
+            $request->getSession()->getFlashBag()->add('success', 'Compte bien enregistré.');
             return $this->redirectToRoute('homepage');
         }
-        return $this->render('UserBundle:Session:signup.html.twig', array(
-            'form' => $form->createView()
+        return $this->render('UserBundle:Default:form_user.html.twig', array(
+            'form'      => $form->createView(),
+            'title'     => 'Formulaire d\'inscription',
+            'titleTab'  => 'Inscription'
         ));
     }
 
     public function loginAction(Request $request) {
         if ($this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
-            $request->getSession()->getFlashBag()->add('notice', 'Vous êtes bien connecté.');            
+            $request->getSession()->getFlashBag()->add('notice', 'Vous êtes bien connecté(e).');            
             return $this->redirectToRoute('homepage');
         }
         $authenticationUtils = $this->get('security.authentication_utils');

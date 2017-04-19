@@ -55,12 +55,4 @@ class UserCountType extends AbstractType
             'data_class' => 'UserBundle\Entity\UserCount'
         ));
     }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getBlockPrefix()
-    {
-        return 'UserBundle_usercount';
-    }
 }

@@ -86,7 +86,8 @@ class DefaultController extends Controller
 
         return $this->render('UserBundle:Default:form_user.html.twig', array(
             'form'      => $form->createView(),
-            'title'     => 'Edition d\'un utilisateur'
+            'title'     => 'Edition d\'un utilisateur',
+            'titleTab'  => 'Edition'
         ));
     }
 

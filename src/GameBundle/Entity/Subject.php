@@ -43,6 +43,20 @@ class Subject
     }
 
     /**
+     * Set id
+     *
+     * @param string $id
+     *
+     * @return Subject
+     */
+    public function setId($id)
+    {
+        $this->id = $id;
+
+        return $this;
+    }
+
+    /**
      * Get id
      *
      * @return int

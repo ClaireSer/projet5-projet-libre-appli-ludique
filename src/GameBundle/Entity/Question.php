@@ -20,7 +20,7 @@ class Question
     private $userCount;
     
     /**
-     * @ORM\OneToMany(targetEntity="GameBundle\Entity\Answer", mappedBy="question", cascade={"persist"})
+     * @ORM\OneToMany(targetEntity="GameBundle\Entity\Answer", mappedBy="question", cascade={"persist", "remove"})
      */
     private $answers;
 
@@ -66,6 +66,20 @@ class Question
      */
     private $isValid;
 
+
+    /**
+     * Set id
+     *
+     * @param string $id
+     *
+     * @return Question
+     */
+    public function setId($id)
+    {
+        $this->id = $id;
+
+        return $this;
+    }
 
     /**
      * Get id

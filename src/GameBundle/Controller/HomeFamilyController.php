@@ -45,7 +45,7 @@ class HomeFamilyController extends Controller
             $em = $this->getDoctrine()->getManager();
             $em->persist($question);
             $em->flush();
-            $request->getSession()->getFlashBag()->add('notice', 'Question bien enregistrée.');
+            $request->getSession()->getFlashBag()->add('success', 'Question bien enregistrée.');
             return $this->redirectToRoute('homepage');
         }
         return $this->render('GameBundle:Default:form_question.html.twig', array(

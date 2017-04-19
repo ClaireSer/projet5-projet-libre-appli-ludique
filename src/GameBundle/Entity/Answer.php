@@ -43,16 +43,6 @@ class Answer
 
 
     /**
-     * Get id
-     *
-     * @return int
-     */
-    public function getId()
-    {
-        return $this->id;
-    }
-
-    /**
      * Set id
      *
      * @param string $id
@@ -63,6 +53,16 @@ class Answer
     {
         $this->id = $id;
 
+        return $this->id;
+    }
+
+    /**
+     * Get id
+     *
+     * @return int
+     */
+    public function getId()
+    {
         return $this->id;
     }
 
