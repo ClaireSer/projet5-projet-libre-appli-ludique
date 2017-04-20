@@ -19,15 +19,7 @@
     {% endfor %}
 
     <h3>Options des questions</h3>
-    <div class="row list-group">
-    <div class="col-sm-offset-4 col-sm-4">
-      <a href="#themesList" class="list-group-item active">Voir la liste des thèmes</a>
-      <a href="#" class="list-group-item">Ajouter un nouveau thème</a>
-      <a href="#" class="list-group-item">Ajouter une nouvelle catégorie</a>
-      <a href="#" class="list-group-item">Supprimer un thème</a>
-      <a href="#" class="list-group-item">Supprimer une catégorie</a>
-    </div>
-    </div>
+    <h4>Choisissez les thèmes des questions</h4>
 
     <div class="row center" id="themesList">
       {% for subject in subjects %}
@@ -37,13 +29,32 @@
           {% for topic in subject.topics %}
             <p>{{ topic.nameTopic }}</p>
           {% endfor %}
-
         </div>
       {% endfor %}
+      <div class="theme buttons">
+        <div class="btn-group add">
+          <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Ajouter <span class="caret"></span>
+          </button>
+          <ul class="dropdown-menu">
+            <li><a href="#">Un thème</a></li>
+            <li><a href="#">Une catégorie</a></li>
+          </ul>
+        </div>
+        <div class="btn-group delete">
+          <button type="button" class="btn btn-danger dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Supprimer <span class="caret"></span>
+          </button>
+          <ul class="dropdown-menu">
+            <li><a href="#">Un thème</a></li>
+            <li><a href="#">Une catégorie</a></li>
+          </ul>
+        </div>
+      </div>
     </div>
 
     <div class="row">
-      <div class="col-sm-offset-2 col-sm-4">
+      <div class="col-sm-offset-4 col-sm-4 formTheme">
         <h4>Ajout d'un nouveau thème</h4>
         <div class="well">
           {{ form_start(formTheme, {'attr': {'class': 'form-horizontal'}}) }}
@@ -63,7 +74,7 @@
         </div>
       </div>
 
-      <div class="col-sm-4">
+      <div class="col-sm-offset-4 col-sm-4 formTopic">
         <h4>Ajout d'une nouvelle sous-matière</h4>        
         <div class="well">
           {{ form_start(formTopic, {'attr': {'class': 'form-horizontal'}}) }}
@@ -84,4 +95,37 @@
       </div>
     </div>
   </div>
+
+
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+  <script type="text/javascript">
+
+  $(function () {
+    $('.add ul li a:eq(0)').on('click', function(e) {
+      $('.formTheme').show();
+      $('.formTopic').hide();      
+      e.preventDefault();
+    })
+
+    $('.add ul li a:eq(1)').on('click', function(e) {
+      $('.formTopic').show();
+      $('.formTheme').hide();      
+      e.preventDefault();
+    })
+
+    $('.delete ul li a:eq(0)').on('click', function(e) {
+      $('.formTopic').hide();      
+      $('.formTheme').hide();      
+      e.preventDefault();
+    })
+
+    $('.delete ul li a:eq(1)').on('click', function(e) {
+      $('.formTopic').hide();      
+      $('.formTheme').hide();      
+      e.preventDefault();
+    })
+  });
+  
+  </script>
+
 {% endblock %}

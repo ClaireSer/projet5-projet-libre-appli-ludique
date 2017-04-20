@@ -7,7 +7,7 @@
 {% block body %}
 
     {% for message in app.session.flashbag.get('notice') %}
-      <p>Message flash : {{ message }}</p>
+      <p>{{ message }}</p>
     {% endfor %}
  
     <h2>{{ title }}</h2>

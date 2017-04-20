@@ -1,0 +1,27 @@
+{# src/GameBundle/Resources/views/Default/select_gamer.html.twig #}
+
+{% extends "GameBundle::layout.html.twig" %}
+
+{% block title %}{{ parent() }} - Index{% endblock %}
+
+{% block body %}
+    {% for message in app.session.flashbag.get('notice') %}
+      <div class="alert alert-danger">
+        <p>{{ message }}</p>
+      </div>
+    {% endfor %}
+
+    {% for message in app.session.flashbag.get('success') %}
+      <div class="alert alert-success">
+        <p>{{ message }}</p>
+      </div>
+    {% endfor %}
+
+    <h3>Gestion des joueurs</h3>
+
+    <p><a href=" {{ path('add_gamer') }} ">Ajouter un joueur</a></p>
+    <p><a href="">Modifier un joueur</a></p>
+    <p><a href="">Consulter le profil d'un joueur</a></p>
+
+
+{% endblock %}

@@ -35,8 +35,7 @@ class QuestionType extends AbstractType
             'label'         => 'Niveau',
             'placeholder'   => '-- Choisissez le niveau --',
             'query_builder' => function (EntityRepository $er) {
-                return $er->createQueryBuilder('s')
-                    ->orderBy('s.id', 'ASC');
+                return $er->orderBy();
             }
         ))
         ->add('difficulty',   ChoiceType::class, array(

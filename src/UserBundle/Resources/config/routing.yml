@@ -18,7 +18,7 @@ check_scores:
 
 admin_gamers:
    path:    /gamers
-   defaults: { _controller: GameBundle:HomeFamily:manageGamers }
+   defaults: { _controller: UserBundle:Gamer:manager }
 
 admin_users:
    path:    /administration
@@ -35,3 +35,13 @@ user_delete:
     defaults: { _controller: UserBundle:Default:deleteUser }
     requirements:
         id: \d+
+
+settings_user:
+    path:   /settings/{id}
+    defaults: { _controller: UserBundle:Session:settings }
+    requirements:
+        id: \d+
+
+add_gamer:
+    path:   /add
+    defaults: { _controller: UserBundle:Gamer:add }

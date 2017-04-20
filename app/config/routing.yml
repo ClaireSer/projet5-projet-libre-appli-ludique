@@ -2,10 +2,6 @@ question:
     resource: "@GameBundle/Resources/config/routing.yml"
     prefix:   /question    
 
-# game:
-#     resource: "@GameBundle/Resources/config/routing.yml"
-#     prefix:   /game
-
 home:
     resource: "@UserBundle/Resources/config/routing.yml"
     prefix:   /

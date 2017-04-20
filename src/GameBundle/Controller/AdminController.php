@@ -134,7 +134,7 @@ class AdminController extends Controller
         $formThemeRequest = $formTheme->handleRequest($request);
         $formTopicRequest = $formTopic->handleRequest($request);
 
-        if ($formThemeRequest->isSubmitted() AND $formThemeRequest->isValid()) {
+        if ($formThemeRequest->isSubmitted() && $formThemeRequest->isValid()) {
             $subject = $topic->getSubject();
             $subject->addTopic($topic);
 
@@ -142,10 +142,10 @@ class AdminController extends Controller
             $em->persist($topic);
             $em->flush();
             $request->getSession()->getFlashBag()->add('success', 'Le nouveau thème a bien été enregistré.');
-            return $this->redirectToRoute('homepage');
+            return $this->redirectToRoute('options_question');
         }
 
-        if ($formTopicRequest->isSubmitted() AND $formTopicRequest->isValid()) {
+        if ($formTopicRequest->isSubmitted() && $formTopicRequest->isValid()) {
             $subject = $topic->getSubject();
             $subject->addTopic($topic);
 
@@ -153,7 +153,7 @@ class AdminController extends Controller
             $em->persist($topic);
             $em->flush();
             $request->getSession()->getFlashBag()->add('success', 'La nouvelle catégorie a bien été enregistrée.');
-            return $this->redirectToRoute('homepage');
+            return $this->redirectToRoute('options_question');
         }
 
         $subjects = $em->getRepository('GameBundle:Subject')->findBy(array(), array('id' => 'ASC'));

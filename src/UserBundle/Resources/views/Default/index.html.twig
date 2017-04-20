@@ -26,6 +26,7 @@
       <p><a href=" {{ path('check_scores') }} ">CONSULTER LES SCORES</a></p>
       <p><a href=" {{ path('admin_gamers') }} ">GÉRER LES JOUEURS</a></p>
       <p><a href=" {{ path('suggest_question') }} ">PROPOSER DES QUESTIONS</a></p>
+      <p><a href=" {{ path('settings_user', { 'id': app.user.id }) }} ">PARAMÈTRES DU COMPTE</a></p>
     
     {% elseif app.user and is_granted('ROLE_TEACHER') %}
         <p>Bienvenue {{ app.user.username }} ! </p>
