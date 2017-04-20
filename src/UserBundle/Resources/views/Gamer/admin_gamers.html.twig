@@ -5,6 +5,7 @@
 {% block title %}{{ parent() }} - Index{% endblock %}
 
 {% block body %}
+  <div class="container-fluid">
     {% for message in app.session.flashbag.get('notice') %}
       <div class="alert alert-danger">
         <p>{{ message }}</p>
@@ -19,9 +20,73 @@
 
     <h3>Gestion des joueurs</h3>
 
-    <p><a href=" {{ path('add_gamer') }} ">Ajouter un joueur</a></p>
-    <p><a href="">Modifier un joueur</a></p>
-    <p><a href="">Consulter le profil d'un joueur</a></p>
+    {% if gamers %}
+      <div class="tab-content">
+        <div class="row tab-pane fade in active" id="#">
+          <table class="table table-striped">
+            <thead>
+              <tr>
+                <th>Pseudo</th>
+                <th>Prénom</th>
+                <th>Rôle</th>
+                <th>Classe</th>
+                <th>Meilleur score</th>
+                <th>Nombre de parties gagnées</th>
+                <th>Nombre de bonnes réponses</th>
+                <th>Niveau</th>
+                <th>Modifier</th>
+                <th>Supprimer</th>
+              </tr>
+            </thead>            
+            <tbody>
+              {% for gamer in gamers %}
+                <tr>
+                  <td>{{ gamer.username }}</td>
+                  <td>{{ gamer.firstname }}</td>
+                  <td>{{ gamer.role }}</td>
+                  <td>{{ gamer.schoolClass.schoolClass }}</th>
+                  <td>{{ gamer.bestScore }}</td>
+                  <td>{{ gamer.gameWonNb }}</td>
+                  <td>{{ gamer.rightAnswerNb }}</td>
+                  <td>{{ gamer.level }}</td>
+                  <td><a href="{{ path('edit_gamer', { 'id': gamer.id }) }}"><span class="glyphicon glyphicon-wrench"></span></a></td>
+                  <td><a data-toggle="modal" data-target="#modalDeleteGamer{{ gamer.id }}"><span class="glyphicon glyphicon-trash"></span></a></td>
 
+                  <!-- Modal -->
+                    <div class="modal fade" id="modalDeleteGamer{{ gamer.id }}" tabindex="-1" role="dialog" aria-labelledby="modalDeleteGamerLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                    <h4 class="modal-title" id="modalDeleteGamerLabel">Confirmation requise</h4>
+                                </div>
+                                <div class="modal-body">
+                                    Etes-vous sûr de vouloir supprimer le joueur {{ gamer.username }} ?
+                                </div>
+                                <div class="modal-footer">
+                                    <a href="{{ path('delete_gamer', { 'id': gamer.id }) }}">
+                                        {% if app.user.username == "Visiteur" and is_granted('ROLE_ADMIN') %}
+                                            <button class="btn btn-danger btn-lg disabled">Supprimer</button>
+                                        {% else %}
+                                            <button class="btn btn-danger btn-lg">Supprimer</button>
+                                        {% endif %}
+                                    </a>
+                                </div>
+                            </div><!-- /.modal-content -->
+                        </div><!-- /.modal-dialog -->
+                    </div><!-- /.modal -->
+                  </tr>
+                {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    <a href=" {{ path('add_gamer') }} "><button class="btn btn-primary" type="button">Ajoutez un joueur</button></a>
 
+    {% else %}
+      <p>Il n'y a pas encore de joueurs.</p>
+      <a href=" {{ path('add_gamer') }} "><button class="btn btn-primary" type="button">Ajoutez en un !</button></a>
+      
+    {% endif %}
+  </div>
 {% endblock %}

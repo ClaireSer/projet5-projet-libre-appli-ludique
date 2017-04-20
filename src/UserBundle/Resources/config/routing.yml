@@ -16,16 +16,12 @@ check_scores:
    path:    /scores
    defaults: { _controller: GameBundle:HomeFamily:checkScores }
 
-admin_gamers:
-   path:    /gamers
-   defaults: { _controller: UserBundle:Gamer:manager }
-
 admin_users:
    path:    /administration
    defaults: { _controller: UserBundle:Default:manageUsers }
 
 user_edit:
-    path:   /edit/{id}
+    path:   user/edit/{id}
     defaults: { _controller: UserBundle:Default:editUser }
     requirements:
         id: \d+
@@ -42,6 +38,22 @@ settings_user:
     requirements:
         id: \d+
 
+admin_gamers:
+   path:    /gamers
+   defaults: { _controller: UserBundle:Gamer:manager }
+
 add_gamer:
     path:   /add
     defaults: { _controller: UserBundle:Gamer:add }
+
+edit_gamer:
+    path:   gamer/edit/{id}
+    defaults: { _controller: UserBundle:Gamer:edit }
+    requirements:
+        id: \d+
+
+delete_gamer:
+    path:   gamer/delete/{id}
+    defaults: { _controller: UserBundle:Gamer:delete }
+    requirements:
+        id: \d+

@@ -10,6 +10,14 @@ namespace UserBundle\Repository;
  */
 class GamerRepository extends \Doctrine\ORM\EntityRepository
 {
-
+    public function getGamersByUserCount($userCount) {
+        return $this->createQueryBuilder('g')
+            ->leftJoin('g.schoolClass', 's')
+            ->addSelect('s')
+            ->where('g.userCount = :userCount')
+            ->setParameter('userCount', $userCount)
+            ->getQuery()
+            ->getResult()
+		;
+    }
 }
-

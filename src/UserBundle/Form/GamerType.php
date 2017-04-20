@@ -11,7 +11,6 @@ use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use GameBundle\Repository\SchoolClassRepository;
 
-
 class GamerType extends AbstractType
 {
     /**

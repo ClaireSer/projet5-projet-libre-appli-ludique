@@ -8,12 +8,16 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
-
 class GamerController extends Controller
 {
     public function managerAction(Request $request) 
     {
-        return $this->render('UserBundle:Gamer:admin_gamers.html.twig');
+        $em = $this->getDoctrine()->getManager();
+        $userCount = $this->getUser();
+        $gamers = $em->getRepository('UserBundle:Gamer')->getGamersByUserCount($userCount);
+        return $this->render('UserBundle:Gamer:admin_gamers.html.twig', array(
+            'gamers'    => $gamers
+        ));
     }
 
     public function addAction(Request $request)
@@ -27,11 +31,53 @@ class GamerController extends Controller
             $gamer->setRightAnswerNb(0);
             $gamer->setLevel(0);
             $gamer->setUserCount($this->getUser());
+            $schoolClass = $gamer->getSchoolClass();
+            $schoolClass->addGamer($gamer);
 
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($gamer);
+            $em->flush();
+            $request->getSession()->getFlashBag()->add('success', 'Le joueur a bien été créé.');
+            return $this->redirectToRoute('homepage');
         }
 
         return $this->render('UserBundle:Gamer:form_gamer.html.twig', array(
-            'form'  => $form->createView()
+            'form'  => $form->createView(),
+            'title' => 'Ajouter un joueur'
         ));
+    }
+
+    public function editAction(Request $request, $id)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $gamer = $em->getRepository('UserBundle:Gamer')->find($id);
+        $form = $this->createForm(GamerType::class, $gamer);
+        $formRequest = $form->handleRequest($request);
+        if ($formRequest->isSubmitted() && $formRequest->isValid()) {
+            
+            $schoolClass = $gamer->getSchoolClass();
+            $schoolClass->addGamer($gamer);
+
+            $em->persist($gamer);
+            $em->flush();
+            $request->getSession()->getFlashBag()->add('success', 'Les informations du joueur ont bien été modifiées.');
+            return $this->redirectToRoute('homepage');
+        }
+
+        return $this->render('UserBundle:Gamer:form_gamer.html.twig', array(
+            'form'  => $form->createView(),
+            'title' => 'Editer un joueur'
+        ));
+    }
+
+    public function deleteAction(Request $request, $id)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $gamer = $em->getRepository('UserBundle:Gamer')->find($id);
+
+        $em->remove($gamer);
+        $em->flush();
+        $request->getSession()->getFlashBag()->add('success', 'Le joueur a bien été supprimée.');
+        return $this->redirectToRoute('homepage');
     }
 }

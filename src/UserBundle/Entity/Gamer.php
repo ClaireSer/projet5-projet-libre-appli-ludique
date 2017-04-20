@@ -3,6 +3,7 @@
 namespace UserBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use GameBundle\Entity\SchoolClass;
 
 /**
  * Gamer
@@ -105,6 +106,20 @@ class Gamer
     public function getUserCount()
     {
         return $this->userCount;
+    }
+
+    /**
+     * Set id
+     *
+     * @param int $id
+     *
+     * @return Gamer
+     */
+    public function setId($id)
+    {
+        $this->id = $id;
+
+        return $this;
     }
 
     /**
