@@ -23,7 +23,7 @@
       <p>Bienvenue famille {{ app.user.username }} ! </p>
       <p>Faites votre choix :</p>
       <p><a href=" {{ path('select_gamers') }} ">JOUER</a></p>
-      <p><a href=" {{ path('check_scores') }} ">CONSULTER LES SCORES</a></p>
+      <p><a href=" {{ path('list_scores') }} ">CONSULTER LES SCORES</a></p>
       <p><a href=" {{ path('admin_gamers') }} ">GÉRER LES JOUEURS</a></p>
       <p><a href=" {{ path('suggest_question') }} ">PROPOSER DES QUESTIONS</a></p>
       <p><a href=" {{ path('settings_user', { 'id': app.user.id }) }} ">PARAMÈTRES DU COMPTE</a></p>
@@ -35,7 +35,7 @@
         <p><a href=" {{ path('add_question') }} ">AJOUTER DES QUESTIONS</a></p>
         <p><a href=" {{ path('moderate_question') }} ">MODÉRER LES QUESTIONS</a></p>
         <p><a href=" {{ path('options_question') }} ">OPTIONS DES QUESTIONS</a></p>
-        <p><a href=" {{ path('check_scores') }} ">CONSULTER LES SCORES</a></p>
+        <p><a href=" {{ path('list_scores') }} ">CONSULTER LES SCORES</a></p>
     
     {% else %}
       <p><a href=" {{ path('login') }} ">CONNEXION</a></p>

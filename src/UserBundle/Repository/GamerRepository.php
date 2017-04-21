@@ -20,4 +20,39 @@ class GamerRepository extends \Doctrine\ORM\EntityRepository
             ->getResult()
 		;
     }
+
+    public function getGamers() {
+        return $this->createQueryBuilder('g')
+            ->leftJoin('g.userCount', 'u')
+            ->addSelect('u')
+            ->getQuery()
+            ->getResult()
+		;
+    }
+
+    public function getGamersBySchoolClass($schoolClass) {
+        return $this->createQueryBuilder('g')
+            ->leftJoin('g.userCount', 'u')
+            ->leftJoin('g.schoolClass', 's')
+            ->addSelect('u')
+            ->addSelect('s')
+            ->where('s.schoolClass = :schoolClass')
+            ->andWhere('g.role = :role')
+            ->setParameter('schoolClass', $schoolClass)
+            ->setParameter('role', 'Élève')
+            ->getQuery()
+            ->getResult()
+		;
+    }
+
+    public function getOtherGamers() {
+        return $this->createQueryBuilder('g')
+            ->leftJoin('g.userCount', 'u')
+            ->addSelect('u')
+            ->where('g.role != :role')
+            ->setParameter('role', 'Élève')
+            ->getQuery()
+            ->getResult()
+		;
+    }
 }

@@ -14,11 +14,6 @@ class HomeFamilyController extends Controller
     {
         return $this->render('GameBundle:Default:select_gamer.html.twig');
     }
-    
-    public function checkScoresAction(Request $request)
-    {
-        return $this->render('GameBundle:Default:check_scores.html.twig');        
-    }
 
     public function suggestQuestionAction(Request $request)
     {

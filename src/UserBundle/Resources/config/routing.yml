@@ -12,10 +12,6 @@ select_gamers:
     path:   /select
     defaults: { _controller: GameBundle:HomeFamily:select }    
 
-check_scores:
-   path:    /scores
-   defaults: { _controller: GameBundle:HomeFamily:checkScores }
-
 admin_users:
    path:    /administration
    defaults: { _controller: UserBundle:Default:manageUsers }
@@ -57,3 +53,7 @@ delete_gamer:
     defaults: { _controller: UserBundle:Gamer:delete }
     requirements:
         id: \d+
+
+list_scores:
+   path:    /scores
+   defaults: { _controller: UserBundle:Gamer:listScores }

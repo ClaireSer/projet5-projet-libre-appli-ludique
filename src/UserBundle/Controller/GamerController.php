@@ -80,4 +80,28 @@ class GamerController extends Controller
         $request->getSession()->getFlashBag()->add('success', 'Le joueur a bien été supprimée.');
         return $this->redirectToRoute('homepage');
     }
+
+    public function listScoresAction(Request $request)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $gamers = $em->getRepository('UserBundle:Gamer')->getGamers();
+        $cpGamers = $em->getRepository('UserBundle:Gamer')->getGamersBySchoolClass('CP');
+        $ce1Gamers = $em->getRepository('UserBundle:Gamer')->getGamersBySchoolClass('CE1');
+        $ce2Gamers = $em->getRepository('UserBundle:Gamer')->getGamersBySchoolClass('CE2');
+        $cm1Gamers = $em->getRepository('UserBundle:Gamer')->getGamersBySchoolClass('CM1');
+        $cm2Gamers = $em->getRepository('UserBundle:Gamer')->getGamersBySchoolClass('CM2');
+        $otherGamers = $em->getRepository('UserBundle:Gamer')->getOtherGamers();
+        
+        return $this->render('UserBundle:Gamer:list_scores.html.twig', array(
+            'title'         => 'Scores des joueurs selon les niveaux',
+            'titleTab'      => 'Scores',
+            'gamers'        => $gamers,
+            'cpGamers'      => $cpGamers,
+            'ce1Gamers'     => $ce1Gamers,
+            'ce2Gamers'     => $ce2Gamers,
+            'cm1Gamers'     => $cm1Gamers,
+            'cm2Gamers'     => $cm2Gamers,
+            'otherGamers'   => $otherGamers
+        ));
+    }
 }
