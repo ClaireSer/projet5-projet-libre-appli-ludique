@@ -17,31 +17,39 @@
       </div>
     {% endfor %}
  
-    <h2>Page d'accueil</h2>
+    <h1>Bienvenue sur la plateforme du </br>jeu de l'oie... érudit</h1>
 
     {% if app.user and is_granted('ROLE_USER') %}
-      <p>Bienvenue famille {{ app.user.username }} ! </p>
-      <p>Faites votre choix :</p>
       <p><a href=" {{ path('select_gamers') }} ">JOUER</a></p>
-      <p><a href=" {{ path('list_scores') }} ">CONSULTER LES SCORES</a></p>
-      <p><a href=" {{ path('admin_gamers') }} ">GÉRER LES JOUEURS</a></p>
+      <p><a href=" {{ path('admin_gamers') }} ">VOS JOUEURS</a></p>
+      <p><a href=" {{ path('list_scores') }} ">SCORES ET CLASSEMENTS</a></p>
       <p><a href=" {{ path('suggest_question') }} ">PROPOSER DES QUESTIONS</a></p>
       <p><a href=" {{ path('settings_user', { 'id': app.user.id }) }} ">PARAMÈTRES DU COMPTE</a></p>
     
     {% elseif app.user and is_granted('ROLE_TEACHER') %}
-        <p>Bienvenue {{ app.user.username }} ! </p>
-        <p>Faites votre choix :</p>        
-        <p><a href=" {{ path('admin_users') }} ">GÉRER LES COMPTES UTILISATEURS</a></p>
+        {% if is_granted('ROLE_ADMIN') %}
+          <p><a href=" {{ path('admin_users') }} ">GÉRER LES COMPTES UTILISATEURS</a></p>
+        {% endif %}
         <p><a href=" {{ path('add_question') }} ">AJOUTER DES QUESTIONS</a></p>
         <p><a href=" {{ path('moderate_question') }} ">MODÉRER LES QUESTIONS</a></p>
         <p><a href=" {{ path('options_question') }} ">OPTIONS DES QUESTIONS</a></p>
         <p><a href=" {{ path('list_scores') }} ">CONSULTER LES SCORES</a></p>
     
     {% else %}
-      <p><a href=" {{ path('login') }} ">CONNEXION</a></p>
-      <p><a href=" {{ path('signup') }} ">INSCRIPTION</a></p>
+      <div class="row accueil">
+        <div class="col-sm-offset-2 col-sm-2 para">
+          <h4>Vous êtes élève ?</h4>
+          <p>Et eodem impetu Domitianum praecipitem per scalas itidem funibus constrinxerunt, eosque coniunctos per ampla spatia civitatis acri raptavere discursu. iamque artuum et membrorum divulsa conpage superscandentes corpora mortuorum ad ultimam truncata deformitatem velut exsaturati mox abiecerunt in flumen.</p>
+        </div>
+        <div class="col-sm-offset-1 col-sm-2 para">
+          <h4>Vous êtes parent ?</h4>
+          <p>Et eodem impetu Domitianum praecipitem per scalas itidem funibus constrinxerunt, eosque coniunctos per ampla spatia civitatis acri raptavere discursu. iamque artuum et membrorum divulsa conpage superscandentes corpora mortuorum ad ultimam truncata deformitatem velut exsaturati mox abiecerunt in flumen.</p>
+        </div>
+        <div class="col-sm-offset-1 col-sm-2 para">
+          <h4>Vous êtes enseignant ?</h4>
+          <p>Et eodem impetu Domitianum praecipitem per scalas itidem funibus constrinxerunt, eosque coniunctos per ampla spatia civitatis acri raptavere discursu. iamque artuum et membrorum divulsa conpage superscandentes corpora mortuorum ad ultimam truncata deformitatem velut exsaturati mox abiecerunt in flumen.</p>
+        </div>
+      </div>
     {% endif %}
-
-
 
 {% endblock %}

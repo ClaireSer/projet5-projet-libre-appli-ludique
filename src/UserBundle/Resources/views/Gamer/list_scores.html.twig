@@ -21,9 +21,15 @@
     <h3> {{ title }} </h3>
 
     <div class="row">
-      <div class="col-sm-offset-4 col-sm-4" >
+      <div class="col-sm-offset-2 col-sm-8" >
         <ul class="nav nav-pills nav-justified">
-          <li role="presentation" class="active"><a href="#tous" data-toggle="pill">Tous</a></li>
+          {% if app.user and is_granted('ROLE_USER') %}
+            <li role="presentation" class="active"><a href="#myGamers" data-toggle="pill">Mes joueurs</a></li>
+            <li role="presentation"><a href="#tous" data-toggle="pill">Tous</a></li>
+          {% endif %}
+          {% if app.user and is_granted('ROLE_TEACHER') %}
+            <li role="presentation" class="active"><a href="#tous" data-toggle="pill">Tous</a></li>
+          {% endif %}
           <li role="presentation"><a href="#cp" data-toggle="pill">CP</a></li>
           <li role="presentation"><a href="#ce1" data-toggle="pill">CE1</a></li>
           <li role="presentation"><a href="#ce2" data-toggle="pill">CE2</a></li>
@@ -33,9 +39,49 @@
         </ul>
       </div>
     </div>
-
+  
     <div class="tab-content">
-      <div class="row tab-pane fade in active" id="tous">
+
+    {% if app.user and is_granted('ROLE_USER') %}
+      <div class="row tab-pane fade in active" id="myGamers">
+        <table class="table table-striped">
+          {% if myGamers %}
+            <thead>
+              <tr>
+                <th>Pseudo</th>
+                <th>Prénom</th>
+                <th>Nom de famille</th>
+                <th>Meilleur score</th>
+                <th>Nombre de parties gagnées</th>
+                <th>Nombre de bonnes réponses</th>
+                <th>Niveau</th>
+              </tr>
+            </thead>            
+            <tbody>
+              {% for myGamer in myGamers %}
+                <tr>
+                  <td>{{ myGamer.username }}</td>
+                  <td>{{ myGamer.firstname }}</td>
+                  <td>{{ myGamer.usercount.username }}</td>
+                  <td>{{ myGamer.bestScore }}</td>
+                  <td>{{ myGamer.gameWonNb }}</td>
+                  <td>{{ myGamer.rightAnswerNb }}</td>
+                  <td>{{ myGamer.level }}</td>
+                </tr>
+              {% endfor %}
+            </tbody>
+          {% else %}
+            <p>Il n'y a pas encore de joueurs.</p>      
+          {% endif %}
+        </table>
+      </div>
+      {% endif %}
+
+      {% if app.user and is_granted('ROLE_TEACHER') %}      
+        <div class="row tab-pane fade in active" id="tous">
+      {% else %}
+        <div class="row tab-pane fade" id="tous">
+      {% endif %}
         <table class="table table-striped">
           {% if gamers %}
             <thead>

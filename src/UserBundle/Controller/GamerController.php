@@ -84,6 +84,7 @@ class GamerController extends Controller
     public function listScoresAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
+        $myGamers = $em->getRepository('UserBundle:Gamer')->getGamersByUserCount($this->getUser());
         $gamers = $em->getRepository('UserBundle:Gamer')->getGamers();
         $cpGamers = $em->getRepository('UserBundle:Gamer')->getGamersBySchoolClass('CP');
         $ce1Gamers = $em->getRepository('UserBundle:Gamer')->getGamersBySchoolClass('CE1');
@@ -95,6 +96,7 @@ class GamerController extends Controller
         return $this->render('UserBundle:Gamer:list_scores.html.twig', array(
             'title'         => 'Scores des joueurs selon les niveaux',
             'titleTab'      => 'Scores',
+            'myGamers'        => $myGamers,
             'gamers'        => $gamers,
             'cpGamers'      => $cpGamers,
             'ce1Gamers'     => $ce1Gamers,
