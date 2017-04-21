@@ -10,11 +10,6 @@ use GameBundle\Entity\Question;
 
 class HomeFamilyController extends Controller
 {
-    public function selectAction(Request $request)
-    {
-        return $this->render('GameBundle:Default:select_gamer.html.twig');
-    }
-
     public function suggestQuestionAction(Request $request)
     {
         $question = new Question();

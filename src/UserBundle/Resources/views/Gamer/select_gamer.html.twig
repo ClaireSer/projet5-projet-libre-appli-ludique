@@ -1,0 +1,41 @@
+{# src/UserBundle/Resources/views/Gamer/select_gamer.html.twig #}
+
+{% extends "GameBundle::layout.html.twig" %}
+
+{% block title %}{{ parent() }} - {{ titleTab }}{% endblock %}
+
+{% block body %}
+    {% for message in app.session.flashbag.get('notice') %}
+      <div class="alert alert-danger">
+        <p>{{ message }}</p>
+      </div>
+    {% endfor %}
+
+    {% for message in app.session.flashbag.get('success') %}
+      <div class="alert alert-success">
+        <p>{{ message }}</p>
+      </div>
+    {% endfor %}
+
+    <h3>{{ title }}</h3>
+    
+    {% if gamers %}
+      {% for gamer in gamers %}
+        <div style="background-color:whitesmoke; display:inline-block; padding:20px; margin:20px;" class="gamer">
+          <h4>{{ gamer.username }}</h4>
+          <p>Meilleur score : {{ gamer.bestScore }}</p>
+          <p>Nombre de parties gagnées : {{ gamer.gameWonNb }}</p>
+          <p>Nombre de bonnes réponses : {{ gamer.rightAnswerNb }}</p>
+          <p>Niveau : {{ gamer.level }}</p>
+        </div>
+      {% endfor %}
+      <div>
+        <a href=" {{ path('play') }} "><button class="btn btn-primary" type="button">JOUER !</button></a>      
+      </div>
+    {% else %}
+      <p>Il n'y a encore aucun joueur.</p>
+      <a href=" {{ path('add_gamer') }} "><button class="btn btn-primary" type="button">Ajoutez en un !</button></a>
+    {% endif %}
+
+{% endblock %}
+ 

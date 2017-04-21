@@ -104,4 +104,14 @@ class GamerController extends Controller
             'otherGamers'   => $otherGamers
         ));
     }
+
+    public function selectAction() {
+        $em = $this->getDoctrine()->getManager();
+        $gamers = $em->getRepository('UserBundle:Gamer')->getGamersByUserCount($this->getUser());
+        return $this->render('UserBundle:Gamer:select_gamer.html.twig', array(
+            'gamers'    => $gamers,
+            'title'     => 'Choisissez vos joueurs',
+            'titleTab'  => 'Le jeu'
+        ));
+    }
 }

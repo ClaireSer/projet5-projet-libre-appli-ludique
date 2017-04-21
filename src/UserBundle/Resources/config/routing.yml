@@ -10,7 +10,7 @@ logout:
 
 select_gamers:
     path:   /select
-    defaults: { _controller: GameBundle:HomeFamily:select }    
+    defaults: { _controller: UserBundle:Gamer:select }    
 
 admin_users:
    path:    /administration

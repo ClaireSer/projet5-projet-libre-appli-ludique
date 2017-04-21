@@ -24,7 +24,7 @@ class GamerType extends AbstractType
         ->add('role',     ChoiceType::class, array(
             'choices'   => array(
                 'Élève'     => 'Élève',
-                'Parent'    => 'Parent',
+                'Parent'    => 'Parent/Tuteur',
                 'Autre'     => 'Autre',
             ),
             'label'     => 'Vous êtes :',

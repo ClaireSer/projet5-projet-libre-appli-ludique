@@ -40,3 +40,7 @@ question_delete:
 options_question:
     path:    /options
     defaults: { _controller: GameBundle:Admin:optionsQuestion }
+
+play:
+    path:    /play
+    defaults: { _controller: GameBundle:Game:play }
