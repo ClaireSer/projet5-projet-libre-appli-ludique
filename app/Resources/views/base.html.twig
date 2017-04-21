@@ -37,6 +37,16 @@
                                 </li>
                             {% endif %}
                             <li><a href=" {{ path('list_scores') }} ">Scores et classements</a></li>
+                        {% else %}
+                            <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">Le jeu<span class="caret"></span></a>
+                                <ul class="dropdown-menu">
+                                    <li><a href=" {{ path('admin_gamers') }} ">Vos joueurs</a></li>
+                                    <li><a href=" {{ path('list_scores') }} ">Scores et classements</a></li>
+                                </ul>
+                            </li>
+                            <li><a href=" {{ path('suggest_question') }} ">Proposez des questions !</a></li>
+                            <li><a href=" {{ path('settings_user', { 'id': app.user.id }) }} ">Paramètres</a></li>
+
                         {% endif %}
                     {% endif %}
                 </ul>
