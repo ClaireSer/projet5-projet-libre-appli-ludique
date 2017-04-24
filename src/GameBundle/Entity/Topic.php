@@ -4,6 +4,7 @@ namespace GameBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
+use GameBundle\Entity\Question;
 
 /**
  * Topic
@@ -14,7 +15,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 class Topic
 {
     /**
-     * @ORM\OneToMany(targetEntity="GameBundle\Entity\Question", mappedBy="topic")
+     * @ORM\OneToMany(targetEntity="GameBundle\Entity\Question", mappedBy="topic", cascade={"remove"})
      */
     private $questions;
 

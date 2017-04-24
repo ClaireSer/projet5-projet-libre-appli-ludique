@@ -1,6 +1,7 @@
 {# src/GameBundle/Resources/views/Admin/options_question.html.twig #}
 
 {% extends "GameBundle::layout.html.twig" %}
+{% set optionsQuestion = true %}
 
 {% block title %}{{ parent() }} - Options{% endblock %}
 
@@ -21,7 +22,110 @@
     <h3>Options des questions</h3>
     <h4>Choisissez les thèmes des questions</h4>
 
-    <div class="row center" id="themesList">
+    <div class="row center theme buttons">
+      <div class="btn-group themes">
+        <button type="button" class="btn btn-default">Voir les thèmes</button>
+      </div>
+      <div class="btn-group add">
+        <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Ajouter <span class="caret"></span>
+        </button>
+        <ul class="dropdown-menu">
+          <li><a href="#">Un thème</a></li>
+          <li><a href="#">Une catégorie</a></li>
+        </ul>
+      </div>
+      <div class="btn-group delete">
+        <button type="button" class="btn btn-danger">Supprimer des éléments</button>
+      </div>
+    </div>
+
+    <div class="tab-content toHide arrayThemes">
+      <div class="row tab-pane fade in active">
+      <div class="col-sm-offset-3 col-sm-6">
+        <table class="table table-bordered">
+          <thead>
+            <tr>
+              <th>Matières</th>
+              <th>Suppression</th>
+              <th>Sous-matières</th>
+              <th>Suppression</th>
+            </tr>
+          </thead>
+          <tbody>
+          {% for subject in subjects %}
+              <tr>
+                <td rowspan="{{ subject.topics|length }}">
+                  {{ subject.nameSubject }} 
+                </td>
+                <td rowspan="{{ subject.topics|length }}">
+                  <a data-toggle="modal" data-target="#modalDeleteSubject{{ subject.id }}"><button class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-remove"></button></a>
+                  
+                  <!-- Modal -->
+                  <div class="modal fade" id="modalDeleteSubject{{ subject.id }}" tabindex="-1" role="dialog" aria-labelledby="modalDeleteSubjectLabel" aria-hidden="true">
+                      <div class="modal-dialog">
+                          <div class="modal-content">
+                              <div class="modal-header">
+                                  <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                  <h4 class="modal-title" id="modalDeleteSubjectLabel">Confirmation requise</h4>
+                              </div>
+                              <div class="modal-body">
+                                  Etes-vous sûr de vouloir supprimer la matière {{ subject.nameSubject }} ?
+                              </div>
+                              <div class="modal-footer">
+                                  <a href="{{ path('subject_delete', { 'id': subject.id }) }}">
+                                      {% if app.user.username == "Visiteur" and is_granted('ROLE_ADMIN') %}
+                                          <button class="btn btn-danger btn-lg disabled">Supprimer</button>
+                                      {% else %}
+                                          <button class="btn btn-danger btn-lg">Supprimer</button>
+                                      {% endif %}
+                                  </a>
+                              </div>
+                          </div><!-- /.modal-content -->
+                      </div><!-- /.modal-dialog -->
+                  </div><!-- /.modal -->
+                </td>
+            {% for topic in subject.topics %}
+                <td>
+                  {{ topic.nameTopic }} 
+                </td>
+                <td>
+                  <a data-toggle="modal" data-target="#modalDeleteTopic{{ topic.id }}"><button class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-remove"></button></a>
+
+                  <!-- Modal -->
+                  <div class="modal fade" id="modalDeleteTopic{{ topic.id }}" tabindex="-1" role="dialog" aria-labelledby="modalDeleteTopicLabel" aria-hidden="true">
+                      <div class="modal-dialog">
+                          <div class="modal-content">
+                              <div class="modal-header">
+                                  <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                  <h4 class="modal-title" id="modalDeleteTopicLabel">Confirmation requise</h4>
+                              </div>
+                              <div class="modal-body">
+                                  Etes-vous sûr de vouloir supprimer la sous-matière {{ topic.nameTopic }} ?
+                              </div>
+                              <div class="modal-footer">
+                                  <a href="{{ path('topic_delete', { 'id': topic.id }) }}">
+                                      {% if app.user.username == "Visiteur" and is_granted('ROLE_ADMIN') %}
+                                          <button class="btn btn-danger btn-lg disabled">Supprimer</button>
+                                      {% else %}
+                                          <button class="btn btn-danger btn-lg">Supprimer</button>
+                                      {% endif %}
+                                  </a>
+                              </div>
+                          </div><!-- /.modal-content -->
+                      </div><!-- /.modal-dialog -->
+                  </div><!-- /.modal -->
+                </td>
+              </tr>
+            {% endfor %}
+          {% endfor %}
+          </tbody>
+        </table>
+      </div>
+      </div>
+    </div>
+
+    <div class="row center toHide listThemes">
       {% for subject in subjects %}
         <div class="theme">
           <h5> {{ subject.nameSubject }} </h5>
@@ -31,26 +135,6 @@
           {% endfor %}
         </div>
       {% endfor %}
-      <div class="theme buttons">
-        <div class="btn-group add">
-          <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            Ajouter <span class="caret"></span>
-          </button>
-          <ul class="dropdown-menu">
-            <li><a href="#">Un thème</a></li>
-            <li><a href="#">Une catégorie</a></li>
-          </ul>
-        </div>
-        <div class="btn-group delete">
-          <button type="button" class="btn btn-danger dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            Supprimer <span class="caret"></span>
-          </button>
-          <ul class="dropdown-menu">
-            <li><a href="#">Un thème</a></li>
-            <li><a href="#">Une catégorie</a></li>
-          </ul>
-        </div>
-      </div>
     </div>
 
     <div class="row">
@@ -104,26 +188,36 @@
     $('.add ul li a:eq(0)').on('click', function(e) {
       $('.formTheme').show();
       $('.formTopic').hide();      
+      $('.arrayThemes').hide();           
+      $('.listThemes').hide();
       e.preventDefault();
     })
 
     $('.add ul li a:eq(1)').on('click', function(e) {
       $('.formTopic').show();
       $('.formTheme').hide();      
+      $('.arrayThemes').hide();           
+      $('.listThemes').hide();
       e.preventDefault();
     })
 
-    $('.delete ul li a:eq(0)').on('click', function(e) {
+    $('.themes button').on('click', function(e) {
+      $('.listThemes').show();
+      $('.formTheme').hide(); 
       $('.formTopic').hide();      
-      $('.formTheme').hide();      
+      $('.arrayThemes').hide();           
       e.preventDefault();
     })
 
-    $('.delete ul li a:eq(1)').on('click', function(e) {
+    $('.delete button').on('click', function(e) {
+      $('.arrayThemes').show();
+      $('.listThemes').hide();
+      $('.formTheme').hide(); 
       $('.formTopic').hide();      
-      $('.formTheme').hide();      
+           
       e.preventDefault();
     })
+
   });
   
   </script>

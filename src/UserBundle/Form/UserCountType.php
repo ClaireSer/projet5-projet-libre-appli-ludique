@@ -41,9 +41,10 @@ class UserCountType extends AbstractType
             'expanded'  => true,
             'label'     => 'Rôle'
         ))
-        // ->addModelTransformer($transformer)
         ->add('save',      SubmitType::class)
         ;
+        // $builder->get('roles')->addModelTransformer($transformer);
+        
     }
     
     /**

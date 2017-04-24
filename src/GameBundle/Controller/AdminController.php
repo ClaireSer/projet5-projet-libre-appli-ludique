@@ -164,4 +164,26 @@ class AdminController extends Controller
             'subjects'      => $subjects
         ));
     }
+
+    public function deleteTopicAction(Request $request, $id)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $topic = $em->getRepository('GameBundle:Topic')->find($id);
+
+        $em->remove($topic);
+        $em->flush();
+        $request->getSession()->getFlashBag()->add('success', 'La sous-matière a bien été supprimée.');
+        return $this->redirectToRoute('options_question');
+    }
+
+        public function deleteSubjectAction(Request $request, $id)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $subject = $em->getRepository('GameBundle:Subject')->find($id);
+
+        $em->remove($subject);
+        $em->flush();
+        $request->getSession()->getFlashBag()->add('success', 'La matière a bien été supprimée.');
+        return $this->redirectToRoute('options_question');
+    }
 }

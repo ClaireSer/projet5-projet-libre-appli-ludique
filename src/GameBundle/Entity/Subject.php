@@ -14,7 +14,7 @@ class Subject
 {
 
     /**
-     * @ORM\OneToMany(targetEntity="GameBundle\Entity\Topic", mappedBy="subject")
+     * @ORM\OneToMany(targetEntity="GameBundle\Entity\Topic", mappedBy="subject", cascade={"remove"})
      */
     private $topics;
 
