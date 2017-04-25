@@ -18,106 +18,116 @@
       </div>
     {% endfor %}
 
-    <h3>{{ title }}</h3>
+    <h2>{{ title }}</h2>
 
-    {% for gamer in gamers %}
-        <p>{{ gamer.username }} a été sélectionné.</p>
-    {% endfor %}
+    <div class="row">
+        <div class="col-lg-3">
+            <h3>Joueurs :</h3>
+            {% for gamer in gamers %}
+                <p>{{ gamer.username }}</p>
+            {% endfor %}
 
-    <div class="dé">
-        <img class="un" src="{{ asset('bundles/GameBundle/images/un.png') }}" alt="numéro un" />
-        <img class="deux" src="{{ asset('bundles/GameBundle/images/deux.png') }}" alt="numéro deux" />
-        <img class="trois" src="{{ asset('bundles/GameBundle/images/trois.png') }}" alt="numéro trois" />
-        <img class="quatre" src="{{ asset('bundles/GameBundle/images/quatre.png') }}" alt="numéro quatre" />
-        <img class="cinq" src="{{ asset('bundles/GameBundle/images/cinq.png') }}" alt="numéro cinq" />
-        <img class="six" src="{{ asset('bundles/GameBundle/images/six.png') }}" alt="numéro six" />
+            <div class="dé">
+                <img class="un" src="{{ asset('bundles/GameBundle/images/un.png') }}" alt="numéro un" />
+                <img class="deux" src="{{ asset('bundles/GameBundle/images/deux.png') }}" alt="numéro deux" />
+                <img class="trois" src="{{ asset('bundles/GameBundle/images/trois.png') }}" alt="numéro trois" />
+                <img class="quatre" src="{{ asset('bundles/GameBundle/images/quatre.png') }}" alt="numéro quatre" />
+                <img class="cinq" src="{{ asset('bundles/GameBundle/images/cinq.png') }}" alt="numéro cinq" />
+                <img class="six" src="{{ asset('bundles/GameBundle/images/six.png') }}" alt="numéro six" />
+            </div>
+            <button>Jetez les dés !</button>
+        </div>
+
+        <div class="col-lg-6">
+            <table class="board">
+                <tr class="borderTop">
+                    <td class="jaune borderLeft">22</td>
+                    <td class="bleu borderBottom">21</td>
+                    <td class="rouge borderBottom">20</td>
+                    <td class="vert borderBottom">19</td>
+                    <td class="jaune borderBottom">18</td>
+                    <td class="bleu borderBottom">17</td>
+                    <td class="rouge borderBottom">16</td>
+                    <td class="vert borderRight">15</td>
+                </tr>
+                <tr>
+                    <td class="vert borderRight borderLeft">23</td>
+                    <td class="rouge">44</td>
+                    <td class="vert borderBottom">43</td>
+                    <td class="jaune borderBottom">42</td>
+                    <td class="bleu borderBottom">41</td>
+                    <td class="rouge borderBottom">40</td>
+                    <td class="vert">39</td>
+                    <td class="jaune borderLeft borderRight">14</td>
+                </tr>
+                <tr>
+                    <td class="rouge borderRight borderLeft">24</td>
+                    <td class="bleu borderRight">45</td>
+                    <td class="jaune">58</td>
+                    <td class="bleu borderBottom">57</td>
+                    <td class="rouge borderBottom">56</td>
+                    <td class="vert">55</td>
+                    <td class="jaune borderLeft">38</td>
+                    <td class="bleu borderLeft borderRight">13</td>
+                </tr>
+                <tr>
+                    <td class="bleu borderRight borderLeft">25</td>
+                    <td class="jaune borderRight">46</td>
+                    <td class="vert borderRight">59</td>
+                    <!-- case win -->
+                    <td class="win"><span class="glyphicon glyphicon-flag"></span></td> 
+                    <!-- case win -->                
+                    <td class="vert">63</td>
+                    <td class="jaune borderLeft">54</td>
+                    <td class="bleu borderLeft">37</td>
+                    <td class="rouge borderLeft borderRight">12</td>
+                </tr>
+                <tr>
+                    <td class="jaune borderRight borderLeft">26</td>
+                    <td class="vert borderRight">47</td>
+                    <td class="rouge">60</td>
+                    <td class="bleu borderTop">61</td>
+                    <td class="jaune">62</td>
+                    <td class="bleu borderLeft">53</td>
+                    <td class="rouge borderLeft">36</td>
+                    <td class="vert borderLeft borderRight">11</td>
+                </tr>
+                <tr>
+                    <td class="vert borderRight borderLeft">27</td>
+                    <td class="rouge">48</td>
+                    <td class="bleu borderTop">49</td>
+                    <td class="jaune borderTop">50</td>
+                    <td class="vert borderTop">51</td>
+                    <td class="rouge">52</td>
+                    <td class="vert borderLeft">35</td>
+                    <td class="jaune borderLeft borderRight">10</td>
+                </tr>
+                <tr>
+                    <td class="rouge borderLeft">28</td>
+                    <td class="bleu borderTop">29</td>
+                    <td class="jaune borderTop">30</td>
+                    <td class="vert borderTop">31</td>
+                    <td class="rouge borderTop">32</td>
+                    <td class="bleu borderTop">33</td>
+                    <td class="jaune">34</td>
+                    <td class="bleu borderLeft borderRight">9</td>
+                </tr>
+                <tr class="borderBottom">
+                    <td class="bleu borderTop">1</td>
+                    <td class="jaune borderTop">2</td>
+                    <td class="vert borderTop">3</td>
+                    <td class="rouge borderTop">4</td>
+                    <td class="bleu borderTop">5</td>
+                    <td class="jaune borderTop">6</td>
+                    <td class="vert borderTop">7</td>
+                    <td class="rouge borderRight">8</td>
+                </tr>
+            </table>
+            <div class="pion"></div>
+
+        </div>
+
     </div>
-    <button>Jetez les dés !</button>
-
-        <table class="board">
-            <tr class="borderTop">
-                <td class="jaune borderLeft">22</td>
-                <td class="bleu borderBottom">21</td>
-                <td class="rouge borderBottom">20</td>
-                <td class="vert borderBottom">19</td>
-                <td class="jaune borderBottom">18</td>
-                <td class="bleu borderBottom">17</td>
-                <td class="rouge borderBottom">16</td>
-                <td class="vert borderRight">15</td>
-            </tr>
-            <tr>
-                <td class="vert borderRight borderLeft">23</td>
-                <td class="rouge">44</td>
-                <td class="vert borderBottom">43</td>
-                <td class="jaune borderBottom">42</td>
-                <td class="bleu borderBottom">41</td>
-                <td class="rouge borderBottom">40</td>
-                <td class="vert">39</td>
-                <td class="jaune borderLeft borderRight">14</td>
-            </tr>
-            <tr>
-                <td class="rouge borderRight borderLeft">24</td>
-                <td class="bleu borderRight">45</td>
-                <td class="jaune">58</td>
-                <td class="bleu borderBottom">57</td>
-                <td class="rouge borderBottom">56</td>
-                <td class="vert">55</td>
-                <td class="jaune borderLeft">38</td>
-                <td class="bleu borderLeft borderRight">13</td>
-            </tr>
-            <tr>
-                <td class="bleu borderRight borderLeft">25</td>
-                <td class="jaune borderRight">46</td>
-                <td class="vert borderRight">59</td>
-                <!-- case win -->
-                <td class="win"><span class="glyphicon glyphicon-flag"></span></td> 
-                <!-- case win -->                
-                <td class="vert">63</td>
-                <td class="jaune borderLeft">54</td>
-                <td class="bleu borderLeft">37</td>
-                <td class="rouge borderLeft borderRight">12</td>
-            </tr>
-            <tr>
-                <td class="jaune borderRight borderLeft">26</td>
-                <td class="vert borderRight">47</td>
-                <td class="rouge">60</td>
-                <td class="bleu borderTop">61</td>
-                <td class="jaune">62</td>
-                <td class="bleu borderLeft">53</td>
-                <td class="rouge borderLeft">36</td>
-                <td class="vert borderLeft borderRight">11</td>
-            </tr>
-            <tr>
-                <td class="vert borderRight borderLeft">27</td>
-                <td class="rouge">48</td>
-                <td class="bleu borderTop">49</td>
-                <td class="jaune borderTop">50</td>
-                <td class="vert borderTop">51</td>
-                <td class="rouge">52</td>
-                <td class="vert borderLeft">35</td>
-                <td class="jaune borderLeft borderRight">10</td>
-            </tr>
-            <tr>
-                <td class="rouge borderLeft">28</td>
-                <td class="bleu borderTop">29</td>
-                <td class="jaune borderTop">30</td>
-                <td class="vert borderTop">31</td>
-                <td class="rouge borderTop">32</td>
-                <td class="bleu borderTop">33</td>
-                <td class="jaune">34</td>
-                <td class="bleu borderLeft borderRight">9</td>
-            </tr>
-            <tr class="borderBottom">
-                <td class="bleu borderTop">1</td>
-                <td class="jaune borderTop">2</td>
-                <td class="vert borderTop">3</td>
-                <td class="rouge borderTop">4</td>
-                <td class="bleu borderTop">5</td>
-                <td class="jaune borderTop">6</td>
-                <td class="vert borderTop">7</td>
-                <td class="rouge borderRight">8</td>
-            </tr>
-        </table>
 
 
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
@@ -127,7 +137,10 @@
         var maxNumber = 6;
         var dés = $('.dé');
 
+        var cumulDiceGamer1 = 0;
+
         dés.children().hide();
+
         $('button').on('click', function(e) {
             e.preventDefault();
             var randomNumber = Math.floor(Math.random() * maxNumber) + minNumber;
@@ -136,23 +149,40 @@
             switch (randomNumber) {
                 case 1:
                     $('.dé .un').show();
+                    cumulDiceGamer1 = cumulDiceGamer1 + 1;
                     break;
                 case 2:
                     $('.dé .deux').show();
+                    cumulDiceGamer1 = cumulDiceGamer1 + 2;                    
                     break;
                 case 3:
                     $('.dé .trois').show();
+                    cumulDiceGamer1 = cumulDiceGamer1 + 3;
                     break;
                 case 4:
                     $('.dé .quatre').show();
+                    cumulDiceGamer1 = cumulDiceGamer1 + 4;
                     break;    
                 case 5:
                     $('.dé .cinq').show();
+                    cumulDiceGamer1 = cumulDiceGamer1 + 5;
                     break;
                 case 6:
                     $('.dé .six').show();
+                    cumulDiceGamer1 = cumulDiceGamer1 + 6;
                     break;
             }
+            
+            var leftValue = parseInt($('.pion').css('left'));
+
+            $('td').each(function() {
+                if ($(this).text() == cumulDiceGamer1) {
+                    var decalage = leftValue + randomNumber * 60;
+                    $('.pion').css('left', decalage + 'px');
+                }
+            })
+            
+            
         })
     });
     </script>
