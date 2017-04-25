@@ -22,16 +22,21 @@
     
     {% if gamers %}
       {% for gamer in gamers %}
-        <div style="background-color:whitesmoke; display:inline-block; padding:20px; margin:20px;" class="gamer">
+        <div class="gamer">
           <h4>{{ gamer.username }}</h4>
           <p>Meilleur score : {{ gamer.bestScore }}</p>
           <p>Nombre de parties gagnées : {{ gamer.gameWonNb }}</p>
           <p>Nombre de bonnes réponses : {{ gamer.rightAnswerNb }}</p>
           <p>Niveau : {{ gamer.level }}</p>
+
+          <form action=" {{ path('play') }} " method="GET">
+          <input type="checkbox" name="gamer" value="{{ gamer.id }}" /> Sélectionner ce joueur
         </div>
       {% endfor %}
       <div>
-        <a href=" {{ path('play') }} "><button class="btn btn-primary" type="button">JOUER !</button></a>      
+        <input type="submit" value="JOUER" />
+        {#<button class="btn btn-primary" type="button"><input type="submit" value="JOUER" /></button>#}
+        </form>        
       </div>
     {% else %}
       <p>Il n'y a encore aucun joueur.</p>

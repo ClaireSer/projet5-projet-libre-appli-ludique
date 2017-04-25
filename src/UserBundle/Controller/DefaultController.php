@@ -23,7 +23,7 @@ class DefaultController extends Controller
         $teachers = $em->getRepository('UserBundle:UserCount')->getUserByRole('ROLE_TEACHER');
         $admins = $em->getRepository('UserBundle:UserCount')->getUserByRole('ROLE_ADMIN');
         
-        return $this->render('GameBundle:Admin:user_manager.html.twig', array(
+        return $this->render('UserBundle:Default:user_manager.html.twig', array(
             'families'      => $families,
             'teachers'      => $teachers,
             'admins'        => $admins

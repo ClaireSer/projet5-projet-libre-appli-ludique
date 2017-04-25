@@ -20,9 +20,7 @@
                 </div>
                 <ul class="nav navbar-nav">
                     {% if app.user and is_granted('IS_AUTHENTICATED_REMEMBERED') %}
-                        {% if is_granted('ROLE_USER') %}
-                            <li class="{% if (select_gamer is defined) or (game is defined) %}active{% endif %}"><a href=" {{ path('select_gamers') }} ">JOUER</a></li>
-                        {% elseif is_granted('ROLE_TEACHER') %}
+                        {% if is_granted('ROLE_TEACHER') %}
                             <li class="dropdown {% if (formElt is defined) or (moderateQuestion is defined) or (optionsQuestion is defined) %}active{% endif %}"><a class="dropdown-toggle" data-toggle="dropdown" href="#">Questions<span class="caret"></span></a>
                                 <ul class="dropdown-menu">
                                     <li><a href=" {{ path('add_question') }} ">Ajout</a></li>
@@ -39,6 +37,7 @@
                             {% endif %}
                             <li class="{% if listScores is defined %}active{% endif %}"><a href=" {{ path('list_scores') }} ">Scores et classements</a></li>
                         {% else %}
+                            <li class="{% if (select_gamer is defined) or (game is defined) %}active{% endif %}"><a href=" {{ path('select_gamers') }} ">JOUER</a></li>
                             <li class="dropdown {% if (adminGamers is defined) or (listScores is defined) %}active{% endif %}"><a class="dropdown-toggle" data-toggle="dropdown" href="#">Le jeu<span class="caret"></span></a>
                                 <ul class="dropdown-menu">
                                     <li><a href=" {{ path('admin_gamers') }} ">Vos joueurs</a></li>

@@ -41,10 +41,6 @@ options_question:
     path:    /options
     defaults: { _controller: GameBundle:Admin:optionsQuestion }
 
-play:
-    path:    /play
-    defaults: { _controller: GameBundle:Game:play }
-
 topic_delete:
     path:   topic/delete/{id}
     defaults: { _controller: GameBundle:Admin:deleteTopic }
@@ -54,5 +50,11 @@ topic_delete:
 subject_delete:
     path:   subject/delete/{id}
     defaults: { _controller: GameBundle:Admin:deleteSubject }
+    requirements:
+        id: \d+
+
+play:
+    path:    /play
+    defaults: { _controller: GameBundle:Game:play }
     requirements:
         id: \d+

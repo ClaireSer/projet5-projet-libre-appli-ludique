@@ -7,6 +7,8 @@ use UserBundle\Form\GamerType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 
 class GamerController extends Controller
 {
@@ -107,13 +109,14 @@ class GamerController extends Controller
         ));
     }
 
-    public function selectAction() {
+    public function selectAction(Request $request) {
         $em = $this->getDoctrine()->getManager();
         $gamers = $em->getRepository('UserBundle:Gamer')->getGamersByUserCount($this->getUser());
+        
         return $this->render('UserBundle:Gamer:select_gamer.html.twig', array(
             'gamers'    => $gamers,
             'title'     => 'Choisissez vos joueurs',
-            'titleTab'  => 'Le jeu'
+            'titleTab'  => 'Le jeu',
         ));
     }
 }
