@@ -20,8 +20,10 @@
 
     <h3>{{ title }}</h3>
 
-    <p>{{ gamer.username }} a été sélectionné.</p>
-    
+    {% for gamer in gamers %}
+        <p>{{ gamer.username }} a été sélectionné.</p>
+    {% endfor %}
+
         <table class="board">
             <tr class="borderTop">
                 <td class="jaune borderLeft">22</td>

@@ -30,7 +30,7 @@
           <p>Niveau : {{ gamer.level }}</p>
 
           <form action=" {{ path('play') }} " method="GET">
-          <input type="checkbox" name="gamer" value="{{ gamer.id }}" /> Sélectionner ce joueur
+          <input type="checkbox" name="gamer[]" value="{{ gamer.id }}" /> Sélectionner ce joueur
         </div>
       {% endfor %}
       <div>
