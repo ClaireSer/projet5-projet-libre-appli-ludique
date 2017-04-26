@@ -27,15 +27,16 @@
                 <p>{{ gamer.username }}</p>
             {% endfor %}
 
-            <div class="dé">
-                <img class="un" src="{{ asset('bundles/GameBundle/images/un.png') }}" alt="numéro un" />
-                <img class="deux" src="{{ asset('bundles/GameBundle/images/deux.png') }}" alt="numéro deux" />
-                <img class="trois" src="{{ asset('bundles/GameBundle/images/trois.png') }}" alt="numéro trois" />
-                <img class="quatre" src="{{ asset('bundles/GameBundle/images/quatre.png') }}" alt="numéro quatre" />
-                <img class="cinq" src="{{ asset('bundles/GameBundle/images/cinq.png') }}" alt="numéro cinq" />
-                <img class="six" src="{{ asset('bundles/GameBundle/images/six.png') }}" alt="numéro six" />
-            </div>
             <button>Jetez les dés !</button>
+
+            <div class="dé">
+                <img class="dé1" src="{{ asset('bundles/GameBundle/images/un.png') }}" alt="numéro un" />
+                <img class="dé2" src="{{ asset('bundles/GameBundle/images/deux.png') }}" alt="numéro deux" />
+                <img class="dé3" src="{{ asset('bundles/GameBundle/images/trois.png') }}" alt="numéro trois" />
+                <img class="dé4" src="{{ asset('bundles/GameBundle/images/quatre.png') }}" alt="numéro quatre" />
+                <img class="dé5" src="{{ asset('bundles/GameBundle/images/cinq.png') }}" alt="numéro cinq" />
+                <img class="dé6" src="{{ asset('bundles/GameBundle/images/six.png') }}" alt="numéro six" />
+            </div>
         </div>
 
         <div class="col-lg-6">
@@ -123,7 +124,6 @@
                     <td class="rouge borderRight">8</td>
                 </tr>
             </table>
-            <div class="pion"></div>
 
         </div>
 
@@ -146,32 +146,11 @@
             var randomNumber = Math.floor(Math.random() * maxNumber) + minNumber;
             dés.children().hide();
 
-            switch (randomNumber) {
-                case 1:
-                    $('.dé .un').show();
-                    cumulDiceGamer1 = cumulDiceGamer1 + 1;
-                    break;
-                case 2:
-                    $('.dé .deux').show();
-                    cumulDiceGamer1 = cumulDiceGamer1 + 2;                    
-                    break;
-                case 3:
-                    $('.dé .trois').show();
-                    cumulDiceGamer1 = cumulDiceGamer1 + 3;
-                    break;
-                case 4:
-                    $('.dé .quatre').show();
-                    cumulDiceGamer1 = cumulDiceGamer1 + 4;
-                    break;    
-                case 5:
-                    $('.dé .cinq').show();
-                    cumulDiceGamer1 = cumulDiceGamer1 + 5;
-                    break;
-                case 6:
-                    $('.dé .six').show();
-                    cumulDiceGamer1 = cumulDiceGamer1 + 6;
-                    break;
-            }
+            $('.dé .dé' + randomNumber).show();
+            cumulDiceGamer1 += randomNumber;
+            if (cumulDiceGamer1 > 64) {
+                cumulDiceGamer1 -= randomNumber;
+            } 
 
             $('.board td').each(function() {
                 $(this).removeClass('activeCase');
@@ -179,6 +158,11 @@
                     $(this).addClass('activeCase');
                 }
             })
+            if (cumulDiceGamer1 == 64) {
+                $('.board .win').addClass('activeCase');
+                alert('gagné !');
+                return false;                    
+            }
             
         })
     });
