@@ -18,10 +18,14 @@ class GameController extends Controller
             $gamers[] = $em->getRepository('UserBundle:Gamer')->find($id);
         }
 
+        $nbQuestions = $em->getRepository('GameBundle:Question')->count();
+        $randomQuestion = $em->getRepository('GameBundle:Question')->getRandomQuestion($nbQuestions);
+
         return $this->render('GameBundle:Game:play.html.twig', array(
             'title'     => 'À vous de jouer !',
             'titleTab'  => 'Let\'s play !',
-            'gamers'      => $gamers
+            'gamers'    => $gamers,
+            'randomQuestion'  => $randomQuestion
         ));
     }
 }

@@ -40,4 +40,27 @@ class QuestionRepository extends \Doctrine\ORM\EntityRepository
 		;
     }
 
+    public function getRandomQuestion($nbQuestions) {
+        $idList = [];
+        for($i = 1; $i <= $nbQuestions; $i++) {
+            $idList[] = rand(28, 31);
+        }
+
+        $qb = $this->createQueryBuilder('q');
+        return $qb
+            ->where($qb->expr()->in('q.id', $idList))
+            ->getQuery()
+            ->getOneOrNullResult()
+        ;
+    }
+
+    public function count() {
+        $qb = $this->createQueryBuilder('q');
+        return (int) $qb
+            ->select($qb->expr()->count('q'))
+            ->getQuery()
+            ->getSingleScalarResult()
+        ;
+    }
+
 }

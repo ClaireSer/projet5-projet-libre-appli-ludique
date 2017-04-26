@@ -22,10 +22,12 @@
 
     <div class="row">
         <div class="col-lg-3">
-            <h3>Joueurs :</h3>
-            {% for gamer in gamers %}
-                <p>{{ gamer.username }}</p>
-            {% endfor %}
+            <div class="gamersList">
+                <h3>Joueurs :</h3>
+                {% for gamer in gamers %}
+                    <p>{{ gamer.username }}</p>
+                {% endfor %}
+            </div>
 
             <button>Jetez les dés !</button>
 
@@ -36,6 +38,10 @@
                 <img class="dé4" src="{{ asset('bundles/GameBundle/images/quatre.png') }}" alt="numéro quatre" />
                 <img class="dé5" src="{{ asset('bundles/GameBundle/images/cinq.png') }}" alt="numéro cinq" />
                 <img class="dé6" src="{{ asset('bundles/GameBundle/images/six.png') }}" alt="numéro six" />
+            </div>
+
+            <div class="messageInfo">
+                <p>C'est au joueur <strong></strong> de commencer.</p>
             </div>
         </div>
 
@@ -124,11 +130,35 @@
                     <td class="rouge borderRight">8</td>
                 </tr>
             </table>
-
         </div>
 
+        <div class="col-lg-3">
+            {% for gamer in gamers %}
+                <div class="stats">
+                    <p><strong>{{ gamer.username }}</strong></p>
+                    <p>Meilleur score : {{ gamer.bestScore }}</p>
+                    <p>Nombre de parties gagnées : {{ gamer.gameWonNb }}</p>
+                    <p>Nombre de bonnes réponses : {{ gamer.rightAnswerNb }}</p>
+                    <p>Niveau : {{ gamer.level }}</p>
+                </div>
+            {% endfor %}
+        </div>
     </div>
 
+    <div class="row">
+        <div class="col-lg-offset-2 col-lg-8">
+            <div class="question">
+                {{ randomQuestion.question }}
+            </div>
+            <div class="answers">
+                {% for randomAnswer in randomQuestion.answers %}
+                    <div class="answer">
+                        {{ randomAnswer.answer }}
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
 
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
     <script type="text/javascript">
@@ -163,8 +193,13 @@
                 alert('gagné !');
                 return false;                    
             }
-            
         })
+        var len = $('.gamersList p').length;
+        var rowGamer = Math.floor( Math.random() * len );
+        var randomGamer = $(".gamersList p").eq(rowGamer).text();
+
+        $('.messageInfo strong').append(randomGamer);
+
     });
     </script>
 
