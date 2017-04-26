@@ -172,16 +172,13 @@
                     cumulDiceGamer1 = cumulDiceGamer1 + 6;
                     break;
             }
-            
-            var leftValue = parseInt($('.pion').css('left'));
 
-            $('td').each(function() {
+            $('.board td').each(function() {
+                $(this).removeClass('activeCase');
                 if ($(this).text() == cumulDiceGamer1) {
-                    var decalage = leftValue + randomNumber * 60;
-                    $('.pion').css('left', decalage + 'px');
+                    $(this).addClass('activeCase');
                 }
             })
-            
             
         })
     });
