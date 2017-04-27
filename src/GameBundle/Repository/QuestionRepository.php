@@ -40,26 +40,34 @@ class QuestionRepository extends \Doctrine\ORM\EntityRepository
 		;
     }
 
-    public function getRandomQuestion($nbQuestions) {
-        $idList = [];
-        for($i = 1; $i <= $nbQuestions; $i++) {
-            $idList[] = rand(28, 31);
-        }
-
-        $qb = $this->createQueryBuilder('q');
-        return $qb
-            ->where($qb->expr()->in('q.id', $idList))
+    public function getQuestionBySubject($subject) {
+        return $this->createQueryBuilder('q')
+            ->leftJoin('q.topic', 't')
+            ->leftJoin('t.subject', 's')
+            ->addSelect('t')
+            ->addSelect('s')
+            ->where('t.subject = :subject')
+            ->setParameter('subject', $subject)
             ->getQuery()
-            ->getOneOrNullResult()
-        ;
+            ->getResult()
+		;
     }
 
-    public function count() {
+    public function getRandomQuestionBySubject($subject, $idQuestionList) {
+        $randomId = array_rand($idQuestionList, 1);
+        
         $qb = $this->createQueryBuilder('q');
-        return (int) $qb
-            ->select($qb->expr()->count('q'))
+        return $qb
+            ->leftJoin('q.topic', 't')
+            ->leftJoin('t.subject', 's')
+            ->addSelect('t')
+            ->addSelect('s')
+            ->where('t.subject = :subject')
+            ->andWhere('q.id = :randomId')
+            ->setParameter('randomId', $idQuestionList[$randomId])
+            ->setParameter('subject', $subject)
             ->getQuery()
-            ->getSingleScalarResult()
+            ->getOneOrNullResult()
         ;
     }
 

@@ -31,13 +31,13 @@
 
             <button>Jetez les dés !</button>
 
-            <div class="dé">
-                <img class="dé1" src="{{ asset('bundles/GameBundle/images/un.png') }}" alt="numéro un" />
-                <img class="dé2" src="{{ asset('bundles/GameBundle/images/deux.png') }}" alt="numéro deux" />
-                <img class="dé3" src="{{ asset('bundles/GameBundle/images/trois.png') }}" alt="numéro trois" />
-                <img class="dé4" src="{{ asset('bundles/GameBundle/images/quatre.png') }}" alt="numéro quatre" />
-                <img class="dé5" src="{{ asset('bundles/GameBundle/images/cinq.png') }}" alt="numéro cinq" />
-                <img class="dé6" src="{{ asset('bundles/GameBundle/images/six.png') }}" alt="numéro six" />
+            <div class="dice">
+                <img class="die1" src="{{ asset('bundles/GameBundle/images/un.png') }}" alt="numéro un" />
+                <img class="die2" src="{{ asset('bundles/GameBundle/images/deux.png') }}" alt="numéro deux" />
+                <img class="die3" src="{{ asset('bundles/GameBundle/images/trois.png') }}" alt="numéro trois" />
+                <img class="die4" src="{{ asset('bundles/GameBundle/images/quatre.png') }}" alt="numéro quatre" />
+                <img class="die5" src="{{ asset('bundles/GameBundle/images/cinq.png') }}" alt="numéro cinq" />
+                <img class="die6" src="{{ asset('bundles/GameBundle/images/six.png') }}" alt="numéro six" />
             </div>
 
             <div class="messageInfo">
@@ -144,11 +144,16 @@
             {% endfor %}
         </div>
     </div>
-
+    {#{% for subject in subjects %}
+        <div> {{ random([subject.id], [subject.nameSubject]) }} </div>
+    {% endfor %}#}
     <div class="row">
         <div class="col-lg-offset-2 col-lg-8">
+        {% for randomQuestion in randomQuestions %}
             <div class="question">
                 {{ randomQuestion.question }}
+                {{ randomQuestion.topic.subject.nameSubject }}
+                {{ randomQuestion.topic.nameTopic }}
             </div>
             <div class="answers">
                 {% for randomAnswer in randomQuestion.answers %}
@@ -157,6 +162,7 @@
                     </div>
                 {% endfor %}
             </div>
+        {% endfor %}
         </div>
     </div>
 
@@ -165,18 +171,18 @@
     $(function () {
         var minNumber = 1;
         var maxNumber = 6;
-        var dés = $('.dé');
+        var dice = $('.dice');
 
         var cumulDiceGamer1 = 0;
 
-        dés.children().hide();
+        dice.children().hide();
 
         $('button').on('click', function(e) {
             e.preventDefault();
             var randomNumber = Math.floor(Math.random() * maxNumber) + minNumber;
-            dés.children().hide();
+            dice.children().hide();
 
-            $('.dé .dé' + randomNumber).show();
+            $('.dice .die' + randomNumber).show();
             cumulDiceGamer1 += randomNumber;
             if (cumulDiceGamer1 > 64) {
                 cumulDiceGamer1 -= randomNumber;
@@ -186,6 +192,10 @@
                 $(this).removeClass('activeCase');
                 if ($(this).text() == cumulDiceGamer1) {
                     $(this).addClass('activeCase');
+
+                    if ($(this).text() % 1 == 0) {
+                        //faire apparaître une question alétoire dont la matière est français par ex.
+                    }
                 }
             })
             if (cumulDiceGamer1 == 64) {

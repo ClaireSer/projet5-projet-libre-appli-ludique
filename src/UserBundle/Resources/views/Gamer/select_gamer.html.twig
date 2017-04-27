@@ -18,7 +18,7 @@
       </div>
     {% endfor %}
 
-    <h3>{{ title }}</h3>
+    <h3>{{ title1 }}</h3>
     
     {% if gamers %}
       {% for gamer in gamers %}
@@ -33,11 +33,24 @@
           <input type="checkbox" name="gamer[]" value="{{ gamer.id }}" /> Sélectionner ce joueur
         </div>
       {% endfor %}
+
+      <h3>{{ title2 }}</h3>
+        {% for subject in subjects %}
+          <div class="subject">
+            {{ subject.nameSubject }}
+            <div>
+              <input type="checkbox" name="subject[]" value="{{ subject.id }}" /> Choisir ce thème
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+
       <div>
         <input type="submit" value="JOUER" />
         {#<button class="btn btn-primary" type="button"><input type="submit" value="JOUER" /></button>#}
         </form>        
       </div>
+
     {% else %}
       <p>Il n'y a encore aucun joueur.</p>
       <a href=" {{ path('add_gamer') }} "><button class="btn btn-primary" type="button">Ajoutez en un !</button></a>

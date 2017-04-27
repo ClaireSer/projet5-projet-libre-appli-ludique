@@ -89,7 +89,7 @@ class AdminController extends Controller
             $em = $this->getDoctrine()->getManager();
             $em->persist($notValidQuestion);
             $em->flush();
-            $request->getSession()->getFlashBag()->add('notice', 'Question bien modifiée.');
+            $request->getSession()->getFlashBag()->add('success', 'Question bien modifiée.');
             return $this->redirectToRoute('homepage');
         }
 
