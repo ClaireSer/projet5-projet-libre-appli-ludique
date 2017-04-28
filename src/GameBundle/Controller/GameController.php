@@ -4,6 +4,7 @@ namespace GameBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\JsonResponse;
 
 
 
@@ -27,8 +28,6 @@ class GameController extends Controller
             $subjects[] = $em->getRepository('GameBundle:Subject')->find($id);
         }
 
-        
-
         // get a random question by subject
         $randomQuestions = [];
         foreach($subjects as $subject) {
@@ -38,7 +37,6 @@ class GameController extends Controller
             foreach($questions as $question) {
                 $idQuestionList[] = $question->getId();
             }
-
             $randomQuestions[] = $em->getRepository('GameBundle:Question')->getRandomQuestionBySubject($subject, $idQuestionList);
         }
 
@@ -49,5 +47,27 @@ class GameController extends Controller
             'subjects'    => $subjects,
             'randomQuestions'  => $randomQuestions
         ));
+    }
+
+    public function getRandomQuestionAction(Request $request)
+    {
+        $em = $this->getDoctrine()->getManager();
+        if($request->isXmlHttpRequest()) {
+            $subjectId = $request->get('id');
+            if ($subjectId != null) {
+                $subject = $em->getRepository('GameBundle:Subject')->find($subjectId);
+                $questions = $em->getRepository('GameBundle:Question')->getQuestionBySubject($subject);
+                $idQuestionList = [];
+                foreach($questions as $question) {
+                    $idQuestionList[] = $question->getId();
+                }
+                $randomQuestion = $em->getRepository('GameBundle:Question')->getRandomQuestionBySubject($subject, $idQuestionList);
+
+                return new JsonResponse(array(
+                    'randomQuestion'  => $randomQuestion                    
+                ));
+            }
+        }
+        return new Response('Erreur');
     }
 }

@@ -144,23 +144,21 @@
             {% endfor %}
         </div>
     </div>
-    {#{% for subject in subjects %}
-        <div> {{ random([subject.id], [subject.nameSubject]) }} </div>
-    {% endfor %}#}
-    <div class="row">
+    
+    <div class="row questions">
         <div class="col-lg-offset-2 col-lg-8">
         {% for randomQuestion in randomQuestions %}
-            <div class="question">
-                {{ randomQuestion.question }}
-                {{ randomQuestion.topic.subject.nameSubject }}
-                {{ randomQuestion.topic.nameTopic }}
-            </div>
-            <div class="answers">
-                {% for randomAnswer in randomQuestion.answers %}
-                    <div class="answer">
-                        {{ randomAnswer.answer }}
-                    </div>
-                {% endfor %}
+            <div class="subject subjectFromId{{ randomQuestion.topic.subject.id }}">
+                <div class="question">
+                    {{ randomQuestion.question }}
+                </div>
+                <div class="answers">
+                    {% for randomAnswer in randomQuestion.answers %}
+                        <div class="answer">
+                            {{ randomAnswer.answer }}
+                        </div>
+                    {% endfor %}
+                </div>
             </div>
         {% endfor %}
         </div>
@@ -172,7 +170,6 @@
         var minNumber = 1;
         var maxNumber = 6;
         var dice = $('.dice');
-
         var cumulDiceGamer1 = 0;
 
         dice.children().hide();
@@ -192,24 +189,57 @@
                 $(this).removeClass('activeCase');
                 if ($(this).text() == cumulDiceGamer1) {
                     $(this).addClass('activeCase');
+                    $('.subject').hide();      
+                    var subjectIdArray = [];
 
-                    if ($(this).text() % 1 == 0) {
-                        //faire apparaître une question alétoire dont la matière est français par ex.
-                    }
+                    $('.subject').each(function() {
+                        var txt = $(this).attr('class');
+                        /([0-9]+)/.exec(txt);
+                        subjectIdArray.push(RegExp.$1);
+                    })
+                    var url = "{{ path('get_random_question', { 'id': 0 }) }}";
+                    url = url.replace('0', subjectIdArray[0]);
+                    $.ajax({
+                        url: url,
+                        type: 'GET',
+                        dataType: 'json',
+                        success: function (response) {
+                            $('.subjectFromId2').show();
+                            alert(response);
+                        },
+                        error: function() {
+                            alert('erreur');
+                        }
+                    });
+
+/*                    if ($(this).text() % 1 == 0) {
+                        
+
+                    } else if ($(this).text() % 2 == 0) {
+                        $('.subjectFromId3').show();                        
+                    } else if ($(this).text() % 3 == 0) {
+                        $('.subjectFromId6').show();                        
+                    } else if ($(this).text() % 4 == 0) {
+                        $('.subjectFromId4').show();                        
+                    }*/
                 }
             })
+        
+            // end of game
             if (cumulDiceGamer1 == 64) {
                 $('.board .win').addClass('activeCase');
                 alert('gagné !');
                 return false;                    
             }
         })
+
+        // get a random gamer
         var len = $('.gamersList p').length;
         var rowGamer = Math.floor( Math.random() * len );
         var randomGamer = $(".gamersList p").eq(rowGamer).text();
 
         $('.messageInfo strong').append(randomGamer);
-
+        
     });
     </script>
 

@@ -58,3 +58,11 @@ play:
     defaults: { _controller: GameBundle:Game:play }
     requirements:
         id: \d+
+
+get_random_question:
+    path: /random/{id}
+    defaults: { _controller: GameBundle:Game:getRandomQuestion }
+    requirements: 
+        _method: GET
+        id: \d+
+        
