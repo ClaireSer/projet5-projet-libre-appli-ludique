@@ -60,14 +60,16 @@ class QuestionRepository extends \Doctrine\ORM\EntityRepository
         return $qb
             ->leftJoin('q.topic', 't')
             ->leftJoin('t.subject', 's')
+            ->leftJoin('q.answers', 'a')
             ->addSelect('t')
             ->addSelect('s')
+            ->addSelect('a')
             ->where('t.subject = :subject')
             ->andWhere('q.id = :randomId')
-            ->setParameter('randomId', $idQuestionList[$randomId])
             ->setParameter('subject', $subject)
+            ->setParameter('randomId', $idQuestionList[$randomId])
             ->getQuery()
-            ->getOneOrNullResult()
+            ->getArrayResult()[0]
         ;
     }
 

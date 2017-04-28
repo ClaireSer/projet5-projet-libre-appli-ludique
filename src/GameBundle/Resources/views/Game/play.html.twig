@@ -147,20 +147,12 @@
     
     <div class="row questions">
         <div class="col-lg-offset-2 col-lg-8">
-        {% for randomQuestion in randomQuestions %}
-            <div class="subject subjectFromId{{ randomQuestion.topic.subject.id }}">
-                <div class="question">
-                    {{ randomQuestion.question }}
+                <div class="subject subjectFromId">
+                    <div class="question">
+                    </div>
+                    <div class="answers">
+                    </div>                
                 </div>
-                <div class="answers">
-                    {% for randomAnswer in randomQuestion.answers %}
-                        <div class="answer">
-                            {{ randomAnswer.answer }}
-                        </div>
-                    {% endfor %}
-                </div>
-            </div>
-        {% endfor %}
         </div>
     </div>
 
@@ -189,39 +181,76 @@
                 $(this).removeClass('activeCase');
                 if ($(this).text() == cumulDiceGamer1) {
                     $(this).addClass('activeCase');
-                    $('.subject').hide();      
                     var subjectIdArray = [];
 
                     $('.subject').each(function() {
-                        var txt = $(this).attr('class');
-                        /([0-9]+)/.exec(txt);
-                        subjectIdArray.push(RegExp.$1);
+                        var nameClass = $(this).attr('class');
+                        /([0-9]+)/.exec(nameClass);
+                        var subjectId = RegExp.$1;
+                        subjectIdArray.push(subjectId);
                     })
                     var url = "{{ path('get_random_question', { 'id': 0 }) }}";
-                    url = url.replace('0', subjectIdArray[0]);
-                    $.ajax({
-                        url: url,
-                        type: 'GET',
-                        dataType: 'json',
-                        success: function (response) {
-                            $('.subjectFromId2').show();
-                            alert(response);
-                        },
-                        error: function() {
-                            alert('erreur');
-                        }
-                    });
 
-/*                    if ($(this).text() % 1 == 0) {
-                        
+                    if ($(this).text() % 1 == 0) {
+                        url = url.replace('0', 1);
+                        $.ajax({
+                            url: url,
+                            type: 'GET',
+                            dataType: 'json',
+                            success: function (response) {
+                                $('.questions .subject .question').html(response.question);
+                                response.answers.forEach(function(data) {
+                                    $('.questions .subject .answers').append(data.answer);
+                                })
+                            },
+                            error: function(response) {
+                                alert('erreur1');
+                            }
+                        });   
 
                     } else if ($(this).text() % 2 == 0) {
-                        $('.subjectFromId3').show();                        
+                        url = url.replace('0', subjectIdArray[1]);
+                        $.ajax({
+                            url: url,
+                            type: 'GET',
+                            dataType: 'json',
+                            success: function (response) {
+                                $('.subjectFromId2').show();
+                            },
+                            error: function(response) {
+                                alert('erreur2');
+                                alert(response);                                
+                            }
+                        });
                     } else if ($(this).text() % 3 == 0) {
-                        $('.subjectFromId6').show();                        
+                        url = url.replace('0', subjectIdArray[2]);
+                        $.ajax({
+                            url: url,
+                            type: 'GET',
+                            dataType: 'json',
+                            success: function (response) {
+                                $('.subjectFromId3').show();
+                            },
+                            error: function(response) {
+                                alert('erreur3');
+                                alert(response);                                
+                            }
+                        });
                     } else if ($(this).text() % 4 == 0) {
-                        $('.subjectFromId4').show();                        
-                    }*/
+                        url = url.replace('0', subjectIdArray[3]);
+                        $.ajax({
+                            url: url,
+                            type: 'GET',
+                            dataType: 'json',
+                            success: function (response) {
+                                $('.subjectFromId4').show();
+                            },
+                            error: function(response) {
+                                alert('erreur4');
+                                alert(response);
+                            }
+                        });
+                    }
                 }
             })
         
