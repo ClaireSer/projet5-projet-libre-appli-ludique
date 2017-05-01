@@ -28,24 +28,11 @@ class GameController extends Controller
             $subjects[] = $em->getRepository('GameBundle:Subject')->find($id);
         }
 
-        // // get a random question by subject
-        // $randomQuestions = [];
-        // foreach($subjects as $subject) {
-        //     // get list of id questions by subject
-        //     $questions = $em->getRepository('GameBundle:Question')->getQuestionBySubject($subject);
-        //     $idQuestionList = [];
-        //     foreach($questions as $question) {
-        //         $idQuestionList[] = $question->getId();
-        //     }
-        //     $randomQuestions[] = $em->getRepository('GameBundle:Question')->getRandomQuestionBySubject($subject, $idQuestionList);
-        // }
-
         return $this->render('GameBundle:Game:play.html.twig', array(
             'title'     => 'À vous de jouer !',
             'titleTab'  => 'Let\'s play !',
             'gamers'    => $gamers,
             'subjects'    => $subjects,
-            // 'randomQuestions'  => $randomQuestions
         ));
     }
 

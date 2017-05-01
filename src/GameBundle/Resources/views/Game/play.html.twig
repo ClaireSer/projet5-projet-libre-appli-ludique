@@ -146,13 +146,11 @@
     </div>
     
     <div class="row questions">
-        <div class="col-lg-offset-2 col-lg-8">
-                <div class="subject subjectFromId">
-                    <div class="question">
-                    </div>
-                    <div class="answers">
-                    </div>                
-                </div>
+        <div class="col-lg-offset-3 col-lg-6 subject">
+            <div class="question">
+            </div>
+            <div class="answers">
+            </div>
         </div>
     </div>
 
@@ -163,6 +161,7 @@
         var maxNumber = 6;
         var dice = $('.dice');
         var cumulDiceGamer1 = 0;
+        
 
         dice.children().hide();
 
@@ -181,26 +180,30 @@
                 $(this).removeClass('activeCase');
                 if ($(this).text() == cumulDiceGamer1) {
                     $(this).addClass('activeCase');
-                    var subjectIdArray = [];
-
-                    $('.subject').each(function() {
-                        var nameClass = $(this).attr('class');
-                        /([0-9]+)/.exec(nameClass);
-                        var subjectId = RegExp.$1;
-                        subjectIdArray.push(subjectId);
-                    })
+                    
                     var url = "{{ path('get_random_question', { 'id': 0 }) }}";
-
-                    if ($(this).text() % 1 == 0) {
-                        url = url.replace('0', 1);
+                    
+                    if ($(this).text() % 4 == 1) {
+                        url = url.replace('0', '{{ subjects[0].id }}');
+                        var firstTime = true;
                         $.ajax({
                             url: url,
                             type: 'GET',
                             dataType: 'json',
                             success: function (response) {
+
+                                if (!firstTime) {
+                                    var classStr = $('.questions .subject').attr('class');
+                                    var lastClass = classStr.substr( classStr.lastIndexOf(' ') + 1);
+                                    $('.questions .subject').removeClass(lastClass);
+                                }
+                                $('.questions .subject').addClass('blue');
                                 $('.questions .subject .question').html(response.question);
+                                $('.questions .subject .answers').html('');
+                                var index = 0;
                                 response.answers.forEach(function(data) {
-                                    $('.questions .subject .answers').append(data.answer);
+                                    $('.questions .subject .answers').append('<div class="answer answer'+ index +'">'+ data.answer +'</div>');
+                                    index++;
                                 })
                             },
                             error: function(response) {
@@ -208,48 +211,83 @@
                             }
                         });   
 
-                    } else if ($(this).text() % 2 == 0) {
-                        url = url.replace('0', subjectIdArray[1]);
+                    } else if ($(this).text() % 4 == 2) {
+                        url = url.replace('0', '{{ subjects[1].id }}');
                         $.ajax({
                             url: url,
                             type: 'GET',
                             dataType: 'json',
                             success: function (response) {
-                                $('.subjectFromId2').show();
+                                if (!firstTime) {
+                                    var classStr = $('.questions .subject').attr('class');
+                                    var lastClass = classStr.substr( classStr.lastIndexOf(' ') + 1);
+                                    $('.questions .subject').removeClass(lastClass);
+                                }
+                                $('.questions .subject').addClass('yellow');
+                                $('.questions .subject .question').html(response.question);
+                                $('.questions .subject .answers').html('');
+                                var index = 0;
+                                response.answers.forEach(function(data) {
+                                    $('.questions .subject .answers').append('<div class="answer answer'+ index +'">'+ data.answer +'</div>');
+                                    index++;
+                                })
                             },
                             error: function(response) {
-                                alert('erreur2');
-                                alert(response);                                
+                                alert('erreur2');                                
                             }
                         });
-                    } else if ($(this).text() % 3 == 0) {
-                        url = url.replace('0', subjectIdArray[2]);
+                    } else if ($(this).text() % 4 == 3) {
+                        url = url.replace('0', '{{ subjects[2].id }}');
                         $.ajax({
                             url: url,
                             type: 'GET',
                             dataType: 'json',
                             success: function (response) {
-                                $('.subjectFromId3').show();
+                                if (!firstTime) {
+                                    var classStr = $('.questions .subject').attr('class');
+                                    var lastClass = classStr.substr( classStr.lastIndexOf(' ') + 1);
+                                    $('.questions .subject').removeClass(lastClass);
+                                }
+                                $('.questions .subject').addClass('green');
+                                $('.questions .subject .question').html(response.question);
+                                $('.questions .subject .answers').html('');
+                                var index = 0;
+                                response.answers.forEach(function(data) {
+                                    $('.questions .subject .answers').append('<div class="answer answer'+ index +'">'+ data.answer +'</div>');
+                                    index++;
+                                })
                             },
                             error: function(response) {
                                 alert('erreur3');
-                                alert(response);                                
                             }
                         });
                     } else if ($(this).text() % 4 == 0) {
-                        url = url.replace('0', subjectIdArray[3]);
+                        url = url.replace('0', '{{ subjects[3].id }}');
                         $.ajax({
                             url: url,
                             type: 'GET',
                             dataType: 'json',
                             success: function (response) {
-                                $('.subjectFromId4').show();
+                                if (!firstTime) {
+                                    var classStr = $('.questions .subject').attr('class');
+                                    var lastClass = classStr.substr( classStr.lastIndexOf(' ') + 1);
+                                    $('.questions .subject').removeClass(lastClass);
+                                }
+                                $('.questions .subject').addClass('orange');
+                                $('.questions .subject .question').html(response.question);
+                                $('.questions .subject .answers').html('');
+                                var index = 0;
+                                response.answers.forEach(function(data) {
+                                    $('.questions .subject .answers').append('<div class="answer answer'+ index +'">'+ data.answer +'</div>');
+                                    index++;
+                                })
                             },
                             error: function(response) {
                                 alert('erreur4');
-                                alert(response);
                             }
                         });
+                    } else {
+                        alert('erreur!!!');
                     }
                 }
             })
@@ -260,6 +298,8 @@
                 alert('gagné !');
                 return false;                    
             }
+            var firstTime = false;
+            
         })
 
         // get a random gamer
