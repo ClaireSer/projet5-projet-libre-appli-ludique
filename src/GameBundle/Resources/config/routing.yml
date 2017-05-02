@@ -66,3 +66,8 @@ get_random_question:
         _method: GET
         id: \d+
         
+valid_answer:
+    path: /valid/answer
+    defaults: { _controller: GameBundle:Game:validAnswer }
+    requirements: 
+        _method: POST

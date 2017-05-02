@@ -55,4 +55,17 @@ class GameController extends Controller
         }
         return new Response('Erreur');
     }
+
+    public function validAnswerAction(Request $request)
+    {
+        $em = $this->getDoctrine()->getManager();
+        if($request->isXmlHttpRequest()) {
+            $subjectId = $request->get('id');
+            if ($subjectId != null) {
+                
+                return new JsonResponse();
+            }
+        }
+        return new Response('Erreur');
+    }
 }

@@ -22,14 +22,37 @@
 
     <div class="row">
         <div class="col-lg-3">
-            <div class="gamersList">
-                <h3>Joueurs :</h3>
-                {% for gamer in gamers %}
-                    <p>{{ gamer.username }}</p>
-                {% endfor %}
+
+            <div class="messageInfo">
+                <p>C'est au joueur <strong></strong> de commencer.</p>
             </div>
 
-            <button>Jetez les dés !</button>
+            {#<button>Jetez les dés !</button>#}
+            <!-- Button trigger modal -->
+            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+                Jetez les dés !
+            </button>
+
+            <!-- Modal -->
+            <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            ...
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <button type="button" class="btn btn-primary">Save changes</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
             <div class="dice">
                 <img class="die1" src="{{ asset('bundles/GameBundle/images/un.png') }}" alt="numéro un" />
@@ -40,9 +63,6 @@
                 <img class="die6" src="{{ asset('bundles/GameBundle/images/six.png') }}" alt="numéro six" />
             </div>
 
-            <div class="messageInfo">
-                <p>C'est au joueur <strong></strong> de commencer.</p>
-            </div>
         </div>
 
         <div class="col-lg-6">
@@ -133,6 +153,7 @@
         </div>
 
         <div class="col-lg-3">
+            <h3>Joueurs et statistiques</h3>
             {% for gamer in gamers %}
                 <div class="stats">
                     <p><strong>{{ gamer.username }}</strong></p>
@@ -145,8 +166,14 @@
         </div>
     </div>
     
-    <div class="row questions">
-        <div class="col-lg-offset-3 col-lg-6 subject">
+    <div class="row">
+        <div class="col-lg-offset-3 col-lg-6 questions">
+            <div class="infoQuestion">
+                Difficulté : <div class="difficulty"></div>
+                Matière : <div class="subject"></div>
+                Thème : <div class="topic"></div>
+                Niveau : <div class="schoolLevel"></div>
+            </div>
             <div class="question">
             </div>
             <div class="answers">
@@ -169,7 +196,7 @@
             e.preventDefault();
             var randomNumber = Math.floor(Math.random() * maxNumber) + minNumber;
             dice.children().hide();
-
+            
             $('.dice .die' + randomNumber).show();
             cumulDiceGamer1 += randomNumber;
             if (cumulDiceGamer1 > 64) {
@@ -180,7 +207,8 @@
                 $(this).removeClass('activeCase');
                 if ($(this).text() == cumulDiceGamer1) {
                     $(this).addClass('activeCase');
-                    
+                    $('.questions').show();
+
                     var url = "{{ path('get_random_question', { 'id': 0 }) }}";
                     
                     if ($(this).text() % 4 == 1) {
@@ -192,16 +220,22 @@
                             success: function (response) {
 
                                 if (!firstTime) {
-                                    var classStr = $('.questions .subject').attr('class');
+                                    var classStr = $('.questions').attr('class');
                                     var lastClass = classStr.substr( classStr.lastIndexOf(' ') + 1);
-                                    $('.questions .subject').removeClass(lastClass);
+                                    $('.questions').removeClass(lastClass);
                                 }
-                                $('.questions .subject').addClass('blue');
-                                $('.questions .subject .question').html(response.question);
-                                $('.questions .subject .answers').html('');
+                                $('.questions').addClass('blue');
+                                $('.questions .question').html(response.question);
+                                $('.infoQuestion .difficulty').html(response.difficulty);
+                                $('.infoQuestion .topic').html(response.topic.nameTopic);
+                                $('.infoQuestion .subject').html(response.topic.subject.nameSubject);
+                                $('.infoQuestion .schoolLevel').html(response.schoolClass.schoolClass);
+                                $('.questions .answers').html('');
                                 var index = 0;
                                 response.answers.forEach(function(data) {
-                                    $('.questions .subject .answers').append('<div class="answer answer'+ index +'">'+ data.answer +'</div>');
+                                    $('.questions .answers').append('<div class="answer answer'+ index +'">'+ data.answer +'</div>');
+                                    $('.answer').wrap("<a href='#'></a>");
+                                    //$('.questions a').attr('href', '{{ path("valid_answer") }}');
                                     index++;
                                 })
                                 firstTime = false;                                
@@ -219,16 +253,20 @@
                             dataType: 'json',
                             success: function (response) {
                                 if (!firstTime) {
-                                    var classStr = $('.questions .subject').attr('class');
+                                    var classStr = $('.questions').attr('class');
                                     var lastClass = classStr.substr( classStr.lastIndexOf(' ') + 1);
-                                    $('.questions .subject').removeClass(lastClass);
+                                    $('.questions').removeClass(lastClass);
                                 }
-                                $('.questions .subject').addClass('yellow');
-                                $('.questions .subject .question').html(response.question);
-                                $('.questions .subject .answers').html('');
+                                $('.questions').addClass('yellow');
+                                $('.questions .question').html(response.question);
+                                $('.infoQuestion .difficulty').html(response.difficulty);
+                                $('.infoQuestion .topic').html(response.topic.nameTopic);
+                                $('.infoQuestion .subject').html(response.topic.subject.nameSubject);
+                                $('.infoQuestion .schoolLevel').html(response.schoolClass.schoolClass);
+                                $('.questions .answers').html('');
                                 var index = 0;
                                 response.answers.forEach(function(data) {
-                                    $('.questions .subject .answers').append('<div class="answer answer'+ index +'">'+ data.answer +'</div>');
+                                    $('.questions .answers').append('<div class="answer answer'+ index +'">'+ data.answer +'</div>');
                                     index++;
                                 })
                                 firstTime = false;                                
@@ -245,16 +283,20 @@
                             dataType: 'json',
                             success: function (response) {
                                 if (!firstTime) {
-                                    var classStr = $('.questions .subject').attr('class');
+                                    var classStr = $('.questions').attr('class');
                                     var lastClass = classStr.substr( classStr.lastIndexOf(' ') + 1);
-                                    $('.questions .subject').removeClass(lastClass);
+                                    $('.questions').removeClass(lastClass);
                                 }
-                                $('.questions .subject').addClass('green');
-                                $('.questions .subject .question').html(response.question);
-                                $('.questions .subject .answers').html('');
+                                $('.questions').addClass('green');
+                                $('.questions .question').html(response.question);
+                                $('.infoQuestion .difficulty').html(response.difficulty);
+                                $('.infoQuestion .topic').html(response.topic.nameTopic);
+                                $('.infoQuestion .subject').html(response.topic.subject.nameSubject);
+                                $('.infoQuestion .schoolLevel').html(response.schoolClass.schoolClass);
+                                $('.questions .answers').html('');
                                 var index = 0;
                                 response.answers.forEach(function(data) {
-                                    $('.questions .subject .answers').append('<div class="answer answer'+ index +'">'+ data.answer +'</div>');
+                                    $('.questions .answers').append('<div class="answer answer'+ index +'">'+ data.answer +'</div>');
                                     index++;
                                 })
                                 firstTime = false;                                
@@ -271,16 +313,20 @@
                             dataType: 'json',
                             success: function (response) {
                                 if (!firstTime) {
-                                    var classStr = $('.questions .subject').attr('class');
+                                    var classStr = $('.questions').attr('class');
                                     var lastClass = classStr.substr( classStr.lastIndexOf(' ') + 1);
-                                    $('.questions .subject').removeClass(lastClass);
+                                    $('.questions').removeClass(lastClass);
                                 }
-                                $('.questions .subject').addClass('red');
-                                $('.questions .subject .question').html(response.question);
-                                $('.questions .subject .answers').html('');
+                                $('.questions').addClass('red');
+                                $('.questions .question').html(response.question);
+                                $('.infoQuestion .difficulty').html(response.difficulty);
+                                $('.infoQuestion .topic').html(response.topic.nameTopic);
+                                $('.infoQuestion .subject').html(response.topic.subject.nameSubject);
+                                $('.infoQuestion .schoolLevel').html(response.schoolClass.schoolClass);
+                                $('.questions .answers').html('');
                                 var index = 0;
                                 response.answers.forEach(function(data) {
-                                    $('.questions .subject .answers').append('<div class="answer answer'+ index +'">'+ data.answer +'</div>');
+                                    $('.questions .answers').append('<div class="answer answer'+ index +'">'+ data.answer +'</div>');
                                     index++;
                                 })
                                 firstTime = false;
@@ -303,9 +349,9 @@
         })
 
         // get a random gamer
-        var len = $('.gamersList p').length;
+        var len = $('.stats').length;
         var rowGamer = Math.floor( Math.random() * len );
-        var randomGamer = $(".gamersList p").eq(rowGamer).text();
+        var randomGamer = $(".stats p:first").eq(rowGamer).text();
 
         $('.messageInfo strong').append(randomGamer);
         

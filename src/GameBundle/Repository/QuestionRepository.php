@@ -59,11 +59,13 @@ class QuestionRepository extends \Doctrine\ORM\EntityRepository
         $qb = $this->createQueryBuilder('q');
         return $qb
             ->leftJoin('q.topic', 't')
-            ->leftJoin('t.subject', 's')
+            ->leftJoin('t.subject', 'su')
             ->leftJoin('q.answers', 'a')
+            ->leftJoin('q.schoolClass', 'sc')
             ->addSelect('t')
-            ->addSelect('s')
+            ->addSelect('su')
             ->addSelect('a')
+            ->addSelect('sc')
             ->where('t.subject = :subject')
             ->andWhere('q.id = :randomId')
             ->setParameter('subject', $subject)
