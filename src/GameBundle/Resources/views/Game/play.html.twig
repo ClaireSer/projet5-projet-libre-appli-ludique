@@ -161,7 +161,7 @@
         var maxNumber = 6;
         var dice = $('.dice');
         var cumulDiceGamer1 = 0;
-        
+        var firstTime = true;
 
         dice.children().hide();
 
@@ -185,7 +185,6 @@
                     
                     if ($(this).text() % 4 == 1) {
                         url = url.replace('0', '{{ subjects[0].id }}');
-                        var firstTime = true;
                         $.ajax({
                             url: url,
                             type: 'GET',
@@ -205,6 +204,7 @@
                                     $('.questions .subject .answers').append('<div class="answer answer'+ index +'">'+ data.answer +'</div>');
                                     index++;
                                 })
+                                firstTime = false;                                
                             },
                             error: function(response) {
                                 alert('erreur1');
@@ -231,6 +231,7 @@
                                     $('.questions .subject .answers').append('<div class="answer answer'+ index +'">'+ data.answer +'</div>');
                                     index++;
                                 })
+                                firstTime = false;                                
                             },
                             error: function(response) {
                                 alert('erreur2');                                
@@ -256,6 +257,7 @@
                                     $('.questions .subject .answers').append('<div class="answer answer'+ index +'">'+ data.answer +'</div>');
                                     index++;
                                 })
+                                firstTime = false;                                
                             },
                             error: function(response) {
                                 alert('erreur3');
@@ -273,7 +275,7 @@
                                     var lastClass = classStr.substr( classStr.lastIndexOf(' ') + 1);
                                     $('.questions .subject').removeClass(lastClass);
                                 }
-                                $('.questions .subject').addClass('orange');
+                                $('.questions .subject').addClass('red');
                                 $('.questions .subject .question').html(response.question);
                                 $('.questions .subject .answers').html('');
                                 var index = 0;
@@ -281,13 +283,12 @@
                                     $('.questions .subject .answers').append('<div class="answer answer'+ index +'">'+ data.answer +'</div>');
                                     index++;
                                 })
+                                firstTime = false;
                             },
                             error: function(response) {
                                 alert('erreur4');
                             }
                         });
-                    } else {
-                        alert('erreur!!!');
                     }
                 }
             })
@@ -298,7 +299,6 @@
                 alert('gagné !');
                 return false;                    
             }
-            var firstTime = false;
             
         })
 
