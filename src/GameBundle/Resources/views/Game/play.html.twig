@@ -240,10 +240,14 @@
                                 response.answers.forEach(function(data) {
                                     
                                     $('.questions .answers').append('<div class="answer answer'+ index +'">'+ data.answer +'</div>');
-                                    $('.answer').wrap("<a href='#'></a>");
-                                    //$('.questions a').attr('href', chemin);
+                                    
                                     index++;
                                 })
+                                var parent = $('.questions .answers');
+                                var divsAnswer = parent.children();
+                                while(divsAnswer.length) {
+                                    parent.append(divsAnswer.splice(Math.floor(Math.random() * divsAnswer.length), 1));
+                                }
                                 firstTime = false;                                
                             },
                             error: function(response) {
@@ -275,6 +279,11 @@
                                     $('.questions .answers').append('<div class="answer answer'+ index +'">'+ data.answer +'</div>');
                                     index++;
                                 })
+                                var parent = $('.questions .answers');
+                                var divsAnswer = parent.children();
+                                while(divsAnswer.length) {
+                                    parent.append(divsAnswer.splice(Math.floor(Math.random() * divsAnswer.length), 1));
+                                }
                                 firstTime = false;                                
                             },
                             error: function(response) {
@@ -305,6 +314,11 @@
                                     $('.questions .answers').append('<div class="answer answer'+ index +'">'+ data.answer +'</div>');
                                     index++;
                                 })
+                                var parent = $('.questions .answers');
+                                var divsAnswer = parent.children();
+                                while(divsAnswer.length) {
+                                    parent.append(divsAnswer.splice(Math.floor(Math.random() * divsAnswer.length), 1));
+                                }
                                 firstTime = false;                                
                             },
                             error: function(response) {
@@ -335,6 +349,11 @@
                                     $('.questions .answers').append('<div class="answer answer'+ index +'">'+ data.answer +'</div>');
                                     index++;
                                 })
+                                var parent = $('.questions .answers');
+                                var divsAnswer = parent.children();
+                                while(divsAnswer.length) {
+                                    parent.append(divsAnswer.splice(Math.floor(Math.random() * divsAnswer.length), 1));
+                                }
                                 firstTime = false;
                             },
                             error: function(response) {

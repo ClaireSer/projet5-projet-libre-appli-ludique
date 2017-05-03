@@ -5,7 +5,7 @@ namespace GameBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\JsonResponse;
-
+use Symfony\Component\HttpFoundation\Response;
 
 
 class GameController extends Controller
@@ -49,7 +49,6 @@ class GameController extends Controller
                     $idQuestionList[] = $question->getId();
                 }
                 $randomQuestion = $em->getRepository('GameBundle:Question')->getRandomQuestionBySubject($subject, $idQuestionList);
-
                 return new JsonResponse($randomQuestion);
             }
         }
@@ -66,6 +65,6 @@ class GameController extends Controller
                 return new JsonResponse();
             }
         }
-        return new Response('Erreur');
+        return new Response('Une erreur est survenue. Re-tentez la demande.');
     }
 }
