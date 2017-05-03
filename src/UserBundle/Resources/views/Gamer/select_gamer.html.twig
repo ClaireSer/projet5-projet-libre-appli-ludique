@@ -56,13 +56,21 @@
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
     <script type="text/javascript">
     $(function () {
+      
         var limitCheckedBox = 4;
+        var nbSubjectChecked;
         $('input:checkbox[name="subject[]"]').on('change', function(e) {
-            var nbChecked = $('.chooseSubject input:checked').length;
-            if(nbChecked > limitCheckedBox) {
+            nbSubjectChecked = $('.chooseSubject input:checked').length;
+            if(nbSubjectChecked > limitCheckedBox) {
               this.checked = false;
             }
-            if(nbChecked >= limitCheckedBox) {
+        });
+
+        $('input:checkbox').on('change', function(e) {
+            var nbGamerChecked = $('.gamer input:checked').length;
+            nbSubjectChecked = $('.chooseSubject input:checked').length;
+            
+            if(nbSubjectChecked >= limitCheckedBox && nbGamerChecked >= 1) {
               $('.playButton').removeClass('disabled');
             } else {
               $('.playButton').addClass('disabled');              
