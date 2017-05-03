@@ -27,12 +27,11 @@
                 <p>C'est au joueur <strong></strong> de commencer.</p>
             </div>
 
-            {#<button>Jetez les dés !</button>#}
             <!-- Button trigger modal -->
-            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+            <button type="button" class="btn btn-primary">
                 Jetez les dés !
             </button>
-
+{#
             <!-- Modal -->
             <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                 <div class="modal-dialog" role="document">
@@ -52,7 +51,7 @@
                         </div>
                     </div>
                 </div>
-            </div>
+            </div>#}
 
             <div class="dice">
                 <img class="die1" src="{{ asset('bundles/GameBundle/images/un.png') }}" alt="numéro un" />
@@ -192,6 +191,12 @@
 
         dice.children().hide();
 
+        // get a random gamer
+        var len = $('.stats').length;
+        var rowGamer = Math.floor( Math.random() * len );
+        var randomGamer = $('.stats:nth('+ rowGamer +') > p:first').text();
+        $('.messageInfo strong').append(randomGamer);
+
         $('button').on('click', function(e) {
             e.preventDefault();
             var randomNumber = Math.floor(Math.random() * maxNumber) + minNumber;
@@ -233,9 +238,10 @@
                                 $('.questions .answers').html('');
                                 var index = 0;
                                 response.answers.forEach(function(data) {
+                                    
                                     $('.questions .answers').append('<div class="answer answer'+ index +'">'+ data.answer +'</div>');
                                     $('.answer').wrap("<a href='#'></a>");
-                                    //$('.questions a').attr('href', '{{ path("valid_answer") }}');
+                                    //$('.questions a').attr('href', chemin);
                                     index++;
                                 })
                                 firstTime = false;                                
@@ -347,14 +353,6 @@
             }
             
         })
-
-        // get a random gamer
-        var len = $('.stats').length;
-        var rowGamer = Math.floor( Math.random() * len );
-        var randomGamer = $(".stats p:first").eq(rowGamer).text();
-
-        $('.messageInfo strong').append(randomGamer);
-        
     });
     </script>
 

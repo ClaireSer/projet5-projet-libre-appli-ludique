@@ -37,17 +37,14 @@
       <h3>{{ title2 }}</h3>
         {% for subject in subjects %}
           <div class="chooseSubject">
-            {{ subject.nameSubject }}
-            <div>
-              <label><input type="checkbox" name="subject[]" value="{{ subject.id }}" /> Choisir ce thème</label>
-            </div>
+            {{ subject.nameSubject }} <br/>
+            <label><input type="checkbox" name="subject[]" value="{{ subject.id }}" /> Choisir ce thème</label>
           </div>
         {% endfor %}
       </div>
-
+      
       <div>
-        <input type="submit" value="JOUER" />
-        {#<button class="btn btn-primary" type="button"><input type="submit" value="JOUER" /></button>#}
+        <input class="playButton btn btn-primary disabled" type="submit" value="JOUER" />
         </form>        
       </div>
 
@@ -55,6 +52,25 @@
       <p>Il n'y a encore aucun joueur.</p>
       <a href=" {{ path('add_gamer') }} "><button class="btn btn-primary" type="button">Ajoutez en un !</button></a>
     {% endif %}
+
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script type="text/javascript">
+    $(function () {
+        var limitCheckedBox = 4;
+        $('input:checkbox[name="subject[]"]').on('change', function(e) {
+            var nbChecked = $('.chooseSubject input:checked').length;
+            if(nbChecked > limitCheckedBox) {
+              this.checked = false;
+            }
+            if(nbChecked >= limitCheckedBox) {
+              $('.playButton').removeClass('disabled');
+            } else {
+              $('.playButton').addClass('disabled');              
+            }
+        });
+
+    });
+    </script>
 
 {% endblock %}
  
