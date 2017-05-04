@@ -59,11 +59,16 @@ class GameController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
         if($request->isXmlHttpRequest()) {
-            $subjectId = $request->get('id');
-            if ($subjectId != null) {
-                
-                return new JsonResponse();
+            $answerId = $request->get('id');
+            if ($answerId != null) {
+                $answerReturn = $em->getRepository('GameBundle:Answer')->find($answerId);
+                if ($answerReturn->getIsRight()) {
+                    return new JsonResponse('Bonne réponse');
+                } else {
+                    return new JsonResponse('Mauvaise réponse');                    
+                }
             }
+            return new Response('L\'élément n\'a pas été trouvé : id null.');
         }
         return new Response('Une erreur est survenue. Re-tentez la demande.');
     }

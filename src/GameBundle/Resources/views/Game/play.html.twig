@@ -18,40 +18,39 @@
       </div>
     {% endfor %}
 
-    <h2>{{ title }}</h2>
+
+    <div id="modal">
+        <div id="signature">
+            <button class="close">
+                <span class="glyphicon glyphicon-remove-circle"></span>
+            </button>
+            <div class="questions">
+                <div class="infoQuestion">
+                    Difficulté : <div class="difficulty"></div>
+                    Matière : <div class="subject"></div>
+                    Thème : <div class="topic"></div>
+                    Niveau : <div class="schoolLevel"></div>
+                </div>
+                <div class="question">
+                </div>
+                <div class="answers">
+                </div>
+            </div>
+        </div>
+    </div>
 
     <div class="row">
         <div class="col-lg-3">
+            <h2>{{ title }}</h2>            
 
             <div class="messageInfo">
                 <p>C'est au joueur <strong></strong> de commencer.</p>
             </div>
 
             <!-- Button trigger modal -->
-            <button type="button" class="btn btn-primary">
+            <button class="buttonDice btn btn-primary">
                 Jetez les dés !
             </button>
-{#
-            <!-- Modal -->
-            <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                <div class="modal-dialog" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-                        <div class="modal-body">
-                            ...
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                            <button type="button" class="btn btn-primary">Save changes</button>
-                        </div>
-                    </div>
-                </div>
-            </div>#}
 
             <div class="dice">
                 <img class="die1" src="{{ asset('bundles/GameBundle/images/un.png') }}" alt="numéro un" />
@@ -164,21 +163,6 @@
             {% endfor %}
         </div>
     </div>
-    
-    <div class="row">
-        <div class="col-lg-offset-3 col-lg-6 questions">
-            <div class="infoQuestion">
-                Difficulté : <div class="difficulty"></div>
-                Matière : <div class="subject"></div>
-                Thème : <div class="topic"></div>
-                Niveau : <div class="schoolLevel"></div>
-            </div>
-            <div class="question">
-            </div>
-            <div class="answers">
-            </div>
-        </div>
-    </div>
 
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
     <script type="text/javascript">
@@ -188,7 +172,8 @@
         var url1 = url.replace('0', '{{ subjects[1].id }}');        
         var url2 = url.replace('0', '{{ subjects[2].id }}');        
         var url3 = url.replace('0', '{{ subjects[3].id }}');    
-        var pathValidAnswer = "{{ path('valid_answer') }}";
+        var pathValidAnswer = "{{ path('valid_answer', { 'id': 1 }) }}";
+        
         
     </script>
 
