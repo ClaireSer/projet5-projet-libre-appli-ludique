@@ -61,16 +61,28 @@ class GameController extends Controller
         if($request->isXmlHttpRequest()) {
             $answerId = $request->get('answerId');
             $gamerId = $request->get('gamerId');
+            $dice = $request->get('dice');
+            $score = $request->get('score');
+            $bonusDifficulty = $request->get('bonus');
+            $score += $dice * $bonusDifficulty;
 
             if ($answerId != null) {
                 $answerReturn = $em->getRepository('GameBundle:Answer')->find($answerId);
                 $gamerReturn = $em->getRepository('UserBundle:Gamer')->find($gamerId);
 
                 if ($answerReturn->getIsRight()) {
-                    $gamerReturn->setRightAnswerNb(5);
-                    return new JsonResponse('Bonne réponse');
+                    $gamerReturn->setRightAnswerNb(1 + $gamerReturn->getRightAnswerNb());
+                    $em->persist($gamerReturn);
+                    $em->flush();
+                    return new JsonResponse(array(
+                        'validity'      => 'Bonne réponse',
+                        'rightAnswerNb' => $gamerReturn->getRightAnswerNb(),
+                        'score'         => $score
+                    ));
                 } else {
-                    return new JsonResponse('Mauvaise réponse');                    
+                    return new JsonResponse(array(
+                        'validity'  => 'Mauvaise réponse'                        
+                    ));                    
                 }
             }
             return new Response('L\'élément n\'a pas été trouvé : id null.');
