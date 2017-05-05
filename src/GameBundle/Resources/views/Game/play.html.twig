@@ -2,6 +2,8 @@
 
 {% extends "GameBundle::layout.html.twig" %}
 {% set game = true %}
+{% set idAns = 0 %}
+{% set idGam = 0 %}
 
 {% block title %}{{ parent() }} - {{ titleTab }}{% endblock %}
 
@@ -159,6 +161,7 @@
                     <p>Nombre de parties gagnées : {{ gamer.gameWonNb }}</p>
                     <p>Nombre de bonnes réponses : {{ gamer.rightAnswerNb }}</p>
                     <p>Niveau : {{ gamer.level }}</p>
+                    <p>{{ gamer.id }}</p>
                 </div>
             {% endfor %}
         </div>
@@ -172,7 +175,9 @@
         var url1 = url.replace('0', '{{ subjects[1].id }}');        
         var url2 = url.replace('0', '{{ subjects[2].id }}');        
         var url3 = url.replace('0', '{{ subjects[3].id }}');    
-        var pathValidAnswer = "{{ path('valid_answer', { 'id': 1 }) }}";
+        
+
+        var pathValidAnswer = "{{ path('valid_answer', { 'answerId': idAns, 'gamerId': idGam }) }}";
         
         
     </script>

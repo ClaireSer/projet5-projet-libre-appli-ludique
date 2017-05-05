@@ -59,10 +59,15 @@ class GameController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
         if($request->isXmlHttpRequest()) {
-            $answerId = $request->get('id');
+            $answerId = $request->get('answerId');
+            $gamerId = $request->get('gamerId');
+
             if ($answerId != null) {
                 $answerReturn = $em->getRepository('GameBundle:Answer')->find($answerId);
+                $gamerReturn = $em->getRepository('UserBundle:Gamer')->find($gamerId);
+
                 if ($answerReturn->getIsRight()) {
+                    $gamerReturn->setRightAnswerNb(5);
                     return new JsonResponse('Bonne réponse');
                 } else {
                     return new JsonResponse('Mauvaise réponse');                    
