@@ -51,6 +51,7 @@ class GameController extends Controller
                 $randomQuestion = $em->getRepository('GameBundle:Question')->getRandomQuestionBySubject($subject, $idQuestionList);
                 return new JsonResponse($randomQuestion);
             }
+            return new Response('L\'élément n\'a pas été trouvé : id null.');            
         }
         return new Response('Erreur');
     }
@@ -75,18 +76,37 @@ class GameController extends Controller
                     $em->persist($gamerReturn);
                     $em->flush();
                     return new JsonResponse(array(
-                        'validity'      => 'Bonne réponse',
+                        'validity'      => 'Bonne réponse !',
                         'rightAnswerNb' => $gamerReturn->getRightAnswerNb(),
                         'score'         => $score
                     ));
                 } else {
                     return new JsonResponse(array(
-                        'validity'  => 'Mauvaise réponse'                        
+                        'validity'  => 'Mauvaise réponse. Vous ne gagnez pas de points.'                        
                     ));                    
                 }
             }
             return new Response('L\'élément n\'a pas été trouvé : id null.');
         }
         return new Response('Une erreur est survenue. Re-tentez la demande.');
+    }
+
+    public function changeBestScoreAction(Request $request)
+    {
+        $em = $this->getDoctrine()->getManager();
+        if($request->isXmlHttpRequest()) {
+            $bestScore = $request->get('bestScore');
+            $gamerIdBis = $request->get('gamerIdBis');
+            
+            $gamerReturn = $em->getRepository('UserBundle:Gamer')->find($gamerIdBis);
+            if ($bestScore != null) {
+                $gamerReturn->setBestScore($bestScore);
+                $em->persist($gamerReturn);
+                $em->flush();
+                return new JsonResponse($gamerReturn->getBestScore());
+            }
+            return new Response('L\'élément n\'a pas été trouvé : id null.');            
+        }
+        return new Response('Erreur');
     }
 }

@@ -76,3 +76,11 @@ valid_answer:
         dice: \d+
         score: \d+
         bonus: \d+
+
+change_best_score:
+    path: /bestscore/{bestScore}/{gamerIdBis}
+    defaults: { _controller: GameBundle:Game:changeBestScore }
+    requirements: 
+        _method: POST
+        bestScore: \d+
+        gamerIdBis: \d+
