@@ -10,8 +10,9 @@ use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\RadioType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
-use UserBundle\Form\DataTransformer\StringToArrayTransformer;
+use UserBundle\Form\StringToArrayTransformer;
 
 
 class UserCountType extends AbstractType
@@ -21,7 +22,7 @@ class UserCountType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        // $transformer = new StringToArrayTransformer();
+        $transformer = new StringToArrayTransformer();
 
         $builder
         ->add('username',      TextType::class, array('label' => 'Nom de famille'))
@@ -37,13 +38,13 @@ class UserCountType extends AbstractType
                 'Enseignant'    => 'ROLE_TEACHER',
                 'Famille'       => 'ROLE_USER'
             ),
-            'multiple'  => true,
+            'multiple'  => false,
             'expanded'  => true,
             'label'     => 'Rôle'
         ))
         ->add('save',      SubmitType::class)
         ;
-        // $builder->get('roles')->addModelTransformer($transformer);
+        $builder->get('roles')->addModelTransformer($transformer);
         
     }
     

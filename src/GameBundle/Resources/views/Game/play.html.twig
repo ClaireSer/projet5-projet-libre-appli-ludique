@@ -155,8 +155,9 @@
             {% for gamer in gamers %}
                 <div class="stats">
                     <p><strong>{{ gamer.username }}</strong></p>
-                    <p>Score sur la partie : <span>0</span></p>
-                    <p>Meilleur score : <span>{{ gamer.bestScore }}</span></p>
+                    <p>Score sur la partie : <span>0</span> points</p>
+                    <p>Score total : <span>{{ gamer.cumulScore }}</span> points</p>
+                    <p>Meilleur score : <span>{{ gamer.bestScore }}</span> points</p>
                     <p>Nombre de parties gagnées : <span>{{ gamer.gameWonNb }}</span></p>
                     <p>Nombre de bonnes réponses : <span>{{ gamer.rightAnswerNb }}</span></p>
                     <p>Niveau : <span>{{ gamer.level }}</span></p>
@@ -177,7 +178,7 @@
         
         var pathValidAnswer = "{{ path('valid_answer', { 'answerId': 0, 'gamerId': 0, 'dice': 0, 'score': 0, 'bonus': 0 }) }}";
         
-        var pathBestScore = "{{ path('change_best_score', { 'bestScore': 0, 'gamerIdBis': 0 }) }}";
+        var pathStats = "{{ path('change_stats', { 'finalScore': 0, 'bestScore': 0, 'gamerId': 0, 'gameWonNb': 0, 'cumulScore': 0, 'level': 0, 'index': 0 }) }}";
         
     </script>
 

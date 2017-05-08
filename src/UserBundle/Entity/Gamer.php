@@ -58,6 +58,13 @@ class Gamer
     /**
      * @var int
      *
+     * @ORM\Column(name="cumul_score", type="integer")
+     */
+    private $cumulScore;
+    
+    /**
+     * @var int
+     *
      * @ORM\Column(name="best_score", type="integer")
      */
     private $bestScore;
@@ -202,6 +209,30 @@ class Gamer
     public function getRole()
     {
         return $this->role;
+    }
+
+    /**
+     * Set cumulScore
+     *
+     * @param integer $cumulScore
+     *
+     * @return Gamer
+     */
+    public function setCumulScore($cumulScore)
+    {
+        $this->cumulScore = $cumulScore;
+
+        return $this;
+    }
+
+    /**
+     * Get cumulScore
+     *
+     * @return int
+     */
+    public function getCumulScore()
+    {
+        return $this->cumulScore;
     }
 
     /**

@@ -77,10 +77,15 @@ valid_answer:
         score: \d+
         bonus: \d+
 
-change_best_score:
-    path: /bestscore/{bestScore}/{gamerIdBis}
-    defaults: { _controller: GameBundle:Game:changeBestScore }
+change_stats:
+    path: /bestscore/{finalScore}/{bestScore}/{gamerId}/{gameWonNb}/{cumulScore}/{level}/{index}
+    defaults: { _controller: GameBundle:Game:changeStats }
     requirements: 
         _method: POST
+        finalScore: \d+
         bestScore: \d+
-        gamerIdBis: \d+
+        gamerId: \d+
+        gameWonNb: \d+
+        cumulScore: \d+
+        level: \d+
+        index: \d+

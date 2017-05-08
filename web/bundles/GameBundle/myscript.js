@@ -11,6 +11,7 @@ $(function () {
     var finalScore;
     var bestScore;
     var gamerId;    
+    var index = 1;
 
     dice.children().hide();
 
@@ -34,32 +35,42 @@ $(function () {
         
         $('.dice .die' + randomNumber).show();
         cumulDiceGamer1 += randomNumber;
-        if (cumulDiceGamer1 > 64) {
+
+        if (cumulDiceGamer1 > 7) {
             cumulDiceGamer1 -= randomNumber;
             $('.rightOrWrongAnswer').html('Passez votre tour !').fadeIn();
             return false;
             
-        } else if (cumulDiceGamer1 == 64) {
+        } else if (cumulDiceGamer1 == 7) {
+            $('.board td').removeClass('activeCase');            
             $('.board .win').addClass('activeCase');
-            $('.rightOrWrongAnswer').html('Bravo !').fadeIn();
+            var txtWin = 'Bravo ! <br/>Vous avez gagné la partie en premier. <br/>Vous bénéficiez d\'un bonus de 30 points.';
+            $('.rightOrWrongAnswer').html(txtWin).fadeIn();
             finalScore = parseInt($('.stats p:nth(1) span').text());
-            bestScore = parseInt($('.stats p:nth(2) span').text());
-            if (finalScore > bestScore) {
-                var exprBestScore = /(^\D+)\d+\/\d+/;
-                pathBestScoreCurrent = pathBestScore.replace(exprBestScore, '$1' + finalScore + '/' + gamerId);
+            bestScore = parseInt($('.stats p:nth(3) span').text());
+            
+            finalScore += 30;
+            $('.stats p:nth(1) span').html(finalScore);
+            var gameWonNb =  parseInt($('.stats p:nth(4) span').text());
+            var cumulScore = parseInt($('.stats p:nth(2) span').text());
+            var level = parseInt($('.stats p:nth(6) span').text());
+            var exprStats = /(^\D+)\d+\/\d+\/\d+\/\d+\/\d+\/\d+\/\d+/;
+            pathStatsCurrent = pathStats.replace(exprStats, '$1' + finalScore + '/' + bestScore + '/' + gamerId + '/' + gameWonNb + '/' + cumulScore + '/' + level + '/' + index);
 
-                $.ajax({
-                    url: pathBestScoreCurrent,
-                    type: 'POST',
-                    dataType: 'json',
-                    success: function(response) {
-                        $('.stats p:nth(2) span').html(response);
-                    },
-                    error: function() {
-                        alert('erreur score');
-                    }
-                });
-            }
+            $.ajax({
+                url: pathStatsCurrent,
+                type: 'POST',
+                dataType: 'json',
+                success: function(response) {
+                    $('.stats p:nth(2) span').html(response.cumulScore);
+                    $('.stats p:nth(3) span').html(response.bestScore);
+                    $('.stats p:nth(4) span').html(response.gameWonNb);
+                    $('.stats p:nth(6) span').html(response.level);
+                },
+                error: function() {
+                    alert('erreur score');
+                }
+            });
             return false;
         } else {
             $('.board td').each(function() {
@@ -69,47 +80,20 @@ $(function () {
                     $('.questions').show();
 
                     if ($(this).text() % 4 == 0) {
-                        ajaxResponse(url0, 'red');
+                        ajaxRandomQuestion(url0, 'red');
 
                     } else if ($(this).text() % 4 == 1) {
-                        ajaxResponse(url1, 'blue');
+                        ajaxRandomQuestion(url1, 'blue');
 
                     } else if ($(this).text() % 4 == 2) {
-                        ajaxResponse(url2, 'yellow');
+                        ajaxRandomQuestion(url2, 'yellow');
                         
                     } else if ($(this).text() % 4 == 3) {
-                        ajaxResponse(url3, 'green');
+                        ajaxRandomQuestion(url3, 'green');
                     }
                 }
             })
         }
-        
-    
-        // end of game
-        // if (cumulDiceGamer1 == 64) {
-        //     $('.board .win').addClass('activeCase');
-        //     alert('gagné !');
-        //     finalScore = parseInt($('.stats p:nth(1) span').text());
-        //     bestScore = parseInt($('.stats p:nth(2) span').text());
-        //     if (finalScore > bestScore) {
-        //         var exprBestScore = /(^\D+)\d+\/\d+/;
-        //         pathBestScoreCurrent = pathBestScore.replace(exprBestScore, '$1' + finalScore + '/' + gamerId);
-
-        //         $.ajax({
-        //             url: pathBestScoreCurrent,
-        //             type: 'POST',
-        //             dataType: 'json',
-        //             success: function(response) {
-        //                 alert('ok');
-        //                 $('.stats p:nth(2) span').html(response);
-        //             },
-        //             error: function() {
-        //                 alert('erreur score');
-        //             }
-        //         });
-        //     }
-        //     return false;                    
-        // }
 
         showModal = setTimeout(function() {
             $('#modal').fadeIn('slow');
@@ -118,7 +102,7 @@ $(function () {
     })
 
 
-    function ajaxResponse (urlType, color) {
+    function ajaxRandomQuestion (urlType, color) {
 
         $.ajax({
             url: urlType,
@@ -181,9 +165,12 @@ $(function () {
             success: function(response) {
                 $('#modal').fadeOut('fast');
                 clearTimeout(showModal);
-                $('.rightOrWrongAnswer').html(response.validity).fadeIn().delay(2500).fadeOut();
                 $('.stats p:nth(4) span').html(response.rightAnswerNb);
                 $('.stats p:nth(1) span').html(response.score);
+                $('.rightOrWrongAnswer').html(response.validity).fadeIn().delay(2500).fadeOut();
+                if (response.infoScore) {
+                    $('.rightOrWrongAnswer').append('<br/> Vous gagnez ' + response.infoScore + ' points.');
+                }
             },
             error: function() {
                 alert('erreur ajaxvalidanswer');

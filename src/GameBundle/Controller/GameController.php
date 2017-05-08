@@ -65,7 +65,8 @@ class GameController extends Controller
             $dice = $request->get('dice');
             $score = $request->get('score');
             $bonusDifficulty = $request->get('bonus');
-            $score += $dice * $bonusDifficulty;
+            $scoreQuestion = $dice * $bonusDifficulty;
+            $score += $scoreQuestion;
 
             if ($answerId != null) {
                 $answerReturn = $em->getRepository('GameBundle:Answer')->find($answerId);
@@ -77,6 +78,7 @@ class GameController extends Controller
                     $em->flush();
                     return new JsonResponse(array(
                         'validity'      => 'Bonne réponse !',
+                        'infoScore'     => $scoreQuestion,
                         'rightAnswerNb' => $gamerReturn->getRightAnswerNb(),
                         'score'         => $score
                     ));
@@ -91,22 +93,43 @@ class GameController extends Controller
         return new Response('Une erreur est survenue. Re-tentez la demande.');
     }
 
-    public function changeBestScoreAction(Request $request)
+    public function changeStatsAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
         if($request->isXmlHttpRequest()) {
+            $finalScore = $request->get('finalScore');
             $bestScore = $request->get('bestScore');
-            $gamerIdBis = $request->get('gamerIdBis');
-            
-            $gamerReturn = $em->getRepository('UserBundle:Gamer')->find($gamerIdBis);
-            if ($bestScore != null) {
+            $gamerId = $request->get('gamerId');
+            $gameWonNb = $request->get('gameWonNb');
+            $gameWonNb++;
+            $cumulScore = $request->get('cumulScore');
+            $cumulScore += $finalScore;
+            $level = $request->get('level');
+            $level++;
+            // $index = $request->get('index');
+
+            $gamerReturn = $em->getRepository('UserBundle:Gamer')->find($gamerId);
+            $gamerReturn->setGameWonNb($gameWonNb);
+            $gamerReturn->setCumulScore($cumulScore);
+            if ($finalScore > $bestScore) {
                 $gamerReturn->setBestScore($bestScore);
-                $em->persist($gamerReturn);
-                $em->flush();
-                return new JsonResponse($gamerReturn->getBestScore());
             }
-            return new Response('L\'élément n\'a pas été trouvé : id null.');            
+            // if ($cumulScore > 300 * $index) {
+            //     $gamerReturn->setLevel($level);                    
+            //     $index++;
+            // }
+            $em->persist($gamerReturn);
+            $em->flush();
+
+            return new JsonResponse(array(
+                'bestScore'     => $gamerReturn->getBestScore(),
+                'gameWonNb'     => $gamerReturn->getGameWonNb(),
+                'cumulScore'    => $gamerReturn->getCumulScore(),
+                'level'         => $gamerReturn->getLevel()
+            ));
         }
         return new Response('Erreur');
     }
+
+    
 }
