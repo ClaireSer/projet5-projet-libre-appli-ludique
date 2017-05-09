@@ -11,7 +11,7 @@ $(function () {
     var finalScore;
     var bestScore;
     var gamerId;    
-    var index = 1;
+    // var index = 1;
 
     dice.children().hide();
 
@@ -19,41 +19,42 @@ $(function () {
     var len = $('.stats').length;
     var rowGamer = Math.floor( Math.random() * len );
     var randomGamer = $('.stats:nth('+ rowGamer +') > p:first').text();
-    $('.messageInfo strong').append(randomGamer);
-
-    $('.stats').each(function() {
-        var that = $(this);
-        if (that.children().first().text() == randomGamer) {
-            gamerId = that.children().last().text();
-        }
-    })
+    $('.messageInfo strong').html(randomGamer);
 
     $('.buttonDice').on('click', function(e) {
         e.preventDefault();
+
+        $('.stats').each(function() {
+            var that = $(this);
+            if (that.children().first().text() == randomGamer) {
+                gamerId = that.children().last().text();
+            }
+        })
+
         randomNumber = Math.floor(Math.random() * maxNumber) + minNumber;
         dice.children().hide();
         
         $('.dice .die' + randomNumber).show();
         cumulDiceGamer1 += randomNumber;
 
-        if (cumulDiceGamer1 > 7) {
+        if (cumulDiceGamer1 > 64) {
             cumulDiceGamer1 -= randomNumber;
             $('.rightOrWrongAnswer').html('Passez votre tour !').fadeIn();
             return false;
             
-        } else if (cumulDiceGamer1 == 7) {
+        } else if (cumulDiceGamer1 == 64) {
             $('.board td').removeClass('activeCase');            
             $('.board .win').addClass('activeCase');
             var txtWin = 'Bravo ! <br/>Vous avez gagné la partie en premier. <br/>Vous bénéficiez d\'un bonus de 30 points.';
             $('.rightOrWrongAnswer').html(txtWin).fadeIn();
-            finalScore = parseInt($('.stats p:nth(1) span').text());
-            bestScore = parseInt($('.stats p:nth(3) span').text());
+            finalScore = parseInt($('.stats:nth('+ rowGamer +') p:nth(1) span').text());
+            bestScore = parseInt($('.stats:nth('+ rowGamer +') p:nth(3) span').text());
             
             finalScore += 30;
             $('.stats p:nth(1) span').html(finalScore);
-            var gameWonNb =  parseInt($('.stats p:nth(4) span').text());
-            var cumulScore = parseInt($('.stats p:nth(2) span').text());
-            var level = parseInt($('.stats p:nth(6) span').text());
+            var gameWonNb =  parseInt($('.stats:nth('+ rowGamer +') p:nth(4) span').text());
+            var cumulScore = parseInt($('.stats:nth('+ rowGamer +') p:nth(2) span').text());
+            var level = parseInt($('.stats:nth('+ rowGamer +') p:nth(6) span').text());
             var exprStats = /(^\D+)\d+\/\d+\/\d+\/\d+\/\d+\/\d+\/\d+/;
             pathStatsCurrent = pathStats.replace(exprStats, '$1' + finalScore + '/' + bestScore + '/' + gamerId + '/' + gameWonNb + '/' + cumulScore + '/' + level + '/' + index);
 
@@ -62,10 +63,10 @@ $(function () {
                 type: 'POST',
                 dataType: 'json',
                 success: function(response) {
-                    $('.stats p:nth(2) span').html(response.cumulScore);
-                    $('.stats p:nth(3) span').html(response.bestScore);
-                    $('.stats p:nth(4) span').html(response.gameWonNb);
-                    $('.stats p:nth(6) span').html(response.level);
+                    $('.stats:nth('+ rowGamer +') p:nth(2) span').html(response.cumulScore);
+                    $('.stats:nth('+ rowGamer +') p:nth(3) span').html(response.bestScore);
+                    $('.stats:nth('+ rowGamer +') p:nth(4) span').html(response.gameWonNb);
+                    $('.stats:nth('+ rowGamer +') p:nth(6) span').html(response.level);
                 },
                 error: function() {
                     alert('erreur score');
@@ -145,7 +146,7 @@ $(function () {
                 
                  $('div.answer').on('click', function() {
                     var expr = /(^\D+)\d+\/\d+\/\d+\/\d+\/\d+/;
-                    var score = parseInt($('.stats p:nth(1) span').text());
+                    var score = parseInt($('.stats:nth('+ rowGamer +') p:nth(1) span').text());
                     pathValidAnswerCurrent = pathValidAnswer.replace(expr, '$1' + $(this).attr('id') + '/' + gamerId + '/' + randomNumber + '/' + score + '/' + bonusDifficulty);
                     ajaxValidAnswer(pathValidAnswerCurrent);
                 })
@@ -165,12 +166,19 @@ $(function () {
             success: function(response) {
                 $('#modal').fadeOut('fast');
                 clearTimeout(showModal);
-                $('.stats p:nth(4) span').html(response.rightAnswerNb);
-                $('.stats p:nth(1) span').html(response.score);
+                $('.stats:nth('+ rowGamer +') p:nth(4) span').html(response.rightAnswerNb);
+                $('.stats:nth('+ rowGamer +') p:nth(1) span').html(response.score);
                 $('.rightOrWrongAnswer').html(response.validity).fadeIn().delay(2500).fadeOut();
                 if (response.infoScore) {
                     $('.rightOrWrongAnswer').append('<br/> Vous gagnez ' + response.infoScore + ' points.');
                 }
+                if (rowGamer == len - 1) {
+                    rowGamer = 0;
+                } else {
+                    rowGamer++;
+                }
+                randomGamer = $('.stats:nth('+ rowGamer +') > p:first').text();
+                $('.messageInfo strong').html(randomGamer);
             },
             error: function() {
                 alert('erreur ajaxvalidanswer');
