@@ -4,7 +4,6 @@ $(function () {
     var dice = $('.dice');
     var cumulDiceGamer1 = 0;
     var firstTime = true;
-    var showModal;
     var pathValidAnswerCurrent;
     var randomNumber;
     var bonusDifficulty;
@@ -40,7 +39,9 @@ $(function () {
 
         if (cumulDiceGamer1 > 64) {
             cumulDiceGamer1 -= randomNumber;
-            $('.messageInfo').html('Passe ton tour !').fadeIn().queue(callGamer(randomGamer));
+            $('.messageInfo').html('Passe ton tour !').fadeIn().delay(2000).fadeOut().queue(function() {
+                $(this).html('<strong>' + randomGamer + '</strong>, <br/> c\'est maintenant à ton tour.').fadeIn().dequeue();        
+            });
             return false;
             
         } else if (cumulDiceGamer1 == 64) {
@@ -56,8 +57,8 @@ $(function () {
             var gameWonNb =  parseInt($('.stats:nth('+ rowGamer +') p:nth(4) span').text());
             var cumulScore = parseInt($('.stats:nth('+ rowGamer +') p:nth(2) span').text());
             var level = parseInt($('.stats:nth('+ rowGamer +') p:nth(6) span').text());
-            var exprStats = /(^\D+)\d+\/\d+\/\d+\/\d+\/\d+\/\d+\/\d+/;
-            pathStatsCurrent = pathStats.replace(exprStats, '$1' + finalScore + '/' + bestScore + '/' + gamerId + '/' + gameWonNb + '/' + cumulScore + '/' + level + '/' + index);
+            var exprStats = /(^\D+)\d+\/\d+\/\d+\/\d+\/\d+\/\d+/;
+            pathStatsCurrent = pathStats.replace(exprStats, '$1' + finalScore + '/' + bestScore + '/' + gamerId + '/' + gameWonNb + '/' + cumulScore + '/' + level);
 
             $.ajax({
                 url: pathStatsCurrent,
@@ -97,16 +98,11 @@ $(function () {
             })
         }
 
-        showModal = setTimeout(function() {
-            $('#modal').fadeIn('slow');
-        }, 1000)
+        $('#modal').delay(1000).fadeIn('slow');
         
     })
 
-    function callGamer(gamer) {
-        $('.messageInfo').html('<strong>' + gamer + '</strong>, <br/> c\'est maintenant à ton tour.').fadeIn().dequeue();        
-    }
-
+    
 
     function ajaxRandomQuestion (urlType, color) {
         $('.infoAnswer').html('');                     
@@ -157,7 +153,6 @@ $(function () {
                     var expr = /(^\D+)\d+\/\d+\/\d+\/\d+\/\d+/;
                     var score = parseInt($('.stats:nth('+ rowGamer +') p:nth(1) span').text());
                     pathValidAnswerCurrent = pathValidAnswer.replace(expr, '$1' + $(this).attr('id') + '/' + gamerId + '/' + randomNumber + '/' + score + '/' + bonusDifficulty);
-                    
                     ajaxValidAnswer(pathValidAnswerCurrent, $(this));
                 })
                                             
@@ -168,18 +163,15 @@ $(function () {
         });
     }
 
+
     function ajaxValidAnswer(path, that) {
         $.ajax({
             url: path,
             type: 'POST',
             dataType: 'json',
             success: function(response) {
-                $('#modal').delay(2000).fadeOut('fast').queue(callGamer(randomGamer));
-                clearTimeout(showModal);
-
                 $('.stats:nth('+ rowGamer +') p:nth(4) span').html(response.rightAnswerNb);
                 $('.stats:nth('+ rowGamer +') p:nth(1) span').html(response.score);
-                
                 $('.infoAnswer').html(response.validity);
 
                 if (rowGamer == len - 1) {
@@ -188,9 +180,10 @@ $(function () {
                     rowGamer++;
                 }
                 randomGamer = $('.stats:nth('+ rowGamer +') > p:first').text();
-                // $('.messageInfo strong').html(randomGamer);
-                callGamer(randomGamer);
-                
+
+                $('#modal').delay(2000).fadeOut('fast');
+                $('.messageInfo').html('<strong>' + randomGamer + '</strong>, <br/> c\'est maintenant à ton tour.');
+
                 if (response.infoScore) {
                     $('.infoAnswer').append('<br/> Tu gagnes ' + response.infoScore + ' points.');
                     that.css('background-color', 'limegreen');
