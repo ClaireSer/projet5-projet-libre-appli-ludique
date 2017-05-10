@@ -11,6 +11,7 @@ $(function () {
     var finalScore;
     var bestScore;
     var gamerId;    
+    var exprUrl;
     // var index = 1;
 
     dice.children().hide();
@@ -39,14 +40,14 @@ $(function () {
 
         if (cumulDiceGamer1 > 64) {
             cumulDiceGamer1 -= randomNumber;
-            $('.rightOrWrongAnswer').html('Passez votre tour !').fadeIn();
+            $('.messageInfo').html('Passe ton tour !').fadeIn().queue(callGamer(randomGamer));
             return false;
             
         } else if (cumulDiceGamer1 == 64) {
             $('.board td').removeClass('activeCase');            
             $('.board .win').addClass('activeCase');
-            var txtWin = 'Bravo ! <br/>Vous avez gagné la partie en premier. <br/>Vous bénéficiez d\'un bonus de 30 points.';
-            $('.rightOrWrongAnswer').html(txtWin).fadeIn();
+            var txtWin = 'Bravo ! <br/>Tu as gagné la partie en premier. <br/>Tu bénéficies d\'un bonus de 30 points.';
+            $('.messageInfo').html(txtWin).fadeIn();
             finalScore = parseInt($('.stats:nth('+ rowGamer +') p:nth(1) span').text());
             bestScore = parseInt($('.stats:nth('+ rowGamer +') p:nth(3) span').text());
             
@@ -102,11 +103,19 @@ $(function () {
         
     })
 
+    function callGamer(gamer) {
+        $('.messageInfo').html('<strong>' + gamer + '</strong>, <br/> c\'est maintenant à ton tour.').fadeIn().dequeue();        
+    }
+
 
     function ajaxRandomQuestion (urlType, color) {
+        $('.infoAnswer').html('');                     
 
+        exprUrl = /(^\D+\/\d+\/)\d+/;
+        urlTypeCurrent = urlType.replace(exprUrl, '$1' + gamerId);            
+        
         $.ajax({
-            url: urlType,
+            url: urlTypeCurrent,
             type: 'GET',
             dataType: 'json',
             success: function(response) {
@@ -148,7 +157,8 @@ $(function () {
                     var expr = /(^\D+)\d+\/\d+\/\d+\/\d+\/\d+/;
                     var score = parseInt($('.stats:nth('+ rowGamer +') p:nth(1) span').text());
                     pathValidAnswerCurrent = pathValidAnswer.replace(expr, '$1' + $(this).attr('id') + '/' + gamerId + '/' + randomNumber + '/' + score + '/' + bonusDifficulty);
-                    ajaxValidAnswer(pathValidAnswerCurrent);
+                    
+                    ajaxValidAnswer(pathValidAnswerCurrent, $(this));
                 })
                                             
             },
@@ -158,27 +168,36 @@ $(function () {
         });
     }
 
-    function ajaxValidAnswer(path) {
+    function ajaxValidAnswer(path, that) {
         $.ajax({
             url: path,
             type: 'POST',
             dataType: 'json',
             success: function(response) {
-                $('#modal').fadeOut('fast');
+                $('#modal').delay(2000).fadeOut('fast').queue(callGamer(randomGamer));
                 clearTimeout(showModal);
+
                 $('.stats:nth('+ rowGamer +') p:nth(4) span').html(response.rightAnswerNb);
                 $('.stats:nth('+ rowGamer +') p:nth(1) span').html(response.score);
-                $('.rightOrWrongAnswer').html(response.validity).fadeIn().delay(2500).fadeOut();
-                if (response.infoScore) {
-                    $('.rightOrWrongAnswer').append('<br/> Vous gagnez ' + response.infoScore + ' points.');
-                }
+                
+                $('.infoAnswer').html(response.validity);
+
                 if (rowGamer == len - 1) {
                     rowGamer = 0;
                 } else {
                     rowGamer++;
                 }
                 randomGamer = $('.stats:nth('+ rowGamer +') > p:first').text();
-                $('.messageInfo strong').html(randomGamer);
+                // $('.messageInfo strong').html(randomGamer);
+                callGamer(randomGamer);
+                
+                if (response.infoScore) {
+                    $('.infoAnswer').append('<br/> Tu gagnes ' + response.infoScore + ' points.');
+                    that.css('background-color', 'limegreen');
+                } else {
+                    that.css('background-color', '#f45c6e');                    
+                }
+                
             },
             error: function() {
                 alert('erreur ajaxvalidanswer');

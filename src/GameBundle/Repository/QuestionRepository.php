@@ -68,8 +68,10 @@ class QuestionRepository extends \Doctrine\ORM\EntityRepository
             ->addSelect('sc')
             ->where('t.subject = :subject')
             ->andWhere('q.id = :randomId')
+            // ->andWhere('q.schoolClass = :schoolLevel')
             ->setParameter('subject', $subject)
             ->setParameter('randomId', $idQuestionList[$randomId])
+            // ->setParameter('schoolLevel', $schoolLevel)
             ->getQuery()
             ->getArrayResult()[0]
         ;

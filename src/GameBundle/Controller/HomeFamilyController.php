@@ -26,6 +26,9 @@ class HomeFamilyController extends Controller
             
             $topic = $question->getTopic();
             $topic->addQuestion($question);
+
+            $schoolClass = $question->getSchoolClass();
+            $schoolClass->addQuestion($question);
             
             $em = $this->getDoctrine()->getManager();
             $em->persist($question);

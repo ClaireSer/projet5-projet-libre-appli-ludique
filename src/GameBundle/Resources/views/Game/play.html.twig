@@ -32,13 +32,19 @@
                 </div>
                 <div class="answers">
                 </div>
+                <div class="infoAnswer center">
+                </div>
             </div>
         </div>
     </div>
 
     <div class="row">
         <div class="col-lg-3 center">
-            <h2>{{ title }}</h2>            
+            <h2>{{ title }}</h2>         
+
+            <div class="messageInfo">
+                <p>C'est au joueur <br/><strong></strong><br/> de commencer.</p>
+            </div>   
 
             <!-- Button trigger modal -->
             <button class="buttonDice btn btn-primary">
@@ -52,13 +58,6 @@
                 <img class="die4" src="{{ asset('bundles/GameBundle/images/quatre.png') }}" alt="numéro quatre" />
                 <img class="die5" src="{{ asset('bundles/GameBundle/images/cinq.png') }}" alt="numéro cinq" />
                 <img class="die6" src="{{ asset('bundles/GameBundle/images/six.png') }}" alt="numéro six" />
-            </div>
-            
-            <div class="messageInfo">
-                <p>C'est au joueur <strong></strong> de jouer.</p>
-            </div>
-            <div class="rightOrWrongAnswer">
-                
             </div>
 
         </div>
@@ -170,7 +169,7 @@
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
     <script type="text/javascript">
 
-        var url = "{{ path('get_random_question', { 'id': 0 }) }}";
+        var url = "{{ path('get_random_question', { 'subjectId': 0, 'gamerId': 1 }) }}";
         var url0 = url.replace('0', '{{ subjects[0].id }}');        
         var url1 = url.replace('0', '{{ subjects[1].id }}');        
         var url2 = url.replace('0', '{{ subjects[2].id }}');        

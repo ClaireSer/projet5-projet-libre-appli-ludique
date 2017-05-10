@@ -40,7 +40,12 @@ class GameController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
         if($request->isXmlHttpRequest()) {
-            $subjectId = $request->get('id');
+            $subjectId = $request->get('subjectId');
+            $gamerId = $request->get('gamerId');
+
+            $gamer = $em->getRepository('UserBundle:Gamer')->find($gamerId);
+            // $schoolClass = $gamer->getSchoolClass();
+
             if ($subjectId != null) {
                 $subject = $em->getRepository('GameBundle:Subject')->find($subjectId);
                 $questions = $em->getRepository('GameBundle:Question')->getQuestionBySubject($subject);
@@ -49,7 +54,11 @@ class GameController extends Controller
                     $idQuestionList[] = $question->getId();
                 }
                 $randomQuestion = $em->getRepository('GameBundle:Question')->getRandomQuestionBySubject($subject, $idQuestionList);
-                return new JsonResponse($randomQuestion);
+                if ($randomQuestion != null) {
+                    return new JsonResponse($randomQuestion);
+                } else {
+                    return new JsonResponse('Aucune question n\'a pas été trouvée.');                    
+                }
             }
             return new Response('L\'élément n\'a pas été trouvé : id null.');            
         }
@@ -84,7 +93,7 @@ class GameController extends Controller
                     ));
                 } else {
                     return new JsonResponse(array(
-                        'validity'  => 'Mauvaise réponse. Vous ne gagnez pas de points.'                        
+                        'validity'  => 'Mauvaise réponse. Tu ne gagnes pas de points.'                        
                     ));                    
                 }
             }

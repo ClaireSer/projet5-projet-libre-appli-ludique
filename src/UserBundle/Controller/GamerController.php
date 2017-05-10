@@ -28,6 +28,7 @@ class GamerController extends Controller
         $form = $this->createForm(GamerType::class, $gamer);
         $formRequest = $form->handleRequest($request);
         if ($formRequest->isSubmitted() && $formRequest->isValid()) {
+            $gamer->setCumulScore(0);
             $gamer->setBestScore(0);
             $gamer->setGameWonNb(0);
             $gamer->setRightAnswerNb(0);
@@ -116,7 +117,7 @@ class GamerController extends Controller
 
         return $this->render('UserBundle:Gamer:select_gamer.html.twig', array(
             'gamers'    => $gamers,
-            'subjects'    => $subjects,
+            'subjects'  => $subjects,
             'title1'    => 'Choisissez vos joueurs',
             'title2'    => 'Choisissez quatre thèmes',
             'titleTab'  => 'Le jeu',

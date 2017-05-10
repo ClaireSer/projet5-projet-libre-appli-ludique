@@ -34,13 +34,6 @@
                 <div class="form-group">
                     {{ form_row(form.topic) }}
                 </div>
-                {#plan A not working#}
-                {#<div class="form-group">
-                    {{ form_row(form.topic.subject) }}
-                </div>
-                <div class="form-group form_subject_topic">
-                    {{ form_row(form.topic.nameTopic) }}
-                </div>#}
                 
                 {{ form_widget(form.save, {'attr': {'class': 'btn btn-primary'}}) }}
 
@@ -55,32 +48,6 @@
     <script type="text/javascript">
     $(function () {
 
-//combobox subject + topic
-/*
-        var subjectField = $('#GameBundle_question_topic_subject');
-        var topicField = $('#GameBundle_question_topic_topic');
-        var topicGroup = $('.form_subject_topic');
-
-        subjectField.on('change', function () {
-            var id_subject = $(this).val();
-            $.ajax({
-                url: "{{ path('combobox') }}",
-                type: 'POST',
-                data: { 'id': id_subject },
-                dataType: 'json',
-                success: function (response) {
-                    topicField.html('');
-                    $.each(response, function (index, value) {
-                        topicField.append('<option value="' + value.id + '">' + value.nameTopic + '</option>');
-                    });
-                    topicGroup.show();
-                },
-                error: function() {
-                    topicGroup.hide();
-                }
-            });
-        });
-*/
 
 // Ajouter ou supprimer une réponse
         var $container = $('div#GameBundle_question_answers');

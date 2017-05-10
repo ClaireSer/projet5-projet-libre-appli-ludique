@@ -18,35 +18,43 @@
       </div>
     {% endfor %}
 
-    <h3>{{ title1 }}</h3>
+    <div class="row selectGamer">
+      <div class="col-lg-offset-3 col-lg-3 col-sm-offset-1 col-sm-5 center">
     
-    {% if gamers %}
-      {% for gamer in gamers %}
-        <div class="gamer">
-          <h4>{{ gamer.username }}</h4>
-          <p>Meilleur score : {{ gamer.bestScore }}</p>
-          <p>Nombre de parties gagnées : {{ gamer.gameWonNb }}</p>
-          <p>Nombre de bonnes réponses : {{ gamer.rightAnswerNb }}</p>
-          <p>Niveau : {{ gamer.level }}</p>
+        <h3>{{ title1 }}</h3>
+        
+        {% if gamers %}
+            <div class="gamer">
+          {% for gamer in gamers %}
+              <form action=" {{ path('play') }} " method="GET">
+              <p><label><input type="checkbox" name="gamer[]" value="{{ gamer.id }}" /> {{ gamer.username }}</label></p>
+              {#<p>Meilleur score : {{ gamer.bestScore }}</p>
+              <p>Nombre de parties gagnées : {{ gamer.gameWonNb }}</p>
+              <p>Nombre de bonnes réponses : {{ gamer.rightAnswerNb }}</p>
+              <p>Niveau : {{ gamer.level }}</p>#}
 
-          <form action=" {{ path('play') }} " method="GET">
-          <label><input type="checkbox" name="gamer[]" value="{{ gamer.id }}" /> Sélectionner ce joueur</label>
-        </div>
-      {% endfor %}
+              {#<form action=" {{ path('play') }} " method="GET">
+              <label><input type="checkbox" name="gamer[]" value="{{ gamer.id }}" /> Sélectionner ce joueur</label>#}
+          {% endfor %}
+            </div>
+      </div>
+      <div class="col-lg-3 col-sm-5 center">
 
-      <h3>{{ title2 }}</h3>
-        {% for subject in subjects %}
+        <h3>{{ title2 }}</h3>
           <div class="chooseSubject">
-            {{ subject.nameSubject }} <br/>
-            <label><input type="checkbox" name="subject[]" value="{{ subject.id }}" /> Choisir ce thème</label>
+            {% for subject in subjects %}
+              <p><label><input type="checkbox" name="subject[]" value="{{ subject.id }}" /> {{ subject.nameSubject }}</label><br/></p>
+            {% endfor %}
           </div>
-        {% endfor %}
+        </div>
+
       </div>
+    </div>  
       
-      <div>
-        <input class="playButton btn btn-primary disabled" type="submit" value="JOUER" />
-        </form>        
-      </div>
+    <div class="center">
+      <input class="playButton btn btn-primary disabled" type="submit" value="JOUER" />
+      </form>        
+    </div>
 
     {% else %}
       <p>Il n'y a encore aucun joueur.</p>

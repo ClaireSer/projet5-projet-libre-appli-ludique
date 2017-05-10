@@ -67,6 +67,10 @@ h1 {
     margin: 50px 0;
 }
 
+.selectGamer p {
+    text-align: left;
+}
+
 .form-horizontal .form-group {
     margin-right: 0;
     margin-left: 0;
@@ -148,10 +152,9 @@ div.infoQuestion div {
 .stats p:last-child {
     display: none;
 }
-.rightOrWrongAnswer {
-    display: none;
-    color: red;
-    font-size: 30px;
+
+.messageInfo, .infoAnswer {
+    font-size: 20px;    
 }
 
 /*modal*/

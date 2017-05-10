@@ -31,6 +31,9 @@ class AdminController extends Controller
             $topic = $question->getTopic();
             $topic->addQuestion($question);
 
+            $schoolClass = $question->getSchoolClass();
+            $schoolClass->addQuestion($question);
+
             $em = $this->getDoctrine()->getManager();
             $em->persist($question);
             $em->flush();
@@ -42,19 +45,6 @@ class AdminController extends Controller
             'title' => 'Ajoutez vos questions'
         ));
     }
-
-    // public function comboboxAction(Request $request) 
-    // {
-    //     $em = $this->getDoctrine()->getManager();
-    //     if($request->isXmlHttpRequest()) {
-    //         $id = $request->get('id');
-    //         if ($id != null) {
-    //             $topics = $em->getRepository('GameBundle:Topic')->getTopicsFromSubject($id);
-    //             return new JsonResponse($topics);
-    //         }
-    //     }
-    //     return new Response('Erreur');
-    // }
 
     public function moderateQuestionAction(Request $request)
     {
@@ -85,6 +75,9 @@ class AdminController extends Controller
             
             $topic = $notValidQuestion->getTopic();
             $topic->addQuestion($notValidQuestion);
+
+            $schoolClass = $notValidQuestion->getSchoolClass();
+            $schoolClass->addQuestion($notValidQuestion);
 
             $em = $this->getDoctrine()->getManager();
             $em->persist($notValidQuestion);

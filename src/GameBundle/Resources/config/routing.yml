@@ -60,11 +60,12 @@ play:
         id: \d+
 
 get_random_question:
-    path: /random/{id}
+    path: /random/{subjectId}/{gamerId}
     defaults: { _controller: GameBundle:Game:getRandomQuestion }
     requirements: 
         _method: GET
-        id: \d+
+        subjectId: \d+
+        gamerId: \d+
         
 valid_answer:
     path: /valid/answer/{answerId}/{gamerId}/{dice}/{score}/{bonus}
