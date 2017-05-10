@@ -3,6 +3,7 @@ $(function () {
     var maxNumber = 6;
     var dice = $('.dice');
     var cumulDiceGamer1 = 0;
+    var cumulDiceGamer2 = 0;
     var firstTime = true;
     var pathValidAnswerCurrent;
     var randomNumber;
@@ -21,6 +22,7 @@ $(function () {
     var randomGamer = $('.stats:nth('+ rowGamer +') > p:first').text();
     $('.messageInfo strong').html(randomGamer);
 
+    
     $('.buttonDice').on('click', function(e) {
         e.preventDefault();
 
@@ -33,25 +35,36 @@ $(function () {
 
         randomNumber = Math.floor(Math.random() * maxNumber) + minNumber;
         dice.children().hide();
-        
         $('.dice .die' + randomNumber).show();
-        cumulDiceGamer1 += randomNumber;
 
-        if (cumulDiceGamer1 > 64) {
-            cumulDiceGamer1 -= randomNumber;
+        if (rowGamer == 0) {
+            cumulDiceGamer1 += randomNumber;
+            Game(cumulDiceGamer1, 'activeCase1');
+        } else if (rowGamer == 1) {
+            cumulDiceGamer2 += randomNumber;
+            Game(cumulDiceGamer2, 'activeCase2');
+        }
+
+        $('#modal').delay(1000).fadeIn('slow');
+        
+    })
+
+    function Game(cumulDiceGamer, activeCase) {
+
+        if (cumulDiceGamer > 64) {
+            cumulDiceGamer -= randomNumber;
             $('.messageInfo').html('Passe ton tour !').fadeIn().delay(2000).fadeOut().queue(function() {
                 $(this).html('<strong>' + randomGamer + '</strong>, <br/> c\'est maintenant à ton tour.').fadeIn().dequeue();        
             });
             return false;
             
-        } else if (cumulDiceGamer1 == 64) {
-            $('.board td').removeClass('activeCase');            
-            $('.board .win').addClass('activeCase');
+        } else if (cumulDiceGamer == 64) {
+            $('.board td').removeClass(activeCase);            
+            $('.board .win').addClass(activeCase);
             var txtWin = 'Bravo ! <br/>Tu as gagné la partie en premier. <br/>Tu bénéficies d\'un bonus de 30 points.';
             $('.messageInfo').html(txtWin).fadeIn();
             finalScore = parseInt($('.stats:nth('+ rowGamer +') p:nth(1) span').text());
             bestScore = parseInt($('.stats:nth('+ rowGamer +') p:nth(3) span').text());
-            
             finalScore += 30;
             $('.stats p:nth(1) span').html(finalScore);
             var gameWonNb =  parseInt($('.stats:nth('+ rowGamer +') p:nth(4) span').text());
@@ -59,6 +72,7 @@ $(function () {
             var level = parseInt($('.stats:nth('+ rowGamer +') p:nth(6) span').text());
             var exprStats = /(^\D+)\d+\/\d+\/\d+\/\d+\/\d+\/\d+/;
             pathStatsCurrent = pathStats.replace(exprStats, '$1' + finalScore + '/' + bestScore + '/' + gamerId + '/' + gameWonNb + '/' + cumulScore + '/' + level);
+            $('.buttonDice').addClass('disabled');
 
             $.ajax({
                 url: pathStatsCurrent,
@@ -77,9 +91,9 @@ $(function () {
             return false;
         } else {
             $('.board td').each(function() {
-                $(this).removeClass('activeCase');
-                if ($(this).text() == cumulDiceGamer1) {
-                    $(this).addClass('activeCase');
+                $(this).removeClass(activeCase);
+                if ($(this).text() == cumulDiceGamer) {
+                    $(this).addClass(activeCase);
                     $('.questions').show();
 
                     if ($(this).text() % 4 == 0) {
@@ -97,12 +111,7 @@ $(function () {
                 }
             })
         }
-
-        $('#modal').delay(1000).fadeIn('slow');
-        
-    })
-
-    
+    }
 
     function ajaxRandomQuestion (urlType, color) {
         $('.infoAnswer').html('');                     
