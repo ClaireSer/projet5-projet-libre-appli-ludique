@@ -151,20 +151,35 @@
 
         <div class="col-lg-3">
             <h3>Joueurs et statistiques</h3>
+            <div class="panel-group" id="accordion">
             {% for gamer in gamers %}
-                <div class="stats">
-                    <p><strong>{{ gamer.username }}</strong></p>
-                    <p>Score sur la partie : <span>0</span> points</p>
-                    {#<p>Score total : <span>{{ gamer.cumulScore }}</span> points</p>
-                    <p>Meilleur score : <span>{{ gamer.bestScore }}</span> points</p>
-                    <p>Nombre de parties gagnées : <span>{{ gamer.gameWonNb }}</span></p>
-                    <p>Nombre de bonnes réponses : <span>{{ gamer.rightAnswerNb }}</span></p>
-                    <p>Niveau : <span>{{ gamer.level }}</span></p>
-                    <p>{{ gamer.id }}</p>#}
+                <div class="panel panel-default stats">
+    
+                    <div class="panel-heading">
+                        <h4 class="panel-title">
+                            <a data-toggle="collapse" data-parent="#accordion" href="#accordion{{ gamer.id }}">
+                                <em>{{ gamer.username }}</em> <br/>
+                                Score sur la partie : <span>0</span> points
+                            </a>
+                        </h4>
+                    </div>
+                    <div id="accordion{{ gamer.id }}" class="panel-collapse collapse">
+                        <div class="panel-body">
+                            <p>Score total : <span>{{ gamer.cumulScore }}</span> points</p>
+                            <p>Meilleur score : <span>{{ gamer.bestScore }}</span> points</p>
+                            <p>Nombre de parties gagnées : <span>{{ gamer.gameWonNb }}</span></p>
+                            <p>Nombre de bonnes réponses : <span>{{ gamer.rightAnswerNb }}</span></p>
+                            <p>Niveau : <span>{{ gamer.level }}</span></p>
+                            <p>{{ gamer.id }}</p>
+                        </div>
+                    </div>
+                    
                 </div>
             {% endfor %}
+            </div>
         </div>
     </div>
+
 
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
     <script type="text/javascript">
