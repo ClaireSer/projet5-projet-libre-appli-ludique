@@ -2,8 +2,13 @@ $(function () {
     var minNumber = 1;
     var maxNumber = 6;
     var dice = $('.dice');
-    var cumulDiceGamer1 = 0;
-    var cumulDiceGamer2 = 0;
+
+    var cumulDiceGamerArray = [];
+    var len = $('.stats').length;
+    for (i = 0 ; i < len ; i++) {
+        cumulDiceGamerArray['cumulDiceGamer' + i] = 0;
+    }
+
     var firstTime = true;
     var pathValidAnswerCurrent;
     var randomNumber;
@@ -16,8 +21,6 @@ $(function () {
 
     dice.children().hide();
 
-    // get a random gamer
-    var len = $('.stats').length;
     var rowGamer = Math.floor( Math.random() * len );
     var randomGamer = $('.stats:nth('+ rowGamer +') > p:first').text();
     $('.messageInfo strong').html(randomGamer);
@@ -37,13 +40,8 @@ $(function () {
         dice.children().hide();
         $('.dice .die' + randomNumber).show();
 
-        if (rowGamer == 0) {
-            cumulDiceGamer1 += randomNumber;
-            Game(cumulDiceGamer1, 'activeCase1');
-        } else if (rowGamer == 1) {
-            cumulDiceGamer2 += randomNumber;
-            Game(cumulDiceGamer2, 'activeCase2');
-        }
+        cumulDiceGamerArray['cumulDiceGamer' + rowGamer] += randomNumber;
+        Game(cumulDiceGamerArray['cumulDiceGamer' + rowGamer], 'activeCase' + rowGamer);    
 
         $('#modal').delay(1000).fadeIn('slow');
         
@@ -188,6 +186,7 @@ $(function () {
                 } else {
                     rowGamer++;
                 }
+
                 randomGamer = $('.stats:nth('+ rowGamer +') > p:first').text();
 
                 $('#modal').delay(2000).fadeOut('fast');

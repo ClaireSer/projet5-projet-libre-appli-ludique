@@ -31,12 +31,16 @@ table.board td {
 .board td.rouge {
     background-color: orangered; 
 }
-.activeCase1{
+.activeCase0{
     background: url("images/emoticon.png") no-repeat center;
     color: transparent;
 }
-.activeCase2{
+.activeCase1{
     background: url("images/pion.png") no-repeat center;
+    color: transparent;
+}
+.activeCase2{
+    background: url("images/rabbit.png") no-repeat center;
     color: transparent;
 }
 .board .borderTop {
