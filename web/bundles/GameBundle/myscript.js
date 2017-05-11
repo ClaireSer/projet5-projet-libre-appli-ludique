@@ -42,29 +42,42 @@ $(function () {
 
         cumulDiceGamerArray['cumulDiceGamer' + rowGamer] += randomNumber;
         Game(cumulDiceGamerArray['cumulDiceGamer' + rowGamer], 'activeCase' + rowGamer);    
-
-        $('#modal').delay(1000).fadeIn('slow');
-        
     })
 
     function Game(cumulDiceGamer, activeCase) {
 
         if (cumulDiceGamer > 64) {
             cumulDiceGamer -= randomNumber;
+            if (rowGamer == len - 1) {
+                rowGamer = 0;
+            } else {
+                rowGamer++;
+            }
+            randomGamer = $('.stats:nth('+ rowGamer +') .panel-title em').text();
             $('.messageInfo').html('Passe ton tour !').fadeIn().delay(2000).fadeOut().queue(function() {
                 $(this).html('<strong>' + randomGamer + '</strong>, <br/> c\'est maintenant à ton tour.').fadeIn().dequeue();        
             });
+                
             return false;
             
         } else if (cumulDiceGamer == 64) {
             $('.board td').removeClass(activeCase);            
             $('.board .win').addClass(activeCase);
-            var txtWin = 'Bravo ! <br/>Tu as gagné la partie en premier. <br/>Tu bénéficies d\'un bonus de 30 points.';
-            $('.messageInfo').html(txtWin).fadeIn();
+            var txtWin = 'Bravo ! <br/>Tu as fini la partie en premier. <br/>Tu bénéficies d\'un bonus de 30 points.<br/>';
+            var scoreWinner = Math.max($('.stats:nth(0) .panel-title span').text(), $('.stats:nth(1) .panel-title span').text(), $('.stats:nth(2) .panel-title span').text());
+            var winnerName = '';
+            $('.stats .panel-title').each(function() {
+                if ($(this).children().children('span').text() == scoreWinner) {
+                    winnerName = $(this).children().children('em').text();
+                }
+            })
+            var winner = 'Le gagnant de la partie est <strong>'+ winnerName +'</strong, avec un score de '+ scoreWinner +' points.<br/>';
+            $('.messageInfo').html(txtWin).append(winner).fadeIn();
+
             finalScore = parseInt($('.stats:nth('+ rowGamer +') .panel-title span').text());
             bestScore = parseInt($('.stats:nth('+ rowGamer +') .panel-body p:nth(1) span').text());
             finalScore += 30;
-            $('.stats .panel-title span').html(finalScore);
+            $('.stats:nth('+ rowGamer +') .panel-title span').html(finalScore);
             var gameWonNb =  parseInt($('.stats:nth('+ rowGamer +') p:nth(2) span').text());
             var cumulScore = parseInt($('.stats:nth('+ rowGamer +') p:nth(0) span').text());
             var level = parseInt($('.stats:nth('+ rowGamer +') p:nth(4) span').text());
@@ -108,6 +121,8 @@ $(function () {
                     }
                 }
             })
+            $('#modal').delay(1000).fadeIn('slow');
+            
         }
     }
 
@@ -188,9 +203,7 @@ $(function () {
                 } else {
                     rowGamer++;
                 }
-                
                 randomGamer = $('.stats:nth('+ rowGamer +') .panel-title em').text();
-
                 $('#modal').delay(2000).fadeOut('fast');
                 $('.messageInfo').html('<strong>' + randomGamer + '</strong>, <br/> c\'est maintenant à ton tour.');
 
