@@ -43,6 +43,12 @@ table.board td {
     background: url("images/rabbit.png") no-repeat center;
     color: transparent;
 }
+.pion {
+    float: left;
+    margin: 10px;
+    height: 40px;
+    width: 40px;
+}
 .board .borderTop {
     border-top: 10px solid white;
 }

@@ -25,6 +25,9 @@ $(function () {
     var randomGamer = $('.stats:nth('+ rowGamer +') .panel-title em').text();
     $('.messageInfo strong').html(randomGamer);
 
+    $('.stats').each(function(index) {
+        $(this).children('.pion').addClass('activeCase' + index);    
+    })
     
     $('.buttonDice').on('click', function(e) {
         e.preventDefault();
