@@ -23,6 +23,10 @@ suggest_question:
    path:    /suggest
    defaults: { _controller: GameBundle:HomeFamily:suggestQuestion }
 
+notifications:
+   path:    /notifications
+   defaults: { _controller: GameBundle:HomeFamily:getNotifications }
+
 add_question:
     path:    /add
     defaults: { _controller: GameBundle:Admin:addQuestion }

@@ -41,4 +41,17 @@ class HomeFamilyController extends Controller
             'title' => 'Proposez vos questions'
         ));
     }
+
+    public function getNotificationsAction(Request $request)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $myValidQuestions = $em->getRepository('GameBundle:Question')->findMyQuestions($this->getUser(), true);
+        $myNotValidQuestions = $em->getRepository('GameBundle:Question')->findMyQuestions($this->getUser(), false);
+        
+        return $this->render('GameBundle:Default:notifications.html.twig', array(
+            'title'         => 'Vos questions',
+            'validQuestions'    => $myValidQuestions,
+            'notValidQuestions'    => $myNotValidQuestions
+        ));
+    }
 }

@@ -1,12 +1,13 @@
-{# src/GameBundle/Resources/views/Default/select_gamer.html.twig #}
+{# src/GameBundle/Resources/views/Default/notifications.html.twig #}
 
 {% extends "GameBundle::layout.html.twig" %}
-{% set moderateQuestion = true %}
+{% set notif = true %}
 
 {% block title %}{{ parent() }} - Index{% endblock %}
 
 {% block body %}
   <div class="container-fluid">
+
     {% for message in app.session.flashbag.get('notice') %}
       <div class="alert alert-danger">
         <p>{{ message }}</p>
@@ -18,20 +19,23 @@
         <p>{{ message }}</p>
       </div>
     {% endfor %}
-
-    <h3>Modération des questions</h3>
-
+ 
+    <h3>{{ title }}</h3>
+    
     <div class="row">
       <div class="col-sm-offset-4 col-sm-4" >
         <ul class="nav nav-pills nav-justified">
-          <li role="presentation" class="active"><a href="#validQuestions" data-toggle="pill">Questions valides</a></li>
-          <li role="presentation"><a href="#notValidQuestions" data-toggle="pill">Questions non valides</a></li>
+          <li role="presentation" class="active"><a href="#validQuestions" data-toggle="pill">Questions validées</a></li>
+          <li role="presentation"><a href="#notValidQuestions" data-toggle="pill">Questions non validées</a></li>
         </ul>
       </div>
     </div>
-
+    
+  {% if validQuestions or notValidQuestions %}
     <div class="tab-content">
       <div class="row tab-pane fade in active" id="validQuestions">
+        {% if validQuestions %}
+
         <table class="table table-striped">
           <thead>
             <tr>
@@ -89,62 +93,70 @@
             {% endfor %}
           </tbody>
         </table>
+        {% else %}
+          <p>Vos questions n'ont pas encore été validées.</p>
+        {% endif %}
       </div>
-
+    
       <div class="row tab-pane fade" id="notValidQuestions">
+        {% if notValidQuestions %}
+
         <table class="table table-striped">
-          <thead>
-            <tr>
-              <th>Question</th>
-              <th>Matière</th>
-              <th>Sous-matière</th>
-              <th>Auteur</th>        
-              <th>Modération</th>
-              <th>Suppression</th>
-            </tr>
-          </thead>
-          <tbody>
-            {% for notValidQuestion in notValidQuestions %}                
+            <thead>
               <tr>
-                <td>{{ notValidQuestion.question }} </td>
-                <td>{{ notValidQuestion.topic.subject.nameSubject }} </td>
-                <td>{{ notValidQuestion.topic.nameTopic }} </td>
-                <td>Famille {{ notValidQuestion.userCount.username }} </td>
-                <td><a href="{{ path('validate_question', { 'id': notValidQuestion.id }) }}"><span class="glyphicon glyphicon-wrench"></span></a></td>
-                <td><a data-toggle="modal" data-target="#modalDeleteQuestion{{ notValidQuestion.id }}"><span class="glyphicon glyphicon-trash"></span></a></td>
-
-                <!-- Modal -->
-                  <div class="modal fade" id="modalDeleteNotValidQuestion{{ notValidQuestion.id }}" tabindex="-1" role="dialog" aria-labelledby="modalDeleteNotValidQuestionLabel" aria-hidden="true">
-                      <div class="modal-dialog">
-                          <div class="modal-content">
-                              <div class="modal-header">
-                                  <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                                  <h4 class="modal-title" id="modalDeleteNotValidQuestionLabel">Confirmation requise</h4>
-                              </div>
-                              <div class="modal-body">
-                                  Etes-vous sûr de vouloir supprimer la question ?
-                              </div>
-                              <div class="modal-footer">
-                                  <a href="{{ path('question_delete', { 'id': notValidQuestion.id }) }}">
-                                      {% if app.user.username == "Visiteur" and is_granted('ROLE_ADMIN') %}
-                                          <button class="btn btn-danger btn-lg disabled">Supprimer</button>
-                                      {% else %}
-                                          <button class="btn btn-danger btn-lg">Supprimer</button>
-                                      {% endif %}
-                                  </a>
-                              </div>
-                          </div><!-- /.modal-content -->
-                      </div><!-- /.modal-dialog -->
-                  </div><!-- /.modal -->
-
+                <th>Question</th>
+                <th>Matière</th>
+                <th>Sous-matière</th>
+                <th>Auteur</th>        
+                <th>Modération</th>
+                <th>Suppression</th>
               </tr>
-            {% else %}
-              <p>Toutes les questions ont été validées.</p>
-            {% endfor %}
-          <tbody>            
+            </thead>
+            <tbody>  
+              {% for notValidQuestion in notValidQuestions %}
+                <tr>
+                  <td>{{ notValidQuestion.question }} </td>
+                  <td>{{ notValidQuestion.topic.subject.nameSubject }} </td>
+                  <td>{{ notValidQuestion.topic.nameTopic }} </td>
+                  <td>Famille {{ notValidQuestion.userCount.username }} </td>
+                  <td><a href="{{ path('validate_question', { 'id': notValidQuestion.id }) }}"><span class="glyphicon glyphicon-wrench"></span></a></td>
+                  <td><a data-toggle="modal" data-target="#modalDeleteQuestion{{ notValidQuestion.id }}"><span class="glyphicon glyphicon-trash"></span></a></td>
+
+                  <!-- Modal -->
+                    <div class="modal fade" id="modalDeleteNotValidQuestion{{ notValidQuestion.id }}" tabindex="-1" role="dialog" aria-labelledby="modalDeleteNotValidQuestionLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                    <h4 class="modal-title" id="modalDeleteNotValidQuestionLabel">Confirmation requise</h4>
+                                </div>
+                                <div class="modal-body">
+                                    Etes-vous sûr de vouloir supprimer la question ?
+                                </div>
+                                <div class="modal-footer">
+                                    <a href="{{ path('question_delete', { 'id': notValidQuestion.id }) }}">
+                                        {% if app.user.username == "Visiteur" and is_granted('ROLE_ADMIN') %}
+                                            <button class="btn btn-danger btn-lg disabled">Supprimer</button>
+                                        {% else %}
+                                            <button class="btn btn-danger btn-lg">Supprimer</button>
+                                        {% endif %}
+                                    </a>
+                                </div>
+                            </div><!-- /.modal-content -->
+                        </div><!-- /.modal-dialog -->
+                    </div><!-- /.modal -->
+
+                </tr>
+              {% endfor %}
+            <tbody>            
         </table>
+        {% else %}
+          <p>Vos questions n'ont pas encore été validées.</p>
+        {% endif %}
       </div>
+  {% else %}
+    <p>Vous n'avez pas encore soumis de questions.</p>
+  {% endif %}
     </div>
-  </div>    
+  </div>
 {% endblock %}
- 

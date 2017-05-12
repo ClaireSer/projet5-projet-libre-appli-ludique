@@ -83,7 +83,11 @@ class AdminController extends Controller
             $em->persist($notValidQuestion);
             $em->flush();
             $request->getSession()->getFlashBag()->add('success', 'Question bien modifiée.');
-            return $this->redirectToRoute('homepage');
+            $notif = 1;
+
+            return $this->render('UserBundle:Default:index.html.twig', array(
+               'notif'  => $notif
+            ));
         }
 
         return $this->render('GameBundle:Default:form_question.html.twig', array(

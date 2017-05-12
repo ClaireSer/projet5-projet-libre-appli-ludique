@@ -77,4 +77,21 @@ class QuestionRepository extends \Doctrine\ORM\EntityRepository
         ;
     }
 
+    public function findMyQuestions($userCount, $validity) {
+        return $this->createQueryBuilder('q')
+            ->leftJoin('q.topic', 't')
+            ->leftJoin('q.userCount', 'u')
+            ->leftJoin('q.schoolClass', 's')
+            ->addSelect('t')
+            ->addSelect('u')
+            ->addSelect('s')
+            ->where('q.userCount = :userCount')
+            ->andWhere('q.isValid = :isValid')
+            ->setParameter('userCount', $userCount)
+            ->setParameter('isValid', $validity)
+            ->getQuery()
+            ->getResult()
+		;
+    }
+
 }
