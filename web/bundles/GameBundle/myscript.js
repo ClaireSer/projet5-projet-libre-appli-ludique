@@ -47,7 +47,8 @@ $(function () {
     function Game(cumulDiceGamer, activeCase) {
 
         if (cumulDiceGamer > 64) {
-            cumulDiceGamer -= randomNumber;
+            cumulDiceGamerArray['cumulDiceGamer' + rowGamer] -= randomNumber;
+
             if (rowGamer == len - 1) {
                 rowGamer = 0;
             } else {
@@ -57,12 +58,16 @@ $(function () {
             $('.messageInfo').html('Passe ton tour !').fadeIn().delay(2000).fadeOut().queue(function() {
                 $(this).html('<strong>' + randomGamer + '</strong>, <br/> c\'est maintenant à ton tour.').fadeIn().dequeue();        
             });
+            $('.stats .panel-collapse').removeClass('in');
                 
             return false;
             
         } else if (cumulDiceGamer == 64) {
             $('.board td').removeClass(activeCase);            
             $('.board .win').addClass(activeCase);
+            $('.buttonDice').addClass('disabled');
+            $('.stats .panel-collapse').addClass('in');            
+
             var txtWin = 'Bravo ! <br/>Tu as fini la partie en premier. <br/>Tu bénéficies d\'un bonus de 30 points.<br/>';
             var scoreWinner = Math.max($('.stats:nth(0) .panel-title span').text(), $('.stats:nth(1) .panel-title span').text(), $('.stats:nth(2) .panel-title span').text());
             var winnerName = '';
@@ -83,7 +88,6 @@ $(function () {
             var level = parseInt($('.stats:nth('+ rowGamer +') p:nth(4) span').text());
             var exprStats = /(^\D+)\d+\/\d+\/\d+\/\d+\/\d+\/\d+/;
             pathStatsCurrent = pathStats.replace(exprStats, '$1' + finalScore + '/' + bestScore + '/' + gamerId + '/' + gameWonNb + '/' + cumulScore + '/' + level);
-            $('.buttonDice').addClass('disabled');
 
             $.ajax({
                 url: pathStatsCurrent,
