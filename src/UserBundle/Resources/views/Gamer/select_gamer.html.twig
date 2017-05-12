@@ -42,9 +42,11 @@
 
         <h3>{{ title2 }}</h3>
           <div class="chooseSubject">
+          {#{% if questions and questions|length >= 5 %}#}
             {% for subject in subjects %}
               <p><label><input type="checkbox" name="subject[]" value="{{ subject.id }}" /> {{ subject.nameSubject }}</label><br/></p>
             {% endfor %}
+          {#{% endif %}#}
           </div>
         </div>
 
