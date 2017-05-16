@@ -20,7 +20,7 @@ class Gamer
     private $userCount;
 
     /**
-     * @ORM\ManyToOne(targetEntity="GameBundle\Entity\SchoolClass", inversedBy="gamers")
+     * @ORM\ManyToOne(targetEntity="GameBundle\Entity\SchoolClass", inversedBy="gamers", fetch="EAGER")
      * @ORM\JoinColumn(nullable=false)
      */
     private $schoolClass;      

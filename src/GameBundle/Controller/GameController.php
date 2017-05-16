@@ -44,8 +44,7 @@ class GameController extends Controller
             $gamerId = $request->get('gamerId');
 
             $gamer = $em->getRepository('UserBundle:Gamer')->find($gamerId);
-            $schoolClass = $em->getRepository('GameBundle:SchoolClass')->find();
-            // $schoolClass = $gamer->getSchoolClass();
+            $schoolClass = $gamer->getSchoolClass();
 
             if ($subjectId != null) {
                 $subject = $em->getRepository('GameBundle:Subject')->find($subjectId);
@@ -54,7 +53,7 @@ class GameController extends Controller
                 foreach($questions as $question) {
                     $idQuestionList[] = $question->getId();
                 }
-                $randomQuestion = $em->getRepository('GameBundle:Question')->getRandomQuestionBySubject($subject, $idQuestionList);
+                $randomQuestion = $em->getRepository('GameBundle:Question')->getRandomQuestionBySubject($subject, $schoolClass, $idQuestionList);
                 if ($randomQuestion != null) {
                     return new JsonResponse($randomQuestion);
                 } else {
