@@ -99,7 +99,7 @@ class GamerController extends Controller
         return $this->render('UserBundle:Gamer:list_scores.html.twig', array(
             'title'         => 'Scores des joueurs selon les niveaux',
             'titleTab'      => 'Scores',
-            'myGamers'        => $myGamers,
+            'myGamers'      => $myGamers,
             'gamers'        => $gamers,
             'cpGamers'      => $cpGamers,
             'ce1Gamers'     => $ce1Gamers,
@@ -120,7 +120,7 @@ class GamerController extends Controller
             'subjects'  => $subjects,
             'title1'    => 'Choisissez vos joueurs',
             'title2'    => 'Choisissez quatre thèmes',
-            'titleTab'  => 'Le jeu',
+            'titleTab'  => 'Le jeu'
         ));
     }
 }

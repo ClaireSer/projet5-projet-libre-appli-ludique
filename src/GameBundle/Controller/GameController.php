@@ -28,14 +28,11 @@ class GameController extends Controller
             $subjects[] = $em->getRepository('GameBundle:Subject')->find($id);
         }
 
-        // $questions = $em->getRepository('GameBundle:Question')->getQuestionBySubject($subject);        
-
         return $this->render('GameBundle:Game:play.html.twig', array(
             'title'         => 'À vous de jouer !',
             'titleTab'      => 'Let\'s play !',
             'gamers'        => $gamers,
-            'subjects'      => $subjects,
-            // 'questions'     => $subjects
+            'subjects'      => $subjects
         ));
     }
 
@@ -47,6 +44,7 @@ class GameController extends Controller
             $gamerId = $request->get('gamerId');
 
             $gamer = $em->getRepository('UserBundle:Gamer')->find($gamerId);
+            $schoolClass = $em->getRepository('GameBundle:SchoolClass')->find();
             // $schoolClass = $gamer->getSchoolClass();
 
             if ($subjectId != null) {

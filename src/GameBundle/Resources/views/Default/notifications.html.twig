@@ -120,7 +120,7 @@
                   <td>{{ notValidQuestion.topic.nameTopic }} </td>
                   <td>Famille {{ notValidQuestion.userCount.username }} </td>
                   <td><a href="{{ path('validate_question', { 'id': notValidQuestion.id }) }}"><span class="glyphicon glyphicon-wrench"></span></a></td>
-                  <td><a data-toggle="modal" data-target="#modalDeleteQuestion{{ notValidQuestion.id }}"><span class="glyphicon glyphicon-trash"></span></a></td>
+                  <td><a data-toggle="modal" data-target="#modalDeleteNotValidQuestion{{ notValidQuestion.id }}"><span class="glyphicon glyphicon-trash"></span></a></td>
 
                   <!-- Modal -->
                     <div class="modal fade" id="modalDeleteNotValidQuestion{{ notValidQuestion.id }}" tabindex="-1" role="dialog" aria-labelledby="modalDeleteNotValidQuestionLabel" aria-hidden="true">

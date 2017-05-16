@@ -3,6 +3,9 @@
 namespace GameBundle\Repository;
 
 use Doctrine\ORM\EntityRepository;
+use Doctrine\ORM\Query\Expr\Join;
+use GameBundle\Entity\Topic;
+use GameBundle\Entity\Question;
 
 /**
  * SubjectRepository
@@ -13,6 +16,17 @@ use Doctrine\ORM\EntityRepository;
 class SubjectRepository extends EntityRepository
 {
     public function findAll() {
-        return $this->findBy(array(), array('id' => 'ASC'));
+        return $this->createQueryBuilder('s')
+            ->join(Topic::class, 't', Join::WITH, 's = t.subject')
+            ->join(Question::class, 'q', Join::WITH, 't = q.topic')
+            ->where('q.isValid = :isValid')
+            ->setParameter('isValid', true)
+            ->having('COUNT(q) >= :counter')
+            ->setParameter('counter', 2)
+            ->groupBy('s')
+            ->orderBy('s.id', 'ASC')
+            ->getQuery()
+            ->getResult()
+		;
     }
 }

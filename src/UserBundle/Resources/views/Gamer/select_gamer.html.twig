@@ -24,30 +24,21 @@
         <h3>{{ title1 }}</h3>
         
         {% if gamers %}
-            <div class="gamer">
-          {% for gamer in gamers %}
-              <form action=" {{ path('play') }} " method="GET">
-              <p><label><input type="checkbox" name="gamer[]" value="{{ gamer.id }}" /> {{ gamer.username }}</label></p>
-              {#<p>Meilleur score : {{ gamer.bestScore }}</p>
-              <p>Nombre de parties gagnées : {{ gamer.gameWonNb }}</p>
-              <p>Nombre de bonnes réponses : {{ gamer.rightAnswerNb }}</p>
-              <p>Niveau : {{ gamer.level }}</p>#}
-
-              {#<form action=" {{ path('play') }} " method="GET">
-              <label><input type="checkbox" name="gamer[]" value="{{ gamer.id }}" /> Sélectionner ce joueur</label>#}
-          {% endfor %}
-            </div>
+          <div class="gamer">
+            {% for gamer in gamers %}
+                <form action=" {{ path('play') }} " method="GET">
+                <p><label><input type="checkbox" name="gamer[]" value="{{ gamer.id }}" /> {{ gamer.username }}</label></p>
+            {% endfor %}
+          </div>
       </div>
       <div class="col-lg-3 col-sm-5 center">
 
         <h3>{{ title2 }}</h3>
-          <div class="chooseSubject">
-          {#{% if questions and questions|length >= 5 %}#}
-            {% for subject in subjects %}
+        <div class="chooseSubject">
+
+          {% for subject in subjects %}
               <p><label><input type="checkbox" name="subject[]" value="{{ subject.id }}" /> {{ subject.nameSubject }}</label><br/></p>
-            {% endfor %}
-          {#{% endif %}#}
-          </div>
+          {% endfor %}
         </div>
 
       </div>
