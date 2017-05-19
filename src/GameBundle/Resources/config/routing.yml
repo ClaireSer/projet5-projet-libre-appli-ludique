@@ -94,3 +94,7 @@ change_stats:
         cumulScore: \d+
         level: \d+
         index: \d+
+
+help:
+    path:    /help
+    defaults: { _controller: GameBundle:HomeFamily:help }

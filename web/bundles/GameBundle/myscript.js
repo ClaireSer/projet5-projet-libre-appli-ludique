@@ -43,8 +43,7 @@ $(function () {
         dice.children().hide();
         $('.dice .die' + randomNumber).show();
 
-        rowGamer = Game(rowGamer, 'activeCase' + rowGamer);
-
+        rowGamer = Game(rowGamer, 'activeCase' + rowGamer);        
     })
 
     function Game(rowGamer, activeCase) { 
@@ -139,6 +138,7 @@ $(function () {
             $('#modal').delay(1000).fadeIn('slow');
         }
         return rowGamer;
+        
     }
 
     function ajaxRandomQuestion(urlType, color) {
@@ -228,6 +228,7 @@ $(function () {
                 } else {
                     that.css('background-color', '#f45c6e');
                 }
+                // dice.children().hide();            
 
             },
             error: function () {

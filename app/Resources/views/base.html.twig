@@ -53,6 +53,7 @@
                             </li>
                         {% endif %}
                         <li class="{% if settings is defined %}active{% endif %}"><a href=" {{ path('settings_user', { 'id': app.user.id }) }} ">Paramètres</a></li>                        
+                        <li class="{% if help is defined %}active{% endif %}"><a href=" {{ path('help') }} ">Aide et règles du jeu</a></li>                        
                     {% endif %}
                 </ul>
                 <ul class="nav navbar-nav navbar-right">

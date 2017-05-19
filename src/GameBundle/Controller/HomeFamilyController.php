@@ -54,4 +54,11 @@ class HomeFamilyController extends Controller
             'notValidQuestions'    => $myNotValidQuestions
         ));
     }
+
+    public function helpAction(Request $request)
+    {
+        return $this->render('GameBundle:Default:help.html.twig');
+        
+    } 
+    
 }
