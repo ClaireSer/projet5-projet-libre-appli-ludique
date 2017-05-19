@@ -43,18 +43,14 @@ $(function () {
         dice.children().hide();
         $('.dice .die' + randomNumber).show();
 
-        // cumulDiceGamerArray[rowGamer] += randomNumber; //old
-        // Game(cumulDiceGamerArray[rowGamer], 'activeCase' + rowGamer);   //old
-        rowGamer = Game(rowGamer, 'activeCase' + rowGamer);   //new
+        rowGamer = Game(rowGamer, 'activeCase' + rowGamer);
 
     })
 
-    function Game(rowGamer, activeCase) { //mettre randomNumber
-        var cumulDiceGamer = cumulDiceGamerArray[rowGamer] + randomNumber; //new
+    function Game(rowGamer, activeCase) { 
+        var cumulDiceGamer = cumulDiceGamerArray[rowGamer] + randomNumber; 
 
         if (cumulDiceGamer > 64) {
-            // cumulDiceGamerArray[rowGamer] -= randomNumber; //old
-
             if (rowGamer == len - 1) {
                 rowGamer = 0;
             } else {
@@ -115,7 +111,7 @@ $(function () {
                 var that = $(this);
 
                 if ($(this).text() == cumulDiceGamer) {
-                    cumulDiceGamerArray[rowGamer] = cumulDiceGamer; //new
+                    cumulDiceGamerArray[rowGamer] = cumulDiceGamer;
                     $(this).addClass(activeCase);
                     $('.questions').show();
 

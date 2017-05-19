@@ -69,6 +69,18 @@ table.board td {
     background: url("images/musique.png") no-repeat center;
     color: transparent;
 }
+.activeCase7{
+    background: url("images/coeur.png") no-repeat center;
+    color: transparent;
+}
+.activeCase8{
+    background: url("images/oeil.png") no-repeat center;
+    color: transparent;
+}
+.activeCase9{
+    background: url("images/etoile.png") no-repeat center;
+    color: transparent;
+}
 .multipleGamers{
     background: url("images/multiple.png") no-repeat center !important;
     background-color: white !important;
