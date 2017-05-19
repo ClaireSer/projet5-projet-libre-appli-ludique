@@ -21,11 +21,30 @@
 
     <h3>Modération des questions</h3>
 
+    <div class="alert alert-danger">
+      {% if questionCP|length < 10 %}
+          <p>Attention, il faut au moins 10 questions validées du niveau CP pour que les joueurs de ce niveau puissent jouer.</p>
+      {% endif %}
+      {% if questionCE1|length < 10 %}
+          <p>Attention, il faut au moins 10 questions validées du niveau CE1 pour que les joueurs de ce niveau puissent jouer.</p>
+      {% endif %}
+      {% if questionCE2|length < 10 %}
+          <p>Attention, il faut au moins 10 questions validées du niveau CE2 pour que les joueurs de ce niveau puissent jouer.</p>
+      {% endif %}
+      {% if questionCM1|length < 10 %}
+          <p>Attention, il faut au moins 10 questions validées du niveau CM1 pour que les joueurs de ce niveau puissent jouer.</p>
+      {% endif %}
+      {% if questionCM2|length < 10 %}
+          <p>Attention, il faut au moins 10 questions validées du niveau CM2 pour que les joueurs de ce niveau puissent jouer.</p>
+      {% endif %}
+    </div>
+    
+
     <div class="row">
       <div class="col-sm-offset-4 col-sm-4" >
         <ul class="nav nav-pills nav-justified">
-          <li role="presentation" class="active"><a href="#validQuestions" data-toggle="pill">Questions valides</a></li>
-          <li role="presentation"><a href="#notValidQuestions" data-toggle="pill">Questions non valides</a></li>
+          <li role="presentation" class="active"><a href="#validQuestions" data-toggle="pill">Questions validées</a></li>
+          <li role="presentation"><a href="#notValidQuestions" data-toggle="pill">Questions non validées</a></li>
         </ul>
       </div>
     </div>
@@ -38,6 +57,7 @@
               <th>Question</th>
               <th>Matière</th>
               <th>Sous-matière</th>
+              <th>Niveau</th>
               <th>Auteur</th>        
               <th>Modération</th>
               <th>Suppression</th>
@@ -49,6 +69,7 @@
                 <td>{{ validQuestion.question }} </td>
                 <td>{{ validQuestion.topic.subject.nameSubject }} </td>
                 <td>{{ validQuestion.topic.nameTopic }} </td>
+                <td>{{ validQuestion.schoolClass.schoolClass }} </td>
                 <td>
                   {% if "ROLE_USER" in validQuestion.userCount.roles %}
                     Famille {{ validQuestion.userCount.username }} 

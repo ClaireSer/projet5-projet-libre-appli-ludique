@@ -19,18 +19,6 @@ class TopicType extends AbstractType
   public function buildForm(FormBuilderInterface $builder, array $options)
   {
     $builder
-      // ->add('subject', EntityType::class, array(
-      //     'class'         => 'GameBundle:Subject',
-      //     'choice_label'  => 'nameSubject',
-      //     'label'         => 'Matière',
-      //     'placeholder'   => '-- Choisissez une matière --'
-      // ))
-      // ->add('nameTopic', EntityType::class, array(
-      //     'class'         => 'GameBundle:Topic',
-      //     'choice_label'  => 'nameTopic',
-      //     'label'         => 'Sous-matière',
-      //     'placeholder'   => '-- Choisissez une sous-matière --'
-      // ))
       ->add('subject', EntityType::class, array(
           'class'         => 'GameBundle:Subject',
           'choice_label'  => 'nameSubject',

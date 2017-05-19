@@ -53,6 +53,26 @@ table.board td {
     background: url("images/rabbit.png") no-repeat center;
     color: transparent;
 }
+.activeCase3{
+    background: url("images/eiffel.png") no-repeat center;
+    color: transparent;
+}
+.activeCase4{
+    background: url("images/bird.png") no-repeat center;
+    color: transparent;
+}
+.activeCase5{
+    background: url("images/trefle.png") no-repeat center;
+    color: transparent;
+}
+.activeCase6{
+    background: url("images/musique.png") no-repeat center;
+    color: transparent;
+}
+.multipleGamers{
+    background: url("images/multiple.png") no-repeat center !important;
+    background-color: white !important;
+}
 .pion {
     float: left;
     margin: 10px;
@@ -183,6 +203,9 @@ div.infoQuestion div {
 
 .messageInfo, .infoAnswer {
     font-size: 20px;    
+}
+.table > tbody > tr > td {
+     vertical-align: middle;
 }
 
 /*modal*/

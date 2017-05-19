@@ -39,7 +39,11 @@
           {% for subject in subjects %}
               <p><label><input type="checkbox" name="subject[]" value="{{ subject.id }}" /> {{ subject.nameSubject }}</label><br/></p>
           {% endfor %}
+          
         </div>
+        {% if subjects|length < 4 %}
+          <div><span class="glyphicon glyphicon-time"> Patience, il n'y a pas encore assez de questions pour certains thèmes.</span></div>
+        {% endif %}
 
       </div>
     </div>  

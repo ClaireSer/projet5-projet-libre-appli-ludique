@@ -19,6 +19,11 @@
                 {{ form_errors(form) }}
 
                 <div class="form-group">
+                    {{ form_row(form.topic) }}
+                    Vous souhaitez en créer un nouveau ? <br/>
+                    <a href="{{ path('options_question') }}" class="btn btn-default"><span class="glyphicon glyphicon-hand-right"> Ajouter une catégorie</span></a>
+                </div>
+                <div class="form-group">
                     {{ form_row(form.question) }}
                 </div>
                 <div class="form-group form_answers">
@@ -30,9 +35,6 @@
                 </div>
                 <div class="form-group">
                     {{ form_row(form.difficulty) }}
-                </div>
-                <div class="form-group">
-                    {{ form_row(form.topic) }}
                 </div>
                 
                 {{ form_widget(form.save, {'attr': {'class': 'btn btn-primary'}}) }}

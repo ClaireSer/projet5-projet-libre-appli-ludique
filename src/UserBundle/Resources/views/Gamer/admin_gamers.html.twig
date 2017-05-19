@@ -21,7 +21,7 @@
 
     <h3>Gestion des joueurs</h3>
 
-    {% if gamers %}
+    {% if gamers %}        
       <div class="tab-content">
         <div class="row tab-pane fade in active" id="#">
           <table class="table table-striped">
@@ -82,12 +82,17 @@
           </table>
         </div>
       </div>
-    <a href=" {{ path('add_gamer') }} "><button class="btn btn-primary" type="button">Ajoutez un joueur</button></a>
+
+      {% if gamers|length < 10 %}
+        <a href=" {{ path('add_gamer') }} "><button class="btn btn-primary" type="button">Ajoutez un joueur</button></a>
+      {% else %}
+        <a href="#"><button class="btn btn-primary disabled" type="button">Ajoutez un joueur</button></a>
+        <p>Vous n'êtes pas autorisé à créer plus de 10 joueurs.</p>
+      {% endif %}
 
     {% else %}
       <p>Il n'y a pas encore de joueurs.</p>
       <a href=" {{ path('add_gamer') }} "><button class="btn btn-primary" type="button">Ajoutez en un !</button></a>
-      
     {% endif %}
   </div>
 {% endblock %}

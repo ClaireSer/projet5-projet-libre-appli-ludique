@@ -14,12 +14,15 @@ class QuestionRepository extends \Doctrine\ORM\EntityRepository
         return $this->createQueryBuilder('q')
             ->leftJoin('q.topic', 't')
             ->leftJoin('q.userCount', 'u')
-            ->leftJoin('t.subject', 's')
+            ->leftJoin('t.subject', 'su')
+            ->leftJoin('q.schoolClass', 'sc')
             ->addSelect('t')
             ->addSelect('u')
-            ->addSelect('s')
+            ->addSelect('su')
+            ->addSelect('sc')
             ->where('q.isValid = :isValid')
             ->setParameter('isValid', $validity)
+            ->orderBy('q.schoolClass', 'ASC')
             ->getQuery()
             ->getArrayResult()
 		;
@@ -53,7 +56,7 @@ class QuestionRepository extends \Doctrine\ORM\EntityRepository
 		;
     }
 
-    public function getRandomQuestionBySubject($subject, $schoolLevel, $idQuestionList) {
+    public function getRandomQuestionBySubject($subject, $idQuestionList) {
         $randomId = array_rand($idQuestionList, 1);
         
         $qb = $this->createQueryBuilder('q');
@@ -68,10 +71,10 @@ class QuestionRepository extends \Doctrine\ORM\EntityRepository
             ->addSelect('sc')
             ->where('t.subject = :subject')
             ->andWhere('q.id = :randomId')
-            ->andWhere('q.schoolClass = :schoolLevel')
+            // ->andWhere('q.schoolClass = :schoolLevel')
             ->setParameter('subject', $subject)
             ->setParameter('randomId', $idQuestionList[$randomId])
-            ->setParameter('schoolLevel', $schoolLevel)
+            // ->setParameter('schoolLevel', $schoolLevel)
             ->getQuery()
             ->getArrayResult()[0]
         ;
@@ -89,6 +92,19 @@ class QuestionRepository extends \Doctrine\ORM\EntityRepository
             ->andWhere('q.isValid = :isValid')
             ->setParameter('userCount', $userCount)
             ->setParameter('isValid', $validity)
+            ->getQuery()
+            ->getResult()
+		;
+    }
+
+    public function getQuestionsBySchoolClass($schoolClass) {
+        return $this->createQueryBuilder('q')
+            ->leftJoin('q.schoolClass', 'sc')
+            ->addSelect('sc')
+            ->where('q.isValid = :isValid')
+            ->andWhere('sc.schoolClass = :schoolClass')
+            ->setParameter('isValid', true)
+            ->setParameter('schoolClass', $schoolClass)
             ->getQuery()
             ->getResult()
 		;

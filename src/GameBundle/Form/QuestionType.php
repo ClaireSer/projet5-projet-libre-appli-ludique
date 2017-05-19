@@ -22,41 +22,39 @@ class QuestionType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-        ->add('question',      TextType::class)
-        ->add('answers',   CollectionType::class, array(
-            'entry_type'    => AnswerType::class,
-            'allow_add'     => true,
-            'allow_delete'  => true,
-            'label'         => false
-        ))
-        ->add('schoolClass', EntityType::class, array(
-            'class'         => 'GameBundle:SchoolClass',
-            'choice_label'  => 'schoolClass',
-            'label'         => 'Niveau',
-            'placeholder'   => '-- Choisissez le niveau --',
-            'query_builder' => function (EntityRepository $er) {
-                return $er->orderBy();
-            }
-        ))
-        ->add('difficulty',   ChoiceType::class, array(
-            'label'         => 'Difficulté',
-            'placeholder'   => '-- Choisissez la difficulté --',
-            'choices'       => array(
-                'Facile'        => 'facile',
-                'Moyen'         => 'moyen',
-                'Difficile'     => 'difficile'
-            )
-        ))
-        ->add('topic', EntityType::class, array(
-          'class'         => 'GameBundle:Topic',
-          'choice_label'  => 'nameTopic',
-          'group_by'      => 'subject.nameSubject', // plan B
-          'label'         => 'Matière',
-          'placeholder'   => '-- Choisissez une sous-matière --'
-        ))
-        // plan A not working
-        // ->add('topic',      TopicType::class, array('label' => false))
-        ->add('save',      SubmitType::class)
+            ->add('question',      TextType::class)
+            ->add('answers',   CollectionType::class, array(
+                'entry_type'    => AnswerType::class,
+                'allow_add'     => true,
+                'allow_delete'  => true,
+                'label'         => false
+            ))
+            ->add('schoolClass', EntityType::class, array(
+                'class'         => 'GameBundle:SchoolClass',
+                'choice_label'  => 'schoolClass',
+                'label'         => 'Niveau',
+                'placeholder'   => '-- Choisissez le niveau --',
+                'query_builder' => function (EntityRepository $er) {
+                    return $er->orderBy();
+                }
+            ))
+            ->add('difficulty',   ChoiceType::class, array(
+                'label'         => 'Difficulté',
+                'placeholder'   => '-- Choisissez la difficulté --',
+                'choices'       => array(
+                    'Facile'        => 'facile',
+                    'Moyen'         => 'moyen',
+                    'Difficile'     => 'difficile'
+                )
+            ))
+            ->add('topic', EntityType::class, array(
+            'class'         => 'GameBundle:Topic',
+            'choice_label'  => 'nameTopic',
+            'group_by'      => 'subject.nameSubject',
+            'label'         => 'Quel est le thème de votre question ?',
+            'placeholder'   => '-- Choisissez une sous-matière --'
+            ))
+            ->add('save',      SubmitType::class)
         ;
     }
     
