@@ -111,6 +111,8 @@ class GameController extends Controller
             $gamerId = $request->get('gamerId');
             $gameWonNb = $request->get('gameWonNb');
             $gameWonNb++;
+            $gamePlayedNb = $request->get('gamePlayedNb');
+            $gamePlayedNb++;
             $cumulScore = $request->get('cumulScore');
             $cumulScore += $finalScore;
             $level = $request->get('level');
@@ -119,6 +121,7 @@ class GameController extends Controller
 
             $gamerReturn = $em->getRepository('UserBundle:Gamer')->find($gamerId);
             $gamerReturn->setGameWonNb($gameWonNb);
+            $gamerReturn->setGamePlayedNb($gamePlayedNb);
             $gamerReturn->setCumulScore($cumulScore);
             if ($finalScore > $bestScore) {
                 $gamerReturn->setBestScore($bestScore);
@@ -133,6 +136,7 @@ class GameController extends Controller
             return new JsonResponse(array(
                 'bestScore'     => $gamerReturn->getBestScore(),
                 'gameWonNb'     => $gamerReturn->getGameWonNb(),
+                'gamePlayedNb'  => $gamerReturn->getGamePlayedNb(),
                 'cumulScore'    => $gamerReturn->getCumulScore(),
                 'level'         => $gamerReturn->getLevel()
             ));

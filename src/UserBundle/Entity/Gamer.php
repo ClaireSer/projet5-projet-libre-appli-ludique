@@ -79,6 +79,13 @@ class Gamer
     /**
      * @var int
      *
+     * @ORM\Column(name="game_played_nb", type="integer")
+     */
+    private $gamePlayedNb;
+
+    /**
+     * @var int
+     *
      * @ORM\Column(name="right_answer_nb", type="integer")
      */
     private $rightAnswerNb;
@@ -281,6 +288,30 @@ class Gamer
     public function getGameWonNb()
     {
         return $this->gameWonNb;
+    }
+
+    /**
+     * Set gamePlayedNb
+     *
+     * @param integer $gamePlayedNb
+     *
+     * @return Gamer
+     */
+    public function setGamePlayedNb($gamePlayedNb)
+    {
+        $this->gamePlayedNb = $gamePlayedNb;
+
+        return $this;
+    }
+
+    /**
+     * Get gamePlayedNb
+     *
+     * @return int
+     */
+    public function getGamePlayedNb()
+    {
+        return $this->gamePlayedNb;
     }
 
     /**

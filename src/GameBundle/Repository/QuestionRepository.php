@@ -72,9 +72,11 @@ class QuestionRepository extends \Doctrine\ORM\EntityRepository
             ->where('t.subject = :subject')
             ->andWhere('q.id = :randomId')
             // ->andWhere('q.schoolClass = :schoolLevel')
+            ->andWhere('q.isValid = :isValid')            
             ->setParameter('subject', $subject)
             ->setParameter('randomId', $idQuestionList[$randomId])
             // ->setParameter('schoolLevel', $schoolLevel)
+            ->setParameter('isValid', true)
             ->getQuery()
             ->getArrayResult()[0]
         ;

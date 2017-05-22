@@ -67,6 +67,34 @@ $(function () {
             $('.buttonDice').addClass('disabled');
             $('.stats .panel-collapse').addClass('in');
 
+            finalScore = parseInt($('.stats:nth(' + rowGamer + ') .panel-title span').text());
+            bestScore = parseInt($('.stats:nth(' + rowGamer + ') .panel-body p:nth(1) span').text());
+            finalScore += 30;
+            $('.stats:nth(' + rowGamer + ') .panel-title span').html(finalScore);
+            var gameWonNb = parseInt($('.stats:nth(' + rowGamer + ') p:nth(2) span:nth(0)').text());
+            var gamePlayedNb = parseInt($('.stats:nth(' + rowGamer + ') p:nth(2) span:nth(1)').text());
+            var cumulScore = parseInt($('.stats:nth(' + rowGamer + ') p:nth(0) span').text());
+            var level = parseInt($('.stats:nth(' + rowGamer + ') p:nth(4) span').text());
+            var exprStats = /(^\D+)\d+\/\d+\/\d+\/\d+\/\d+\/\d+\/\d+/;
+            pathStatsCurrent = pathStats.replace(exprStats, '$1' + finalScore + '/' + bestScore + '/' + gamerId + '/' + gameWonNb + '/' + gamePlayedNb + '/' + cumulScore + '/' + level);
+
+            $.ajax({
+                url: pathStatsCurrent,
+                type: 'POST',
+                dataType: 'json',
+                success: function (response) {
+                    $('.stats:nth(' + rowGamer + ') p:nth(0) span').html(response.cumulScore);
+                    $('.stats:nth(' + rowGamer + ') p:nth(1) span').html(response.bestScore);
+                    $('.stats:nth(' + rowGamer + ') p:nth(2) span:nth(0)').html(response.gameWonNb);
+                    $('.stats:nth(' + rowGamer + ') p:nth(2) span:nth(1)').html(response.gamePlayedNb);
+                    $('.stats:nth(' + rowGamer + ') p:nth(4) span').html(response.level);
+                },
+                error: function () {
+                    alert('erreur score');
+                }
+            });
+
+
             var txtWin = 'Bravo ! <br/>Tu as fini la partie en premier. <br/>Tu bénéficies d\'un bonus de 30 points.<br/>';
             var scoreWinner = Math.max($('.stats:nth(0) .panel-title span').text(), $('.stats:nth(1) .panel-title span').text(), $('.stats:nth(2) .panel-title span').text());
             var winnerName = '';
@@ -77,31 +105,6 @@ $(function () {
             })
             var winner = 'Le gagnant de la partie est <strong>' + winnerName + '</strong, avec un score de ' + scoreWinner + ' points.<br/>';
             $('.messageInfo').html(txtWin).append(winner).fadeIn();
-
-            finalScore = parseInt($('.stats:nth(' + rowGamer + ') .panel-title span').text());
-            bestScore = parseInt($('.stats:nth(' + rowGamer + ') .panel-body p:nth(1) span').text());
-            finalScore += 30;
-            $('.stats:nth(' + rowGamer + ') .panel-title span').html(finalScore);
-            var gameWonNb = parseInt($('.stats:nth(' + rowGamer + ') p:nth(2) span').text());
-            var cumulScore = parseInt($('.stats:nth(' + rowGamer + ') p:nth(0) span').text());
-            var level = parseInt($('.stats:nth(' + rowGamer + ') p:nth(4) span').text());
-            var exprStats = /(^\D+)\d+\/\d+\/\d+\/\d+\/\d+\/\d+/;
-            pathStatsCurrent = pathStats.replace(exprStats, '$1' + finalScore + '/' + bestScore + '/' + gamerId + '/' + gameWonNb + '/' + cumulScore + '/' + level);
-
-            $.ajax({
-                url: pathStatsCurrent,
-                type: 'POST',
-                dataType: 'json',
-                success: function (response) {
-                    $('.stats:nth(' + rowGamer + ') p:nth(0) span').html(response.cumulScore);
-                    $('.stats:nth(' + rowGamer + ') p:nth(1) span').html(response.bestScore);
-                    $('.stats:nth(' + rowGamer + ') p:nth(2) span').html(response.gameWonNb);
-                    $('.stats:nth(' + rowGamer + ') p:nth(4) span').html(response.level);
-                },
-                error: function () {
-                    alert('erreur score');
-                }
-            });
 
         } else {
             $('.board td').each(function () {
