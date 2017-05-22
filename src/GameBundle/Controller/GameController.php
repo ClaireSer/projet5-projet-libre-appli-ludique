@@ -106,39 +106,57 @@ class GameController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
         if($request->isXmlHttpRequest()) {
+
             $finalScore = $request->get('finalScore');
-            $bestScore = $request->get('bestScore');
             $gamerId = $request->get('gamerId');
-            $gameWonNb = $request->get('gameWonNb');
-            $gameWonNb++;
-            $gamePlayedNb = $request->get('gamePlayedNb');
-            $gamePlayedNb++;
-            $cumulScore = $request->get('cumulScore');
-            $cumulScore += $finalScore;
-            $level = $request->get('level');
-            $level++;
-            // $index = $request->get('index');
 
             $gamerReturn = $em->getRepository('UserBundle:Gamer')->find($gamerId);
+            $gameWonNb = $gamerReturn->getGameWonNb();
+            $gameWonNb++;
             $gamerReturn->setGameWonNb($gameWonNb);
-            $gamerReturn->setGamePlayedNb($gamePlayedNb);
-            $gamerReturn->setCumulScore($cumulScore);
-            if ($finalScore > $bestScore) {
-                $gamerReturn->setBestScore($bestScore);
-            }
-            // if ($cumulScore > 300 * $index) {
-            //     $gamerReturn->setLevel($level);                    
-            //     $index++;
-            // }
             $em->persist($gamerReturn);
+            
+            $allGamersId = array();
+            $content = $request->getContent();
+            if (!empty($content)) {
+                $allGamersId = json_decode($content, true);
+            }
+
+            $gamers = [];
+            foreach ($allGamersId as $id) {
+                $gamers[] = $em->getRepository('UserBundle:Gamer')->find($id);
+            }
+            foreach ($gamers as $gamer) {
+                $cumulScore = $gamer->getCumulScore();
+                $cumulScore += $finalScore;
+                $gamer->setCumulScore($cumulScore);
+
+                $bestScore = $gamer->getBestScore();
+                if ($finalScore > $bestScore) {
+                    $gamer->setBestScore($finalScore);
+                }
+
+                $gamePlayedNb = $gamer->getGamePlayedNb();
+                $gamePlayedNb++;
+                $gamer->setGamePlayedNb($gamePlayedNb);
+
+                $level = $gamer->getLevel();
+                if ($cumulScore > 1500 * ($level + 1)) {
+                    $level++;
+                    $gamer->setLevel($level);
+                }
+
+                $em->persist($gamer);
+            }
+
             $em->flush();
 
             return new JsonResponse(array(
-                'bestScore'     => $gamerReturn->getBestScore(),
-                'gameWonNb'     => $gamerReturn->getGameWonNb(),
-                'gamePlayedNb'  => $gamerReturn->getGamePlayedNb(),
-                'cumulScore'    => $gamerReturn->getCumulScore(),
-                'level'         => $gamerReturn->getLevel()
+                'bestScore'     => $gamers->getBestScore(),
+                'gameWonNb'     => $gamers->getGameWonNb(),
+                'gamePlayedNb'  => $gamers->getGamePlayedNb(),
+                'cumulScore'    => $gamers->getCumulScore(),
+                'level'         => $gamers->getLevel()
             ));
         }
         return new Response('Erreur');

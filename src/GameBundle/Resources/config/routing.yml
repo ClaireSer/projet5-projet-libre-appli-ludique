@@ -83,18 +83,12 @@ valid_answer:
         bonus: \d+
 
 change_stats:
-    path: /bestscore/{finalScore}/{bestScore}/{gamerId}/{gameWonNb}/{gamePlayedNb}/{cumulScore}/{level}/{index}
+    path: /stats/{finalScore}/{gamerId}
     defaults: { _controller: GameBundle:Game:changeStats }
     requirements: 
         _method: POST
         finalScore: \d+
-        bestScore: \d+
         gamerId: \d+
-        gameWonNb: \d+
-        gamePlayedNb: \d+
-        cumulScore: \d+
-        level: \d+
-        index: \d+
 
 help:
     path:    /help

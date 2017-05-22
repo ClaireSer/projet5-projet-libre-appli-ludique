@@ -13,11 +13,13 @@ $(function () {
     var pathValidAnswerCurrent;
     var randomNumber;
     var bonusDifficulty;
-    var finalScore;
-    var bestScore;
     var gamerId;
     var exprUrl;
-    // var index = 1;
+
+    var allGamersId = [];
+    $('.stats').each(function (i) {
+        allGamersId[i] = $(this).children().children().children('p:last').text();
+    })
 
     dice.children().hide();
 
@@ -67,21 +69,18 @@ $(function () {
             $('.buttonDice').addClass('disabled');
             $('.stats .panel-collapse').addClass('in');
 
-            finalScore = parseInt($('.stats:nth(' + rowGamer + ') .panel-title span').text());
-            bestScore = parseInt($('.stats:nth(' + rowGamer + ') .panel-body p:nth(1) span').text());
+            var finalScore = parseInt($('.stats:nth(' + rowGamer + ') .panel-title span').text());
             finalScore += 30;
             $('.stats:nth(' + rowGamer + ') .panel-title span').html(finalScore);
-            var gameWonNb = parseInt($('.stats:nth(' + rowGamer + ') p:nth(2) span:nth(0)').text());
-            var gamePlayedNb = parseInt($('.stats:nth(' + rowGamer + ') p:nth(2) span:nth(1)').text());
-            var cumulScore = parseInt($('.stats:nth(' + rowGamer + ') p:nth(0) span').text());
-            var level = parseInt($('.stats:nth(' + rowGamer + ') p:nth(4) span').text());
-            var exprStats = /(^\D+)\d+\/\d+\/\d+\/\d+\/\d+\/\d+\/\d+/;
-            pathStatsCurrent = pathStats.replace(exprStats, '$1' + finalScore + '/' + bestScore + '/' + gamerId + '/' + gameWonNb + '/' + gamePlayedNb + '/' + cumulScore + '/' + level);
+            var exprStatsRegex = /(^\D+)\d+\/\d+/;
+            pathStatsCurrent = pathStats.replace(exprStatsRegex, '$1' + finalScore + '/' + gamerId);
 
             $.ajax({
                 url: pathStatsCurrent,
                 type: 'POST',
                 dataType: 'json',
+                contentType: 'application/json',
+                data: JSON.stringify(allGamersId),
                 success: function (response) {
                     $('.stats:nth(' + rowGamer + ') p:nth(0) span').html(response.cumulScore);
                     $('.stats:nth(' + rowGamer + ') p:nth(1) span').html(response.bestScore);
@@ -93,7 +92,6 @@ $(function () {
                     alert('erreur score');
                 }
             });
-
 
             var txtWin = 'Bravo ! <br/>Tu as fini la partie en premier. <br/>Tu bénéficies d\'un bonus de 30 points.<br/>';
             var scoreWinner = Math.max($('.stats:nth(0) .panel-title span').text(), $('.stats:nth(1) .panel-title span').text(), $('.stats:nth(2) .panel-title span').text());

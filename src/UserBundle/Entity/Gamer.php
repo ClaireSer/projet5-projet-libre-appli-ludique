@@ -123,6 +123,30 @@ class Gamer
     }
 
     /**
+     * Set schoolClass
+     *
+     * @param \GameBundle\Entity\SchoolClass $schoolClass
+     *
+     * @return Gamer
+     */
+    public function setSchoolClass(SchoolClass $schoolClass)
+    {
+        $this->schoolClass = $schoolClass;
+
+        return $this;
+    }
+
+    /**
+     * Get schoolClass
+     *
+     * @return \GameBundle\Entity\SchoolClass
+     */
+    public function getSchoolClass()
+    {
+        return $this->schoolClass;
+    }
+
+    /**
      * Set id
      *
      * @param int $id
@@ -360,29 +384,5 @@ class Gamer
     public function getLevel()
     {
         return $this->level;
-    }
-
-    /**
-     * Set schoolClass
-     *
-     * @param \GameBundle\Entity\SchoolClass $schoolClass
-     *
-     * @return Gamer
-     */
-    public function setSchoolClass(SchoolClass $schoolClass)
-    {
-        $this->schoolClass = $schoolClass;
-
-        return $this;
-    }
-
-    /**
-     * Get schoolClass
-     *
-     * @return \GameBundle\Entity\SchoolClass
-     */
-    public function getSchoolClass()
-    {
-        return $this->schoolClass;
     }
 }
