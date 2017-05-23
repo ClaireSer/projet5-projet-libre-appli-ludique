@@ -19,10 +19,8 @@
     {% endfor %}
 
     <div class="row selectGamer">
-      <div class="col-lg-offset-3 col-lg-3 col-sm-offset-1 col-sm-5 center">
-    
+      <div class="col-lg-offset-3 col-lg-3 col-sm-offset-1 col-sm-5 center">    
         <h3>{{ title1 }}</h3>
-        
         {% if gamers %}
           <div class="gamer">
             {% for gamer in gamers %}
@@ -30,16 +28,20 @@
                 <p><label><input type="checkbox" name="gamer[]" value="{{ gamer.id }}" /> {{ gamer.username }}</label></p>
             {% endfor %}
           </div>
+          <div>
+            <a class="checkAllGamers btn btn-default">Cocher tous les joueurs</a>
+          </div>
       </div>
-      <div class="col-lg-3 col-sm-5 center">
 
+      <div class="col-lg-3 col-sm-5 center">
         <h3>{{ title2 }}</h3>
         <div class="chooseSubject">
-
           {% for subject in subjects %}
               <p><label><input type="checkbox" name="subject[]" value="{{ subject.id }}" /> {{ subject.nameSubject }}</label><br/></p>
           {% endfor %}
-          
+        </div>
+        <div>
+          <a class="checkAllSubjects btn btn-default">Cocher les 4 premiers thèmes</a>
         </div>
         {% if subjects|length < 4 %}
           <div><span class="glyphicon glyphicon-time"> Patience, il n'y a pas encore assez de questions pour certains thèmes.</span></div>
@@ -80,6 +82,32 @@
             } else {
               $('.playButton').addClass('disabled');              
             }
+        });        
+
+        $('.checkAllGamers').on('click', function(e) {
+          e.preventDefault();
+          $('.gamer input:checkbox').each(function(){
+              this.checked = true;
+          });
+          if ($('.chooseSubject input:checked').length == limitCheckedBox) {
+            $('.playButton').removeClass('disabled');
+          }          
+        });
+
+        $('.checkAllSubjects').on('click', function(e) {
+          e.preventDefault();
+          $('.chooseSubject input:checkbox').each(function(i){
+              this.checked = true;
+              if ($('.gamer input:checked').length >= 1) {
+                $('.playButton').removeClass('disabled');            
+              }
+              if ($('.chooseSubject input:checked').length != limitCheckedBox) {
+                $('.playButton').addClass('disabled');
+              }          
+              if (i == 3) {
+                return false;
+              }
+          });
         });
 
     });

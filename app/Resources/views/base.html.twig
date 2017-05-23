@@ -16,62 +16,70 @@
         <nav class="navbar navbar-inverse">
             <div class="container-fluid">
                 <div class="navbar-header">
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#menu" aria-expanded="false">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
                     <a class="navbar-brand" href="{{ path('homepage') }}">Le jeu de l'oie érudit</a>
                 </div>
-                <ul class="nav navbar-nav">
-                    {% if app.user and is_granted('IS_AUTHENTICATED_REMEMBERED') %}
-                        {% if is_granted('ROLE_TEACHER') %}
-                            <li class="dropdown {% if (formElt is defined) or (moderateQuestion is defined) or (optionsQuestion is defined) %}active{% endif %}"><a class="dropdown-toggle" data-toggle="dropdown" href="#">Questions<span class="caret"></span></a>
-                                <ul class="dropdown-menu">
-                                    <li><a href=" {{ path('add_question') }} ">Ajout</a></li>
-                                    <li><a href=" {{ path('moderate_question') }} ">Modération</a></li>
-                                    <li><a href=" {{ path('options_question') }} ">Options</a></li>
-                                </ul>
-                            </li>
-                            {% if is_granted('ROLE_ADMIN') %}
-                                <li class="dropdown {% if adminUser is defined %}active{% endif %}"><a class="dropdown-toggle" data-toggle="dropdown" href="#">Utilisateurs<span class="caret"></span></a>
+                <div class="collapse navbar-collapse" id="menu">
+                    <ul class="nav navbar-nav">
+                        {% if app.user and is_granted('IS_AUTHENTICATED_REMEMBERED') %}
+                            {% if is_granted('ROLE_TEACHER') %}
+                                <li class="dropdown {% if (formElt is defined) or (moderateQuestion is defined) or (optionsQuestion is defined) %}active{% endif %}"><a class="dropdown-toggle" data-toggle="dropdown" href="#">Questions<span class="caret"></span></a>
                                     <ul class="dropdown-menu">
-                                        <li><a href=" {{ path('admin_users') }} ">Gestion</a></li>
+                                        <li><a href=" {{ path('add_question') }} ">Ajout</a></li>
+                                        <li><a href=" {{ path('moderate_question') }} ">Modération</a></li>
+                                        <li><a href=" {{ path('options_question') }} ">Options</a></li>
+                                    </ul>
+                                </li>
+                                {% if is_granted('ROLE_ADMIN') %}
+                                    <li class="dropdown {% if adminUser is defined %}active{% endif %}"><a class="dropdown-toggle" data-toggle="dropdown" href="#">Utilisateurs<span class="caret"></span></a>
+                                        <ul class="dropdown-menu">
+                                            <li><a href=" {{ path('admin_users') }} ">Gestion</a></li>
+                                        </ul>
+                                    </li>
+                                {% endif %}
+                                <li class="{% if listScores is defined %}active{% endif %}"><a href=" {{ path('list_scores') }} ">Scores et classements</a></li>
+                            {% else %}
+                                <li class="{% if (select_gamer is defined) or (game is defined) %}active{% endif %}"><a href=" {{ path('select_gamers') }} ">JOUER</a></li>
+                                <li class="dropdown {% if (adminGamers is defined) or (listScores is defined) %}active{% endif %}"><a class="dropdown-toggle" data-toggle="dropdown" href="#">Le jeu<span class="caret"></span></a>
+                                    <ul class="dropdown-menu">
+                                        <li><a href=" {{ path('admin_gamers') }} ">Vos joueurs</a></li>
+                                        <li><a href=" {{ path('list_scores') }} ">Scores et classements</a></li>
+                                    </ul>
+                                </li>
+                                {#<li class="dropdown {% if (formElt is defined) or (notif is defined) %}active{% endif %}"><a class="dropdown-toggle" data-toggle="dropdown" href="#">Vos questions <span class="badge">{% if notif %}{{ notif }}{% endif %}</span><span class="caret"></span></a>#}
+                                <li class="dropdown {% if (formElt is defined) or (notif is defined) %}active{% endif %}"><a class="dropdown-toggle" data-toggle="dropdown" href="#">Vos questions <span class="badge"></span><span class="caret"></span></a>
+                                    <ul class="dropdown-menu">
+                                        <li><a href=" {{ path('suggest_question') }} ">Proposez des questions !</a></li>
+                                        <li><a href=" {{ path('notifications') }} ">Vos questions <span class="badge"></span></a></li>
                                     </ul>
                                 </li>
                             {% endif %}
-                            <li class="{% if listScores is defined %}active{% endif %}"><a href=" {{ path('list_scores') }} ">Scores et classements</a></li>
-                        {% else %}
-                            <li class="{% if (select_gamer is defined) or (game is defined) %}active{% endif %}"><a href=" {{ path('select_gamers') }} ">JOUER</a></li>
-                            <li class="dropdown {% if (adminGamers is defined) or (listScores is defined) %}active{% endif %}"><a class="dropdown-toggle" data-toggle="dropdown" href="#">Le jeu<span class="caret"></span></a>
-                                <ul class="dropdown-menu">
-                                    <li><a href=" {{ path('admin_gamers') }} ">Vos joueurs</a></li>
-                                    <li><a href=" {{ path('list_scores') }} ">Scores et classements</a></li>
-                                </ul>
-                            </li>
-                            {#<li class="dropdown {% if (formElt is defined) or (notif is defined) %}active{% endif %}"><a class="dropdown-toggle" data-toggle="dropdown" href="#">Vos questions <span class="badge">{% if notif %}{{ notif }}{% endif %}</span><span class="caret"></span></a>#}
-                            <li class="dropdown {% if (formElt is defined) or (notif is defined) %}active{% endif %}"><a class="dropdown-toggle" data-toggle="dropdown" href="#">Vos questions <span class="badge"></span><span class="caret"></span></a>
-                                <ul class="dropdown-menu">
-                                    <li><a href=" {{ path('suggest_question') }} ">Proposez des questions !</a></li>
-                                    <li><a href=" {{ path('notifications') }} ">Vos questions <span class="badge"></span></a></li>
-                                </ul>
-                            </li>
+                            <li class="{% if settings is defined %}active{% endif %}"><a href=" {{ path('settings_user', { 'id': app.user.id }) }} ">Paramètres</a></li>                        
+                            <li class="{% if help is defined %}active{% endif %}"><a href=" {{ path('help') }} ">Aide et règles du jeu</a></li>                        
                         {% endif %}
-                        <li class="{% if settings is defined %}active{% endif %}"><a href=" {{ path('settings_user', { 'id': app.user.id }) }} ">Paramètres</a></li>                        
-                        <li class="{% if help is defined %}active{% endif %}"><a href=" {{ path('help') }} ">Aide et règles du jeu</a></li>                        
-                    {% endif %}
-                </ul>
-                <ul class="nav navbar-nav navbar-right">
-                    {% if app.user and is_granted('IS_AUTHENTICATED_REMEMBERED') %}
-                        {% if is_granted('ROLE_USER') %}
-                            <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#"><span class="glyphicon glyphicon-user"></span> Bienvenue famille {{ app.user.username }} ! <span class="caret"></span></a>
+                    </ul>
+                    <ul class="nav navbar-nav navbar-right">
+                        {% if app.user and is_granted('IS_AUTHENTICATED_REMEMBERED') %}
+                            {% if is_granted('ROLE_USER') %}
+                                <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#"><span class="glyphicon glyphicon-user"></span> Bienvenue famille {{ app.user.username }} ! <span class="caret"></span></a>
+                            {% else %}
+                                <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#"><span class="glyphicon glyphicon-user"></span> Bienvenue Mme/M. {{ app.user.username }} ! <span class="caret"></span></a>
+                            {% endif %}
+                                    <ul class="dropdown-menu">
+                                        <li><a href=" {{ path('logout') }} ">Déconnexion</a></li>
+                                    </ul>
+                                </li>
                         {% else %}
-                            <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#"><span class="glyphicon glyphicon-user"></span> Bienvenue Mme/M. {{ app.user.username }} ! <span class="caret"></span></a>
+                            <li><a href=" {{ path('signup') }} "><span class="glyphicon glyphicon-user"></span> Inscription</a></li>
+                            <li><a href=" {{ path('login') }} "><span class="glyphicon glyphicon-log-in"></span> Connexion</a></li>
                         {% endif %}
-                                <ul class="dropdown-menu">
-                                    <li><a href=" {{ path('logout') }} ">Déconnexion</a></li>
-                                </ul>
-                            </li>
-                    {% else %}
-                        <li><a href=" {{ path('signup') }} "><span class="glyphicon glyphicon-user"></span> Inscription</a></li>
-                        <li><a href=" {{ path('login') }} "><span class="glyphicon glyphicon-log-in"></span> Connexion</a></li>
-                    {% endif %}
-                </ul>
+                    </ul>
+                </div> 
             </div> 
         </nav>
 

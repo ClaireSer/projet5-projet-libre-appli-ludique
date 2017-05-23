@@ -145,19 +145,11 @@ class GameController extends Controller
                     $level++;
                     $gamer->setLevel($level);
                 }
-
                 $em->persist($gamer);
             }
-
             $em->flush();
 
-            return new JsonResponse(array(
-                'bestScore'     => $gamers->getBestScore(),
-                'gameWonNb'     => $gamers->getGameWonNb(),
-                'gamePlayedNb'  => $gamers->getGamePlayedNb(),
-                'cumulScore'    => $gamers->getCumulScore(),
-                'level'         => $gamers->getLevel()
-            ));
+            return new JsonResponse($gamers);
         }
         return new Response('Erreur');
     }
