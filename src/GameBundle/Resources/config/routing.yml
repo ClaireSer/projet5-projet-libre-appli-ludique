@@ -83,11 +83,11 @@ valid_answer:
         bonus: \d+
 
 change_stats:
-    path: /stats/{gamerId}
+    path: /stats/{winnerId}
     defaults: { _controller: GameBundle:Game:changeStats }
     requirements: 
         _method: POST
-        gamerId: \d+
+        winnerId: \d+
 
 help:
     path:    /help

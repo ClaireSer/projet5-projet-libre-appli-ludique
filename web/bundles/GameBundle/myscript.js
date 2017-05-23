@@ -78,8 +78,20 @@ $(function () {
                 finalScores[i] = $(this).children('.panel-heading').children().children().children('span').text();
             })
 
+            var txtWin = 'Bravo ! <br/>Tu as fini la partie en premier. <br/>Tu bénéficies d\'un bonus de 30 points.<br/>';
+            var scoreWinner = Math.max($('.stats:nth(0) .panel-title span').text(), $('.stats:nth(1) .panel-title span').text(), $('.stats:nth(2) .panel-title span').text());
+            var winnerName = '';
+            $('.stats').each(function () {
+                if ($(this).children('.panel-heading').children().children().children('span').text() == scoreWinner) {
+                    winnerName = $(this).children('.panel-heading').children().children().children('em').text();
+                    winnerId = $(this).children('.panel-collapse').children().children('p:last').text()
+                }
+            })
+            var winner = 'Le gagnant de la partie est <strong>' + winnerName + '</strong, avec un score de ' + scoreWinner + ' points.<br/>';
+            $('.messageInfo').html(txtWin).append(winner).fadeIn();
+
             var exprStatsRegex = /(^\D+)\d+/;
-            pathStatsCurrent = pathStats.replace(exprStatsRegex, '$1' + gamerId);
+            pathStatsCurrent = pathStats.replace(exprStatsRegex, '$1' + winnerId);
 
             $.ajax({
                 url: pathStatsCurrent,
@@ -100,17 +112,6 @@ $(function () {
                     alert('erreur score');
                 }
             });
-
-            var txtWin = 'Bravo ! <br/>Tu as fini la partie en premier. <br/>Tu bénéficies d\'un bonus de 30 points.<br/>';
-            var scoreWinner = Math.max($('.stats:nth(0) .panel-title span').text(), $('.stats:nth(1) .panel-title span').text(), $('.stats:nth(2) .panel-title span').text());
-            var winnerName = '';
-            $('.stats .panel-title').each(function () {
-                if ($(this).children().children('span').text() == scoreWinner) {
-                    winnerName = $(this).children().children('em').text();
-                }
-            })
-            var winner = 'Le gagnant de la partie est <strong>' + winnerName + '</strong, avec un score de ' + scoreWinner + ' points.<br/>';
-            $('.messageInfo').html(txtWin).append(winner).fadeIn();
 
         } else {
             $('.board td').each(function () {

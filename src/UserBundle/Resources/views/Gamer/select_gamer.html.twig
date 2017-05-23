@@ -49,27 +49,40 @@
 
       </div>
     </div>
-      
+    <div class="alert alert-warning">
       {% for schoolLevel in schoolLevels %}
-        {% if schoolLevel.schoolClass == 'CP' and schoolLevel.questions|length <= 3 %}
+        {% if schoolLevel.schoolClass == 'CP' and schoolLevel.questions|length == 0 %}
+          <p>Attention, il faut au moins une question de niveau CP.</p>
+        {% elseif schoolLevel.schoolClass == 'CP' and schoolLevel.questions|length <= 3 %}
           <p>Attention, il y a seulement {{ schoolLevel.questions|length }} questions de niveau CP.</p>
         {% endif %}
-        {% if schoolLevel.schoolClass == 'CE1' and schoolLevel.questions|length <= 3 %}
+
+        {% if schoolLevel.schoolClass == 'CE1' and schoolLevel.questions|length == 0 %}
+          <p>Attention, il faut au moins une question de niveau CE1.</p>
+        {% elseif schoolLevel.schoolClass == 'CE1' and schoolLevel.questions|length <= 3 %}
           <p>Attention, il y a seulement {{ schoolLevel.questions|length }} questions de niveau CE1.</p>
         {% endif %}
-        {% if schoolLevel.schoolClass == 'CE2' and schoolLevel.questions|length <= 3 %}
+
+        {% if schoolLevel.schoolClass == 'CE2' and schoolLevel.questions|length == 0 %}
+          <p>Attention, il faut au moins une question de niveau CE2.</p>
+        {% elseif schoolLevel.schoolClass == 'CE2' and schoolLevel.questions|length <= 3 %}
           <p>Attention, il y a seulement {{ schoolLevel.questions|length }} questions de niveau CE2.</p>
         {% endif %}
-        {% if schoolLevel.schoolClass == 'CM1' and schoolLevel.questions|length <= 3 %}
+
+        {% if schoolLevel.schoolClass == 'CM1' and schoolLevel.questions|length == 0 %}
+          <p>Attention, il faut au moins une question de niveau CM1.</p>
+        {% elseif schoolLevel.schoolClass == 'CM1' and schoolLevel.questions|length <= 3 %}
           <p>Attention, il y a seulement {{ schoolLevel.questions|length }} questions de niveau CM1.</p>
         {% endif %}
-        {% if schoolLevel.schoolClass == 'CM2' and schoolLevel.questions|length <= 3 %}
-          <p>Attention, il y a seulement {{ schoolLevel.questions|length }} questions de niveau CM2.</p>
+
+        {% if schoolLevel.schoolClass == 'CM2' and schoolLevel.questions|length == 0 %}
+          <p>Attention, il faut au moins une question de niveau CM2.</p>
+        {% elseif schoolLevel.schoolClass == 'CM2' and schoolLevel.questions|length <= 3 %}
+          <p>Attention, il y a seulement {{ schoolLevel.questions|length }} questions de niveau CE1.</p>
         {% endif %}
       {% endfor %}
+      <p><a href=" {{ path('suggest_question') }} "><button class="btn btn-warning" type="button">N'hésitez pas à en ajouter !</button></a></p>
       
-    <div>
-
     </div>  
       
     <div class="center">

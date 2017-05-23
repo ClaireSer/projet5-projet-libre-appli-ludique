@@ -219,6 +219,9 @@ div.infoQuestion div {
 .table > tbody > tr > td {
      vertical-align: middle;
 }
+.alert {
+    margin: 20px 0;
+}
 
 /*modal*/
 

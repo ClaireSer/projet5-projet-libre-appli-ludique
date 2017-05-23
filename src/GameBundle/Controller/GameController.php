@@ -107,8 +107,8 @@ class GameController extends Controller
         $em = $this->getDoctrine()->getManager();
         if($request->isXmlHttpRequest()) {
 
-            $gamerId = $request->get('gamerId');
-            $gamerReturn = $em->getRepository('UserBundle:Gamer')->find($gamerId);
+            $winnerId = $request->get('winnerId');
+            $gamerReturn = $em->getRepository('UserBundle:Gamer')->find($winnerId);
             $gameWonNb = $gamerReturn->getGameWonNb();
             $gameWonNb++;
             $gamerReturn->setGameWonNb($gameWonNb);
