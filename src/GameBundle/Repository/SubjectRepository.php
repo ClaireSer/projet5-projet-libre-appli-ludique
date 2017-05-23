@@ -16,15 +16,15 @@ use GameBundle\Entity\Question;
 class SubjectRepository extends EntityRepository
 {
     public function findAll() {
-        return $this->createQueryBuilder('s')
-            ->join(Topic::class, 't', Join::WITH, 's = t.subject')
+        return $this->createQueryBuilder('su')
+            ->join(Topic::class, 't', Join::WITH, 'su = t.subject')
             ->join(Question::class, 'q', Join::WITH, 't = q.topic')
             ->where('q.isValid = :isValid')
             ->setParameter('isValid', true)
             ->having('COUNT(q) >= :counter')
             ->setParameter('counter', 2)
-            ->groupBy('s')
-            ->orderBy('s.id', 'ASC')
+            ->groupBy('su')
+            ->orderBy('su.id', 'ASC')
             ->getQuery()
             ->getResult()
 		;

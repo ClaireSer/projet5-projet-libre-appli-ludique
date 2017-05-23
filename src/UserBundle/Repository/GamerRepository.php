@@ -55,4 +55,13 @@ class GamerRepository extends \Doctrine\ORM\EntityRepository
             ->getResult()
 		;
     }
+
+    public function findGamerInArray($id) {
+        return $this->createQueryBuilder('g')
+            ->where('g.id = :id')
+            ->setParameter('id', $id)
+            ->getQuery()
+            ->getArrayResult()
+		;       
+    }
 }

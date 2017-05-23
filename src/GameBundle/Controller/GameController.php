@@ -107,9 +107,7 @@ class GameController extends Controller
         $em = $this->getDoctrine()->getManager();
         if($request->isXmlHttpRequest()) {
 
-            $finalScore = $request->get('finalScore');
             $gamerId = $request->get('gamerId');
-
             $gamerReturn = $em->getRepository('UserBundle:Gamer')->find($gamerId);
             $gameWonNb = $gamerReturn->getGameWonNb();
             $gameWonNb++;
@@ -117,23 +115,26 @@ class GameController extends Controller
             $em->persist($gamerReturn);
             
             $allGamersId = array();
+            $finalScores = array();
             $content = $request->getContent();
             if (!empty($content)) {
-                $allGamersId = json_decode($content, true);
+                $content = json_decode($content, true);
+                $allGamersId = $content['allGamersId'];
+                $finalScores = $content['finalScores'];
             }
 
             $gamers = [];
             foreach ($allGamersId as $id) {
                 $gamers[] = $em->getRepository('UserBundle:Gamer')->find($id);
             }
-            foreach ($gamers as $gamer) {
+            foreach ($gamers as $key=>$gamer) {
                 $cumulScore = $gamer->getCumulScore();
-                $cumulScore += $finalScore;
+                $cumulScore += $finalScores[$key];
                 $gamer->setCumulScore($cumulScore);
 
                 $bestScore = $gamer->getBestScore();
-                if ($finalScore > $bestScore) {
-                    $gamer->setBestScore($finalScore);
+                if ($finalScores[$key] > $bestScore) {
+                    $gamer->setBestScore($finalScores[$key]);
                 }
 
                 $gamePlayedNb = $gamer->getGamePlayedNb();
@@ -148,11 +149,14 @@ class GameController extends Controller
                 $em->persist($gamer);
             }
             $em->flush();
-
+            
+            $gamers = [];
+            foreach ($allGamersId as $id) {
+                $gamers[] = $em->getRepository('UserBundle:Gamer')->findGamerInArray($id);
+            }
             return new JsonResponse($gamers);
         }
         return new Response('Erreur');
     }
 
-    
 }

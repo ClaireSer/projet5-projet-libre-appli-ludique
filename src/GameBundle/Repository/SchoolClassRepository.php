@@ -2,6 +2,8 @@
 
 namespace GameBundle\Repository;
 
+use Doctrine\ORM\Query\Expr\Join;
+use GameBundle\Entity\Question;
 
 /**
 * SchoolClassRepository
@@ -13,7 +15,20 @@ class SchoolClassRepository extends \Doctrine\ORM\EntityRepository
 {
 	public function orderBy() {
 		return $this->createQueryBuilder('s')
-		->orderBy('s.id', 'ASC')
+		      ->orderBy('s.id', 'ASC')
+		;
+	}
+
+	public function findAll() {
+		return $this->createQueryBuilder('sc')
+            ->leftJoin('sc.questions', 'q')
+            // ->join(Question::class, 'q', Join::WITH, 'sc = q.schoolClass')
+            ->where('q.isValid = :isValid')
+            ->setParameter('isValid', true)
+            // ->groupBy('sc')
+            ->orderBy('sc.id', 'ASC')
+            ->getQuery()
+            ->getResult()
 		;
 	}
 }

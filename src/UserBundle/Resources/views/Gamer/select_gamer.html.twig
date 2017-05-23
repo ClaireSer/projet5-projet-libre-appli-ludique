@@ -48,6 +48,28 @@
         {% endif %}
 
       </div>
+    </div>
+      
+      {% for schoolLevel in schoolLevels %}
+        {% if schoolLevel.schoolClass == 'CP' and schoolLevel.questions|length <= 3 %}
+          <p>Attention, il y a seulement {{ schoolLevel.questions|length }} questions de niveau CP.</p>
+        {% endif %}
+        {% if schoolLevel.schoolClass == 'CE1' and schoolLevel.questions|length <= 3 %}
+          <p>Attention, il y a seulement {{ schoolLevel.questions|length }} questions de niveau CE1.</p>
+        {% endif %}
+        {% if schoolLevel.schoolClass == 'CE2' and schoolLevel.questions|length <= 3 %}
+          <p>Attention, il y a seulement {{ schoolLevel.questions|length }} questions de niveau CE2.</p>
+        {% endif %}
+        {% if schoolLevel.schoolClass == 'CM1' and schoolLevel.questions|length <= 3 %}
+          <p>Attention, il y a seulement {{ schoolLevel.questions|length }} questions de niveau CM1.</p>
+        {% endif %}
+        {% if schoolLevel.schoolClass == 'CM2' and schoolLevel.questions|length <= 3 %}
+          <p>Attention, il y a seulement {{ schoolLevel.questions|length }} questions de niveau CM2.</p>
+        {% endif %}
+      {% endfor %}
+      
+    <div>
+
     </div>  
       
     <div class="center">

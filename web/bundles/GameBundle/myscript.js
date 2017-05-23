@@ -20,7 +20,7 @@ $(function () {
     $('.stats').each(function (i) {
         allGamersId[i] = $(this).children().children().children('p:last').text();
     })
-
+    
     dice.children().hide();
 
     var rowGamer = Math.floor(Math.random() * len);
@@ -72,21 +72,29 @@ $(function () {
             var finalScore = parseInt($('.stats:nth(' + rowGamer + ') .panel-title span').text());
             finalScore += 30;
             $('.stats:nth(' + rowGamer + ') .panel-title span').html(finalScore);
-            var exprStatsRegex = /(^\D+)\d+\/\d+/;
-            pathStatsCurrent = pathStats.replace(exprStatsRegex, '$1' + finalScore + '/' + gamerId);
+
+            var finalScores = [];
+            $('.stats').each(function (i) {
+                finalScores[i] = $(this).children('.panel-heading').children().children().children('span').text();
+            })
+
+            var exprStatsRegex = /(^\D+)\d+/;
+            pathStatsCurrent = pathStats.replace(exprStatsRegex, '$1' + gamerId);
 
             $.ajax({
                 url: pathStatsCurrent,
                 type: 'POST',
                 dataType: 'json',
                 contentType: 'application/json',
-                data: JSON.stringify(allGamersId),
+                data: JSON.stringify({allGamersId, finalScores}),
                 success: function (response) {
-                    $('.stats:nth(' + rowGamer + ') p:nth(0) span').html(response.cumulScore);
-                    $('.stats:nth(' + rowGamer + ') p:nth(1) span').html(response.bestScore);
-                    $('.stats:nth(' + rowGamer + ') p:nth(2) span:nth(0)').html(response.gameWonNb);
-                    $('.stats:nth(' + rowGamer + ') p:nth(2) span:nth(1)').html(response.gamePlayedNb);
-                    $('.stats:nth(' + rowGamer + ') p:nth(4) span').html(response.level);
+                    response.forEach(function(data, gamer) {
+                        $('.stats:nth(' + gamer + ') p:nth(0) span').html(data[0].cumulScore);
+                        $('.stats:nth(' + gamer + ') p:nth(1) span').html(data[0].bestScore);
+                        $('.stats:nth(' + gamer + ') p:nth(2) span:nth(0)').html(data[0].gameWonNb);
+                        $('.stats:nth(' + gamer + ') p:nth(2) span:nth(1)').html(data[0].gamePlayedNb);
+                        $('.stats:nth(' + gamer + ') p:nth(4) span').html(data[0].level);
+                    })
                 },
                 error: function () {
                     alert('erreur score');
