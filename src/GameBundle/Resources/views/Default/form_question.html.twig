@@ -22,7 +22,7 @@
                     {{ form_row(form.topic) }}
                     {% if app.user and is_granted('ROLE_TEACHER') %}
                         Vous souhaitez en créer un nouveau ? <br/>
-                        <a href="{{ path('options_question') }}" class="btn btn-default"><span class="glyphicon glyphicon-hand-right"> Ajouter une catégorie</span></a>
+                        <a href="{{ path('options_question') }}" class="btn btn-default"><span class="glyphicon glyphicon-hand-right"></span> Ajouter une catégorie</a>
                     {% endif %}
                 </div>
                 <div class="form-group">
@@ -60,11 +60,16 @@
         var labelAnswers = $('#GameBundle_question_answers>.form-group label');
         var deleteButton = $('.deleteButton');
 
-        //alert(urlValidation);
-        if (document.location.href.indexOf(urlValidation) != 0) {
+        if (document.location.href.indexOf(urlValidation) == -1) {
             addAnswer($container);
-            addAnswer($container);        
+            addAnswer($container);
         }
+        
+        //revoir 
+        var exprRegex = /(^\D+)[2-9]\d*/;
+        $('.GameBundle_question_answers_2').each(function() {
+            $(this).css({"display":"inline-block", "width":"90%"});
+        })
 
         labelAnswers.each(function(index) {
             if (index === 0) {
