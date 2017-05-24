@@ -99,17 +99,17 @@ class QuestionRepository extends \Doctrine\ORM\EntityRepository
 		;
     }
 
-    public function getQuestionsBySchoolClass($schoolClass) {
-        return $this->createQueryBuilder('q')
-            ->leftJoin('q.schoolClass', 'sc')
-            ->addSelect('sc')
-            ->where('q.isValid = :isValid')
-            ->andWhere('sc.schoolClass = :schoolClass')
-            ->setParameter('isValid', true)
-            ->setParameter('schoolClass', $schoolClass)
-            ->getQuery()
-            ->getResult()
-		;
-    }
+    // public function getQuestionsBySchoolClass($schoolClass) {
+    //     return $this->createQueryBuilder('q')
+    //         ->leftJoin('q.schoolClass', 'sc')
+    //         ->addSelect('sc')
+    //         ->where('q.isValid = :isValid')
+    //         ->andWhere('sc.schoolClass = :schoolClass')
+    //         ->setParameter('isValid', true)
+    //         ->setParameter('schoolClass', $schoolClass)
+    //         ->getQuery()
+    //         ->getResult()
+	// 	;
+    // }
 
 }

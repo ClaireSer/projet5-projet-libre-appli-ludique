@@ -51,20 +51,25 @@ class AdminController extends Controller
         $em = $this->getDoctrine()->getManager();
         $notValidQuestions = $em->getRepository('GameBundle:Question')->getQuestionsByValidity(false);
         $validQuestions = $em->getRepository('GameBundle:Question')->getQuestionsByValidity(true);
-        $questionsCP = $em->getRepository('GameBundle:Question')->getQuestionsBySchoolClass('CP');
-        $questionsCE1 = $em->getRepository('GameBundle:Question')->getQuestionsBySchoolClass('CE1');
-        $questionsCE2 = $em->getRepository('GameBundle:Question')->getQuestionsBySchoolClass('CE2');
-        $questionsCM1 = $em->getRepository('GameBundle:Question')->getQuestionsBySchoolClass('CM1');
-        $questionsCM2 = $em->getRepository('GameBundle:Question')->getQuestionsBySchoolClass('CM2');
+        $allSchoolClass = $em->getRepository('GameBundle:SchoolClass')->findAll();
+        
+        $subjects = $em->getRepository('GameBundle:Subject')->findAll();
+
+        $idArray = [];
+        foreach ($subjects as $subject) {
+            $idArray[] = $subject->getId();
+        }
+        $schoolLevelArray = [];
+        foreach ($idArray as $id) {
+            $schoolLevelArray[] = $em->getRepository('GameBundle:SchoolClass')->countBySubject($id);
+        }
 
         return $this->render('GameBundle:Admin:moderate_question.html.twig', array(
             'notValidQuestions'     => $notValidQuestions,
             'validQuestions'        => $validQuestions,
-            'questionCP'            => $questionsCP,
-            'questionCE1'           => $questionsCE1,
-            'questionCE2'           => $questionsCE2,
-            'questionCM1'           => $questionsCM1,
-            'questionCM2'           => $questionsCM2
+            'allSchoolClass'        => $allSchoolClass,
+            'subjects'              => $subjects,
+            'nbSchoolLevels'        => $schoolLevelArray
         ));   
     }
     

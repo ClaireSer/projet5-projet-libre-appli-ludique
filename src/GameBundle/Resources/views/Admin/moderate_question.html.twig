@@ -22,23 +22,21 @@
     <h3>Modération des questions</h3>
 
     <div class="alert alert-danger">
-      {% if questionCP|length < 10 %}
-          <p>Attention, il faut au moins 10 questions validées du niveau CP pour que les joueurs de ce niveau puissent jouer.</p>
-      {% endif %}
-      {% if questionCE1|length < 10 %}
-          <p>Attention, il faut au moins 10 questions validées du niveau CE1 pour que les joueurs de ce niveau puissent jouer.</p>
-      {% endif %}
-      {% if questionCE2|length < 10 %}
-          <p>Attention, il faut au moins 10 questions validées du niveau CE2 pour que les joueurs de ce niveau puissent jouer.</p>
-      {% endif %}
-      {% if questionCM1|length < 10 %}
-          <p>Attention, il faut au moins 10 questions validées du niveau CM1 pour que les joueurs de ce niveau puissent jouer.</p>
-      {% endif %}
-      {% if questionCM2|length < 10 %}
-          <p>Attention, il faut au moins 10 questions validées du niveau CM2 pour que les joueurs de ce niveau puissent jouer.</p>
-      {% endif %}
+      <h4><strong>Attention</strong></h4>
+      {% for schoolClass in allSchoolClass %}
+        {% if schoolClass.questions|length < 10 %}
+          <p>Il faut au moins 10 questions validées du niveau {{ schoolClass.schoolClass }} pour que les joueurs de ce niveau puissent jouer.</p>
+        {% endif %}
+      {% endfor %}
+
+      {% for key, subject in subjects %}
+        {% if nbSchoolLevels[key][0].1 == 0 %}
+          <p><strong>{{ subject.nameSubject }}</strong> : il n'y a encore aucune question.</p>
+        {% elseif nbSchoolLevels[key][0].1 < 5 %}
+          <p><strong>{{ subject.nameSubject }}</strong> : les questions ne concernent seulement que {{ nbSchoolLevels[key][0].1 }} niveau(x) scolaires.</p>
+        {% endif %}
+      {% endfor %}
     </div>
-    
 
     <div class="row">
       <div class="col-sm-offset-4 col-sm-4" >

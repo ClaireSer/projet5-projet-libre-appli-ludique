@@ -19,6 +19,10 @@ class SchoolClassRepository extends \Doctrine\ORM\EntityRepository
 		;
 	}
 
+	public function findAll() {
+		return $this->findBy(array(), array('id' => 'ASC'));
+	}
+
 	public function countBySubject($id) {
 		return $this->createQueryBuilder('sc')
 		->select('COUNT(distinct sc)')
