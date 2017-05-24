@@ -56,7 +56,7 @@ class QuestionRepository extends \Doctrine\ORM\EntityRepository
 		;
     }
 
-    public function getRandomQuestionBySubject($subject, $idQuestionList) {
+    public function getRandomQuestionBySubject($subject, $schoolLevel, $idQuestionList) {
         $randomId = array_rand($idQuestionList, 1);
         
         $qb = $this->createQueryBuilder('q');
@@ -71,11 +71,11 @@ class QuestionRepository extends \Doctrine\ORM\EntityRepository
             ->addSelect('sc')
             ->where('t.subject = :subject')
             ->andWhere('q.id = :randomId')
-            // ->andWhere('q.schoolClass = :schoolLevel')
+            ->andWhere('q.schoolClass = :schoolLevel')
             ->andWhere('q.isValid = :isValid')            
             ->setParameter('subject', $subject)
             ->setParameter('randomId', $idQuestionList[$randomId])
-            // ->setParameter('schoolLevel', $schoolLevel)
+            ->setParameter('schoolLevel', $schoolLevel)
             ->setParameter('isValid', true)
             ->getQuery()
             ->getArrayResult()[0]

@@ -6,6 +6,7 @@ use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\Query\Expr\Join;
 use GameBundle\Entity\Topic;
 use GameBundle\Entity\Question;
+use GameBundle\Entity\SchoolClass;
 
 /**
  * SubjectRepository
@@ -15,18 +16,23 @@ use GameBundle\Entity\Question;
  */
 class SubjectRepository extends EntityRepository
 {
-    public function findAll() {
+    public function findByCountingSchoolClass() {
         return $this->createQueryBuilder('su')
             ->join(Topic::class, 't', Join::WITH, 'su = t.subject')
             ->join(Question::class, 'q', Join::WITH, 't = q.topic')
+            ->join(schoolClass::class, 'sc', Join::WITH, 'sc = q.schoolClass')
             ->where('q.isValid = :isValid')
             ->setParameter('isValid', true)
-            ->having('COUNT(q) >= :counter')
-            ->setParameter('counter', 2)
+            ->having('COUNT(distinct sc) >= :counter')
+            ->setParameter('counter', 3)
             ->groupBy('su')
             ->orderBy('su.id', 'ASC')
             ->getQuery()
             ->getResult()
 		;
+    }
+
+    public function findAll() {
+        return $this->findBy(array(), array('id' => 'ASC'));
     }
 }

@@ -53,7 +53,7 @@ class GameController extends Controller
                 foreach($questions as $question) {
                     $idQuestionList[] = $question->getId();
                 }
-                $randomQuestion = $em->getRepository('GameBundle:Question')->getRandomQuestionBySubject($subject, $idQuestionList);
+                $randomQuestion = $em->getRepository('GameBundle:Question')->getRandomQuestionBySubject($subject, $schoolClass, $idQuestionList);
                 if ($randomQuestion != null) {
                     return new JsonResponse($randomQuestion);
                 } else {

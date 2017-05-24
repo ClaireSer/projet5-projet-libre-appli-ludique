@@ -113,16 +113,26 @@ class GamerController extends Controller
     public function selectAction(Request $request) {
         $em = $this->getDoctrine()->getManager();
         $gamers = $em->getRepository('UserBundle:Gamer')->getGamersByUserCount($this->getUser());
+        $subjectsSelected = $em->getRepository('GameBundle:Subject')->findByCountingSchoolClass();
         $subjects = $em->getRepository('GameBundle:Subject')->findAll();
-        $schoolLevels = $em->getRepository('GameBundle:SchoolClass')->findAll();
+
+        $idArray = [];
+        foreach ($subjects as $subject) {
+            $idArray[] = $subject->getId();
+        }
+        $schoolLevelArray = [];
+        foreach ($idArray as $id) {
+            $schoolLevelArray[] = $em->getRepository('GameBundle:SchoolClass')->countBySubject($id);
+        }
 
         return $this->render('UserBundle:Gamer:select_gamer.html.twig', array(
-            'gamers'        => $gamers,
-            'subjects'      => $subjects,
-            'schoolLevels'  => $schoolLevels,
-            'title1'        => 'Choisissez vos joueurs',
-            'title2'        => 'Choisissez quatre thèmes',
-            'titleTab'      => 'Le jeu'
+            'gamers'            => $gamers,
+            'subjects'          => $subjects,
+            'subjectsSelected'  => $subjectsSelected,
+            'nbSchoolLevels'    => $schoolLevelArray,
+            'title1'            => 'Choisissez vos joueurs',
+            'title2'            => 'Choisissez quatre thèmes',
+            'titleTab'          => 'Le jeu'
         ));
     }
 }

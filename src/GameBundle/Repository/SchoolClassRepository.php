@@ -19,16 +19,18 @@ class SchoolClassRepository extends \Doctrine\ORM\EntityRepository
 		;
 	}
 
-	public function findAll() {
+	public function countBySubject($id) {
 		return $this->createQueryBuilder('sc')
+		->select('COUNT(distinct sc)')
             ->leftJoin('sc.questions', 'q')
-            // ->join(Question::class, 'q', Join::WITH, 'sc = q.schoolClass')
-            ->where('q.isValid = :isValid')
+            ->leftJoin('q.topic', 't')
+            ->leftJoin('t.subject', 'su')
+		->where('su.id = :id')
+            ->andWhere('q.isValid = :isValid')
+            ->setParameter('id', $id)
             ->setParameter('isValid', true)
-            // ->groupBy('sc')
-            ->orderBy('sc.id', 'ASC')
             ->getQuery()
-            ->getResult()
+            ->execute()
 		;
 	}
 }
