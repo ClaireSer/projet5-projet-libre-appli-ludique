@@ -222,6 +222,24 @@ div.infoQuestion div {
 .alert {
     margin: 20px 0;
 }
+.infoQuestions .panel-heading {
+    color: inherit;
+    background-color: inherit;
+    border-color: inherit;
+    padding: 5px 15px;
+}
+.infoQuestions .panel {
+    background-color: inherit;
+}
+.infoQuestions .panel-group {
+    margin-bottom: 0;
+}
+.infoQuestions .panel-default {
+    border-color: transparent;
+}
+.infoQuestions a {
+    color: inherit;
+}
 
 /*modal*/
 

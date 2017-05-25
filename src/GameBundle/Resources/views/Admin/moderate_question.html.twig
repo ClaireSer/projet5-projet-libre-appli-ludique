@@ -21,7 +21,7 @@
 
     <h3>Modération des questions</h3>
 
-    <div class="alert alert-danger">
+    <div class="alert alert-danger infoQuestions">
       <h4><strong>Attention</strong></h4>
 
       {% for key, subject in subjects %}
@@ -29,28 +29,28 @@
         <div class="panel-group" id="accordion">
           <div class="panel panel-default">
             <div class="panel-heading">
-              <h4 class="panel-title">
-                <a data-toggle="collapse" data-parent="#accordion" href="#collapse1">
+              <p class="panel-title">
+                <a data-toggle="collapse" data-parent="#accordion" href="#collapse{{ key }}">
                   {% if nbSchoolLevels[key][0].1 == 0 %}
-                    <p><strong>{{ subject.nameSubject }}</strong> : il n'y a encore aucune question.</p>
+                    <p><span class="caret"></span><strong> {{ subject.nameSubject }}</strong> : il n'y a encore aucune question.</p>
                   {% else %}
 
                     {% if nbSchoolLevels[key][0].1 == 1 %}
-                      <p><strong>{{ subject.nameSubject }}</strong> : les questions ne concernent seulement que {{ nbSchoolLevels[key][0].1 }} niveau scolaire :
+                      <p><span class="caret"></span><strong> {{ subject.nameSubject }}</strong> : les questions ne concernent seulement que {{ nbSchoolLevels[key][0].1 }} niveau scolaire :
                     {% elseif nbSchoolLevels[key][0].1 < 5 %}
-                      <p><strong>{{ subject.nameSubject }}</strong> : les questions ne concernent seulement que {{ nbSchoolLevels[key][0].1 }} niveaux scolaires :
+                      <p><span class="caret"></span><strong> {{ subject.nameSubject }}</strong> : les questions ne concernent seulement que {{ nbSchoolLevels[key][0].1 }} niveaux scolaires :
                     {% endif %}
 
-                      {% for schoolLevel in schoolLevels[key] %}
-                      {{ schoolLevel.schoolClass }}
-                      {% endfor %}    
-                      </p>
+                    {% for schoolLevel in schoolLevels[key] %}
+                    {{ schoolLevel.schoolClass }}
+                    {% endfor %}    
+                    </p>
                       
                   {% endif %}
                 </a>
-              </h4>
+              </p>
             </div>
-            <div id="collapse1" class="panel-collapse collapse">
+            <div id="collapse{{ key }}" class="panel-collapse collapse">
               <div class="panel-body">
                 {% for nbQuestion in nbQuestions[key] %}
                   {% if loop.index0 == 0 %}

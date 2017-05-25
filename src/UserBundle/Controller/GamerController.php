@@ -120,11 +120,22 @@ class GamerController extends Controller
         foreach ($subjects as $subject) {
             $subjectIds[] = $subject->getId();
         }
+
+        $allSchoolClass = $em->getRepository('GameBundle:SchoolClass')->findAll();
+        $schoolClassIds = [];
+        foreach ($allSchoolClass as $schoolClass) {
+            $schoolClassIds[] = $schoolClass->getId();
+        }
+
         $nbSchoolClassBySubject = [];
         $schoolClassBySubject = [];
-        foreach ($subjectIds as $id) {
-            $nbSchoolClassBySubject[] = $em->getRepository('GameBundle:SchoolClass')->countBySubject($id);
-            $schoolClassBySubject[] = $em->getRepository('GameBundle:SchoolClass')->getBySubject($id);
+        $nbQuestions = [];
+        foreach ($subjectIds as $key=>$id0) {
+            $nbSchoolClassBySubject[] = $em->getRepository('GameBundle:SchoolClass')->countBySubject($id0);
+            $schoolClassBySubject[] = $em->getRepository('GameBundle:SchoolClass')->getBySubject($id0);
+            foreach ($schoolClassIds as $id1) {
+                $nbQuestions[$key][] = $em->getRepository('GameBundle:Question')->count($id0, $id1);
+            }
         }
 
         return $this->render('UserBundle:Gamer:select_gamer.html.twig', array(
@@ -133,6 +144,7 @@ class GamerController extends Controller
             'subjectsSelected'  => $subjectsSelected,
             'nbSchoolLevels'    => $nbSchoolClassBySubject,
             'schoolLevels'      => $schoolClassBySubject,
+            'nbQuestions'       => $nbQuestions,
             'title1'            => 'Choisissez vos joueurs',
             'title2'            => 'Choisissez quatre thèmes',
             'titleTab'          => 'Le jeu'

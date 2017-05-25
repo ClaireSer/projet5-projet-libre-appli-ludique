@@ -78,7 +78,6 @@ class AdminController extends Controller
         return $this->render('GameBundle:Admin:moderate_question.html.twig', array(
             'notValidQuestions'     => $notValidQuestions,
             'validQuestions'        => $validQuestions,
-            // 'allSchoolClass'        => $allSchoolClass,
             'subjects'              => $subjects,
             'nbSchoolLevels'        => $nbSchoolClassBySubject,
             'schoolLevels'          => $schoolClassBySubject,
