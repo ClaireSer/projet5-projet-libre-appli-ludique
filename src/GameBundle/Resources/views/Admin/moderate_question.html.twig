@@ -32,12 +32,23 @@
       {% for key, subject in subjects %}
         {% if nbSchoolLevels[key][0].1 == 0 %}
           <p><strong>{{ subject.nameSubject }}</strong> : il n'y a encore aucune question.</p>
-        {% elseif nbSchoolLevels[key][0].1 < 5 %}
-          <p><strong>{{ subject.nameSubject }}</strong> : les questions ne concernent seulement que {{ nbSchoolLevels[key][0].1 }} niveau(x) scolaires.</p>
+        {% else %}
+
+          {% if nbSchoolLevels[key][0].1 == 1 %}
+            <p><strong>{{ subject.nameSubject }}</strong> : les questions ne concernent seulement que {{ nbSchoolLevels[key][0].1 }} niveau scolaire :
+          {% elseif nbSchoolLevels[key][0].1 < 5 %}
+            <p><strong>{{ subject.nameSubject }}</strong> : les questions ne concernent seulement que {{ nbSchoolLevels[key][0].1 }} niveaux scolaires :
+          {% endif %}
+
+            {% for schoolLevel in schoolLevels[key] %}
+            {{ schoolLevel.schoolClass }}
+            {% endfor %}    
+            </p>
+            
         {% endif %}
       {% endfor %}
     </div>
-
+    
     <div class="row">
       <div class="col-sm-offset-4 col-sm-4" >
         <ul class="nav nav-pills nav-justified">

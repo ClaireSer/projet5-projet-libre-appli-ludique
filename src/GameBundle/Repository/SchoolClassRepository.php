@@ -4,6 +4,8 @@ namespace GameBundle\Repository;
 
 use Doctrine\ORM\Query\Expr\Join;
 use GameBundle\Entity\Question;
+use GameBundle\Entity\Topic;
+use GameBundle\Entity\Subject;
 
 /**
 * SchoolClassRepository
@@ -15,7 +17,7 @@ class SchoolClassRepository extends \Doctrine\ORM\EntityRepository
 {
 	public function orderBy() {
 		return $this->createQueryBuilder('s')
-		      ->orderBy('s.id', 'ASC')
+		->orderBy('s.id', 'ASC')
 		;
 	}
 
@@ -33,6 +35,22 @@ class SchoolClassRepository extends \Doctrine\ORM\EntityRepository
             ->andWhere('q.isValid = :isValid')
             ->setParameter('id', $id)
             ->setParameter('isValid', true)
+            ->getQuery()
+            ->execute()
+		;
+	}
+
+	public function getBySubject($id) {
+		return $this->createQueryBuilder('sc')
+		->select('distinct sc')
+            ->leftJoin('sc.questions', 'q')
+            ->leftJoin('q.topic', 't')
+            ->leftJoin('t.subject', 'su')
+		->where('su.id = :id')
+            ->andWhere('q.isValid = :isValid')
+            ->setParameter('id', $id)
+            ->setParameter('isValid', true)
+            ->orderBy('sc.id', 'ASC')
             ->getQuery()
             ->execute()
 		;
