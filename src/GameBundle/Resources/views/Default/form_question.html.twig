@@ -64,12 +64,6 @@
             addAnswer($container);
             addAnswer($container);
         }
-        
-        //revoir 
-        var exprRegex = /(^\D+)[2-9]\d*/;
-        $('.GameBundle_question_answers_2').each(function() {
-            $(this).css({"display":"inline-block", "width":"90%"});
-        })
 
         labelAnswers.each(function(index) {
             if (index === 0) {
@@ -79,15 +73,25 @@
             }
         });        
         addDeleteLink($('#GameBundle_question_answers>.form-group:gt(1)'));
-        
+        displayDeleteButton();
 
         $('#add_answer').on('click', function (e) {
             addAnswer($container);
+            displayDeleteButton();
             e.preventDefault();
             return false;
         });
         
     // functions
+        function displayDeleteButton() {
+            $('div[id^="GameBundle_question_answers_"]').each(function(i) {
+                if (i > 1) {
+                    $(this).css({"display":"inline-block", "width":"90%"});
+                    $('.deleteButton').css({"margin-left":"2%"});
+                }
+            })
+        }
+
         function addAnswer($container) {
             var template;
             if(nbAnswer === 0) {
