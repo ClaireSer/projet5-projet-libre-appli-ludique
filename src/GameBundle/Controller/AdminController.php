@@ -110,12 +110,9 @@ class AdminController extends Controller
             $em = $this->getDoctrine()->getManager();
             $em->persist($notValidQuestion);
             $em->flush();
-            $request->getSession()->getFlashBag()->add('success', 'Question validée.');
-            $notif = 1;
+            $request->getSession()->getFlashBag()->add('success', 'La question a bien été validée.');
 
-            return $this->render('UserBundle:Default:index.html.twig', array(
-               'notif'  => $notif
-            ));
+            return $this->redirectToRoute('moderate_question');
         }
 
         return $this->render('GameBundle:Default:form_question.html.twig', array(
