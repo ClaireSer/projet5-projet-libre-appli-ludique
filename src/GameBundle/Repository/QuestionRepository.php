@@ -99,4 +99,21 @@ class QuestionRepository extends \Doctrine\ORM\EntityRepository
 		;
     }
 
+    public function count($subjectId, $schoolLevelId) {
+		return $this->createQueryBuilder('q')
+		    ->select('COUNT(q)')
+            ->leftJoin('q.schoolClass', 'sc')
+            ->leftJoin('q.topic', 't')
+            ->leftJoin('t.subject', 'su')
+		    ->where('su.id = :subjectId')
+            ->andWhere('sc.id = :schoolLevelId')
+            ->andWhere('q.isValid = :isValid')
+            ->setParameter('subjectId', $subjectId)
+            ->setParameter('schoolLevelId', $schoolLevelId)
+            ->setParameter('isValid', true)
+            ->getQuery()
+            ->execute()
+		;
+	}
+
 }

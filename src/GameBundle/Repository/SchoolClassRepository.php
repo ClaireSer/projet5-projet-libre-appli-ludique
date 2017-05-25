@@ -2,10 +2,6 @@
 
 namespace GameBundle\Repository;
 
-use Doctrine\ORM\Query\Expr\Join;
-use GameBundle\Entity\Question;
-use GameBundle\Entity\Topic;
-use GameBundle\Entity\Subject;
 
 /**
 * SchoolClassRepository
