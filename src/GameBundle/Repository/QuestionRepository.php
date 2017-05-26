@@ -43,24 +43,26 @@ class QuestionRepository extends \Doctrine\ORM\EntityRepository
 		;
     }
 
-    public function getQuestionBySubject($subject) {
+    public function findBySubjectAndBySchoolClass($subject, $schoolClass) {
         return $this->createQueryBuilder('q')
             ->leftJoin('q.topic', 't')
-            ->leftJoin('t.subject', 's')
-            ->addSelect('t')
-            ->addSelect('s')
+            ->leftJoin('t.subject', 'su')
+            ->leftJoin('q.schoolClass', 'sc')
             ->where('t.subject = :subject')
+            ->andWhere('q.schoolClass = :schoolClass')
+            ->andWhere('q.isValid = :isValid')            
             ->setParameter('subject', $subject)
+            ->setParameter('schoolClass', $schoolClass)
+            ->setParameter('isValid', true)
             ->getQuery()
             ->getResult()
 		;
     }
 
-    public function getRandomQuestionBySubject($subject, $schoolLevel, $idQuestionList) {
+    public function getRandomQuestion($idQuestionList) {
         $randomId = array_rand($idQuestionList, 1);
         
-        $qb = $this->createQueryBuilder('q');
-        return $qb
+        return $this->createQueryBuilder('q')
             ->leftJoin('q.topic', 't')
             ->leftJoin('t.subject', 'su')
             ->leftJoin('q.answers', 'a')
@@ -69,14 +71,8 @@ class QuestionRepository extends \Doctrine\ORM\EntityRepository
             ->addSelect('su')
             ->addSelect('a')
             ->addSelect('sc')
-            ->where('t.subject = :subject')
-            ->andWhere('q.id = :randomId')
-            ->andWhere('q.schoolClass = :schoolLevel')
-            ->andWhere('q.isValid = :isValid')            
-            ->setParameter('subject', $subject)
+            ->where('q.id = :randomId')
             ->setParameter('randomId', $idQuestionList[$randomId])
-            ->setParameter('schoolLevel', $schoolLevel)
-            ->setParameter('isValid', true)
             ->getQuery()
             ->getArrayResult()[0]
         ;

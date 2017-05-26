@@ -24,7 +24,7 @@ class SubjectRepository extends EntityRepository
             ->where('q.isValid = :isValid')
             ->setParameter('isValid', true)
             ->having('COUNT(distinct sc) >= :counter')
-            ->setParameter('counter', 3)
+            ->setParameter('counter', 5)
             ->groupBy('su')
             ->orderBy('su.id', 'ASC')
             ->getQuery()

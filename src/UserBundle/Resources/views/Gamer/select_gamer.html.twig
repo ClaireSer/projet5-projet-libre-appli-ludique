@@ -61,7 +61,6 @@
       <h4><strong>Attention</strong></h4>
       
       {% for key, subject in subjects %}
-
         <div class="panel-group" id="accordion">
           <div class="panel panel-default">
             <div class="panel-heading">
@@ -69,6 +68,8 @@
                 <a data-toggle="collapse" data-parent="#accordion" href="#collapse{{ key }}">
                   {% if nbSchoolLevels[key][0].1 == 0 %}
                     <p><span class="caret"></span><strong> {{ subject.nameSubject }}</strong> : il n'y a encore aucune question.</p>
+                  {% elseif nbSchoolLevels[key][0].1 == 5 %}
+                    <p><span class="caret"></span><strong> {{ subject.nameSubject }}</strong></p>
                   {% else %}
 
                     {% if nbSchoolLevels[key][0].1 == 1 %}
