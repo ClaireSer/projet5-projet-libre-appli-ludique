@@ -14,7 +14,8 @@ class StringToArrayTransformer implements DataTransformerInterface
      */
     public function transform($array)
     {
-        return $array[1];
+        $test = $array[key($array)];
+        return $test;
     }
 
     /**

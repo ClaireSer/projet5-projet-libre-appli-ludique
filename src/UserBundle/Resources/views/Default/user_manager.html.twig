@@ -34,6 +34,9 @@
 
     <div class="tab-content">
       <div class="row tab-pane fade in active" id="families">
+      {% if not families %}
+        <p>Il n'y encore aucun compte famille.</p>
+      {% else %}
         <table class="table table-striped">
           <thead>
             <tr>
@@ -58,7 +61,7 @@
                                   <h4 class="modal-title" id="modalDeleteFamilyLabel">Confirmation requise</h4>
                               </div>
                               <div class="modal-body">
-                                  Etes-vous sûr de vouloir supprimer l'utilisateur ?
+                                  Etes-vous sûr de vouloir supprimer l'utilisateur {{ family.username }} ?
                               </div>
                               <div class="modal-footer">
                                   <a href="{{ path('user_delete', { 'id': family.id }) }}">
@@ -77,9 +80,13 @@
             {% endfor %}
           </tbody>
         </table>
+      {% endif %}
       </div>
 
       <div class="row tab-pane fade" id="teachers">
+      {% if not teachers %}
+        <p>Il n'y encore aucun compte enseignant.</p>
+      {% else %}
         <table class="table table-striped">
           <thead>
             <tr>
@@ -104,7 +111,7 @@
                                   <h4 class="modal-title" id="modalDeleteTeacherLabel">Confirmation requise</h4>
                               </div>
                               <div class="modal-body">
-                                  Etes-vous sûr de vouloir supprimer l'utilisateur ?
+                                  Etes-vous sûr de vouloir supprimer l'utilisateur {{ teacher.username }} ?
                               </div>
                               <div class="modal-footer">
                                   <a href="{{ path('user_delete', { 'id': teacher.id }) }}">
@@ -123,9 +130,13 @@
             {% endfor %}
           </tbody>
         </table>
+      {% endif %}
       </div>
 
       <div class="row tab-pane fade" id="admins">
+      {% if not admins %}
+        <p>Il n'y encore aucun compte administrateur.</p>
+      {% else %}
         <table class="table table-striped">
           <thead>
             <tr>
@@ -150,7 +161,7 @@
                                   <h4 class="modal-title" id="modalDeleteAdminLabel">Confirmation requise</h4>
                               </div>
                               <div class="modal-body">
-                                  Etes-vous sûr de vouloir supprimer l'utilisateur ?
+                                  Etes-vous sûr de vouloir supprimer l'utilisateur {{ admin.username }} ?
                               </div>
                               <div class="modal-footer">
                                   <a href="{{ path('user_delete', { 'id': admin.id }) }}">
@@ -169,6 +180,7 @@
             {% endfor %}
           </tbody>
         </table>
+      {% endif %}
       </div>
 
       
