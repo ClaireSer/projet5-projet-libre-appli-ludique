@@ -1,18 +1,12 @@
 
-combobox:
-    path: /combobox
-    defaults: { _controller: GameBundle:Admin:combobox }
-    requirements: 
-        _method: POST
-
 remove_answer:
-    path: /remove/{id}
+    path: /admin/remove/{id}
     defaults: { _controller: GameBundle:Admin:removeAnswer }
     requirements: 
         _method: DELETE
 
 validate_question:
-    path: /validate/{id}
+    path: /admin/validate/{id}
     defaults:
         _controller: GameBundle:Admin:validateQuestion
         id: 1            
@@ -28,31 +22,31 @@ notifications:
    defaults: { _controller: GameBundle:HomeFamily:getNotifications }
 
 add_question:
-    path:    /add
+    path:    /admin/add
     defaults: { _controller: GameBundle:Admin:addQuestion }
 
 moderate_question:
-    path:    /moderate
+    path:    /admin/moderate
     defaults: { _controller: GameBundle:Admin:moderateQuestion }
 
 question_delete:
-    path:   /delete/{id}
+    path:   /admin/delete/{id}
     defaults: { _controller: GameBundle:Admin:deleteQuestion }
     requirements:
         id: \d+
 
 options_question:
-    path:    /options
+    path:    /admin/options
     defaults: { _controller: GameBundle:Admin:optionsQuestion }
 
 topic_delete:
-    path:   topic/delete/{id}
+    path:   /admin/topic/delete/{id}
     defaults: { _controller: GameBundle:Admin:deleteTopic }
     requirements:
         id: \d+
 
 subject_delete:
-    path:   subject/delete/{id}
+    path:   /admin/subject/delete/{id}
     defaults: { _controller: GameBundle:Admin:deleteSubject }
     requirements:
         id: \d+

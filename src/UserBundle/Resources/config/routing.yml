@@ -17,13 +17,13 @@ admin_users:
    defaults: { _controller: UserBundle:Default:manageUsers }
 
 user_edit:
-    path:   user/edit/{id}
+    path:   /admin/user/edit/{id}
     defaults: { _controller: UserBundle:Default:editUser }
     requirements:
         id: \d+
 
 user_delete:
-    path:   /delete/{id}
+    path:   /admin/delete/{id}
     defaults: { _controller: UserBundle:Default:deleteUser }
     requirements:
         id: \d+
@@ -39,17 +39,17 @@ admin_gamers:
    defaults: { _controller: UserBundle:Gamer:manager }
 
 add_gamer:
-    path:   /add
+    path:   /gamer/add
     defaults: { _controller: UserBundle:Gamer:add }
 
 edit_gamer:
-    path:   gamer/edit/{id}
+    path:   /gamer/edit/{id}
     defaults: { _controller: UserBundle:Gamer:edit }
     requirements:
         id: \d+
 
 delete_gamer:
-    path:   gamer/delete/{id}
+    path:   /gamer/delete/{id}
     defaults: { _controller: UserBundle:Gamer:delete }
     requirements:
         id: \d+

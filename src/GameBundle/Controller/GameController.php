@@ -6,6 +6,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Config\Definition\Exception\Exception;
 
 
 class GameController extends Controller
@@ -14,6 +15,9 @@ class GameController extends Controller
     {
         $idGamers = $request->query->get('gamer');
         $idSubjects = $request->query->get('subject');
+        if ($idGamers == null || $idSubjects == null) {
+            throw new Exception('Avant de jouer, vous devez d\'abord sélectionner des joueurs et des thèmes.');
+        }
         $em = $this->getDoctrine()->getManager();
         
         // get gamers selected
@@ -39,7 +43,7 @@ class GameController extends Controller
     public function getRandomQuestionAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
-        if($request->isXmlHttpRequest()) {
+        if ($request->isXmlHttpRequest()) {
             $subjectId = $request->get('subjectId');
             $gamerId = $request->get('gamerId');
 
@@ -60,9 +64,9 @@ class GameController extends Controller
                     return new JsonResponse('Aucune question n\'a pas été trouvée.');                    
                 }
             }
-            return new Response('L\'élément n\'a pas été trouvé : id null.');            
+            throw new Exception('L\'élément n\'a pas été trouvé : id null.');            
         }
-        return new Response('Erreur');
+        throw new Exception('Aucune requête n\'a été transmise.');
     }
 
     public function validAnswerAction(Request $request)
@@ -97,9 +101,9 @@ class GameController extends Controller
                     ));                    
                 }
             }
-            return new Response('L\'élément n\'a pas été trouvé : id null.');
+            throw new Exception('L\'élément n\'a pas été trouvé : id null.');
         }
-        return new Response('Une erreur est survenue. Re-tentez la demande.');
+        throw new Exception('Aucune requête n\'a été transmise.');
     }
 
     public function changeStatsAction(Request $request)
@@ -156,7 +160,7 @@ class GameController extends Controller
             }
             return new JsonResponse($gamers);
         }
-        return new Response('Erreur');
+        throw new Exception('Aucune requête n\'a été transmise.');
     }
 
 }

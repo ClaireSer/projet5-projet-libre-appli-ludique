@@ -4,6 +4,7 @@ namespace GameBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Config\Definition\Exception\Exception;
 use GameBundle\Form\QuestionType;
 use GameBundle\Form\TopicType;
 use GameBundle\Form\ThemeType;
@@ -124,7 +125,7 @@ class AdminController extends Controller
     public function removeAnswerAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
-        if($request->isXmlHttpRequest()) {
+        if ($request->isXmlHttpRequest()) {
             $idAnswer = $request->get('id');
             if ($idAnswer != null) {
                 $answer = $em->getRepository('GameBundle:Answer')->find($idAnswer);
@@ -133,7 +134,7 @@ class AdminController extends Controller
                 return new JsonResponse();
             }
         }
-        return new Response('Erreur');
+        throw new Exception('Aucune requête n\'a été transmise.');
     }
 
     public function deleteQuestionAction(Request $request, $id)
