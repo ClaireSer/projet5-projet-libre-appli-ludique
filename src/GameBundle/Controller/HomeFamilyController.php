@@ -33,7 +33,7 @@ class HomeFamilyController extends Controller
             $em = $this->getDoctrine()->getManager();
             $em->persist($question);
             $em->flush();
-            $request->getSession()->getFlashBag()->add('success', 'Question bien enregistrée.');
+            $request->getSession()->getFlashBag()->add('success', 'La question a bien été enregistrée.');
             return $this->redirectToRoute('homepage');
         }
         return $this->render('GameBundle:Default:form_question.html.twig', array(

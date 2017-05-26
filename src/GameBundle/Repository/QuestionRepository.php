@@ -28,21 +28,6 @@ class QuestionRepository extends \Doctrine\ORM\EntityRepository
 		;
     }
 
-    public function getQuestionById($id) {
-        return $this->createQueryBuilder('q')
-            ->leftJoin('q.topic', 't')
-            ->leftJoin('q.userCount', 'u')
-            ->leftJoin('q.schoolClass', 's')
-            ->addSelect('t')
-            ->addSelect('u')
-            ->addSelect('s')
-            ->where('q.id = :id')
-            ->setParameter('id', $id)
-            ->getQuery()
-            ->getSingleResult()
-		;
-    }
-
     public function findBySubjectAndBySchoolClass($subject, $schoolClass) {
         return $this->createQueryBuilder('q')
             ->leftJoin('q.topic', 't')

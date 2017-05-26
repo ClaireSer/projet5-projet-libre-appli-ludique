@@ -5,17 +5,23 @@ namespace GameBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 use UserBundle\Entity\UserCount;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Validator\Constraints as Assert;
+
+
 /**
  * Question
  *
  * @ORM\Table(name="question")
  * @ORM\Entity(repositoryClass="GameBundle\Repository\QuestionRepository")
+ * @UniqueEntity(fields="question", message="L'intitulé de la question existe déjà.")
  */
 class Question
 {
     /**
      * @ORM\ManyToOne(targetEntity="UserBundle\Entity\UserCount", inversedBy="questions")
      * @ORM\JoinColumn(nullable=false)
+     * @Assert\Valid()
      */
     private $userCount;
     
@@ -48,7 +54,8 @@ class Question
     /**
      * @var string
      *
-     * @ORM\Column(name="question", type="string", length=255)
+     * @ORM\Column(name="question", type="string", length=255, unique=true)
+     * @Assert\NotBlank()
      */
     private $question;
 

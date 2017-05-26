@@ -81,7 +81,7 @@ class GameController extends Controller
             $scoreQuestion = $dice * $bonusDifficulty;
             $score += $scoreQuestion;
 
-            if ($answerId != null) {
+            if ($answerId != null and $gamerId != null) {
                 $answerReturn = $em->getRepository('GameBundle:Answer')->find($answerId);
                 $gamerReturn = $em->getRepository('UserBundle:Gamer')->find($gamerId);
 
@@ -97,7 +97,7 @@ class GameController extends Controller
                     ));
                 } else {
                     return new JsonResponse(array(
-                        'validity'  => 'Mauvaise réponse. Tu ne gagnes pas de points.'                        
+                        'validity'  => 'Mauvaise réponse. Tu ne gagnes pas de point.'                        
                     ));                    
                 }
             }
@@ -109,7 +109,7 @@ class GameController extends Controller
     public function changeStatsAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
-        if($request->isXmlHttpRequest()) {
+        if ($request->isXmlHttpRequest()) {
 
             $winnerId = $request->get('winnerId');
             $gamerReturn = $em->getRepository('UserBundle:Gamer')->find($winnerId);

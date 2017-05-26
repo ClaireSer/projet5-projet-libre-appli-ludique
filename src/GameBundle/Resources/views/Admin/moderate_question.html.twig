@@ -129,7 +129,7 @@
                                       <h4 class="modal-title" id="modalDeleteValidQuestionLabel">Confirmation requise</h4>
                                   </div>
                                   <div class="modal-body">
-                                      Etes-vous sûr de vouloir supprimer la question ?
+                                      Etes-vous sûr de vouloir supprimer la question : {{ validQuestion.question|truncate(25, true) }} ?
                                   </div>
                                   <div class="modal-footer">
                                       <a href="{{ path('question_delete', { 'id': validQuestion.id }) }}">
@@ -185,7 +185,7 @@
                                       <h4 class="modal-title" id="modalDeleteNotValidQuestionLabel">Confirmation requise</h4>
                                   </div>
                                   <div class="modal-body">
-                                      Etes-vous sûr de vouloir supprimer la question ?
+                                      Etes-vous sûr de vouloir supprimer la question : {{ notValidQuestion.question|truncate(25, true) }} ?
                                   </div>
                                   <div class="modal-footer">
                                       <a href="{{ path('question_delete', { 'id': notValidQuestion.id }) }}">

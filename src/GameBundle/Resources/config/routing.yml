@@ -22,15 +22,15 @@ notifications:
    defaults: { _controller: GameBundle:HomeFamily:getNotifications }
 
 add_question:
-    path:    /admin/add
+    path:    /admin/question/add
     defaults: { _controller: GameBundle:Admin:addQuestion }
 
 moderate_question:
-    path:    /admin/moderate
+    path:    /admin/question/moderate
     defaults: { _controller: GameBundle:Admin:moderateQuestion }
 
 question_delete:
-    path:   /admin/delete/{id}
+    path:   /admin/question/delete/{id}
     defaults: { _controller: GameBundle:Admin:deleteQuestion }
     requirements:
         id: \d+

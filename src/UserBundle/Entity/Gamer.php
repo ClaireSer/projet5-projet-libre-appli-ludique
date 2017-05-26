@@ -4,6 +4,7 @@ namespace UserBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use GameBundle\Entity\SchoolClass;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Gamer
@@ -38,6 +39,7 @@ class Gamer
      * @var string
      *
      * @ORM\Column(name="username", type="string", length=255)
+     * @Assert\NotBlank()
      */
     private $username;
 
@@ -45,6 +47,7 @@ class Gamer
      * @var string
      *
      * @ORM\Column(name="firstname", type="string", length=255)
+     * @Assert\NotBlank()
      */
     private $firstname;
 

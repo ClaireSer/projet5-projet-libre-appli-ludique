@@ -28,6 +28,7 @@ class UserCountType extends AbstractType
         ->add('username',      TextType::class, array('label' => 'Nom de famille'))
         ->add('password',   RepeatedType::class, array(
             'type'            => PasswordType::class,
+            'invalid_message' => 'Les mots de passe doivent être identiques.',
             'options'         => array('required' => true),
             'first_options'   => array('label' => 'Mot de passe'),
             'second_options'  => array('label' => 'Répétez le mot de passe'),

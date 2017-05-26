@@ -6,12 +6,16 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use GameBundle\Entity\Question;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Validator\Constraints as Assert;
+
 
 /**
  * UserCount
  *
  * @ORM\Table(name="user_count")
  * @ORM\Entity(repositoryClass="UserBundle\Repository\UserCountRepository")
+ * @UniqueEntity(fields="username", message="Un compte existe déjà avec ce nom d'utilisateur.")
  */
 class UserCount implements UserInterface
 {
@@ -36,6 +40,7 @@ class UserCount implements UserInterface
 
     /**
      * @ORM\Column(name="username", type="string", length=255, unique=true)
+     * @Assert\NotBlank()
      */
     private $username;
     
@@ -48,6 +53,7 @@ class UserCount implements UserInterface
      * @var string
      *
      * @ORM\Column(name="password", type="string", length=255)
+     * @Assert\NotBlank()
      */
     private $password;
 

@@ -24,7 +24,7 @@ class SessionController extends Controller
             $em = $this->getDoctrine()->getManager();
             $em->persist($userCount);
             $em->flush();
-            $request->getSession()->getFlashBag()->add('success', 'Compte bien enregistré.');
+            $request->getSession()->getFlashBag()->add('success', 'Le compte a bien été créé.');
             return $this->redirectToRoute('homepage');
         }
         return $this->render('UserBundle:Default:form_user.html.twig', array(
@@ -36,7 +36,7 @@ class SessionController extends Controller
 
     public function loginAction(Request $request) {
         if ($this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
-            $request->getSession()->getFlashBag()->add('notice', 'Vous êtes bien connecté(e).');            
+            $request->getSession()->getFlashBag()->add('success', 'Vous êtes bien connecté(e).');            
             return $this->redirectToRoute('homepage');
         }
         $authenticationUtils = $this->get('security.authentication_utils');
@@ -46,12 +46,8 @@ class SessionController extends Controller
         ));
     }
 
-    public function settingsAction(Request $request, $id) {
+    public function settingsAction(Request $request, UserCount $userCount) {
         $em = $this->getDoctrine()->getManager();
-        $userCount = $em->getRepository('UserBundle:UserCount')->find($id);
-        if (null === $userCount) {
-            throw new NotFoundHttpException("L'annonce d'id ".$id." n'existe pas.");
-        }
         $form = $this->createForm(UserCountSettingsType::class, $userCount);
         $formRequest = $form->handleRequest($request);
         if ($formRequest->isSubmitted() && $formRequest->isValid()) {

@@ -30,18 +30,16 @@ class DefaultController extends Controller
         ));   
     }
 
-    public function editUserAction(Request $request, $id)
+    public function editUserAction(Request $request, UserCount $userCount)
     {
         $em = $this->getDoctrine()->getManager();
-        $userCount = $em->getRepository('UserBundle:UserCount')->find($id);
-
         $form = $this->createForm(UserCountEditType::class, $userCount);
         $formRequest = $form->handleRequest($request);
 
         if ($formRequest->isSubmitted() && $formRequest->isValid()) {
             $em->persist($userCount);
             $em->flush();
-            $request->getSession()->getFlashBag()->add('success', 'Compte bien édité.');
+            $request->getSession()->getFlashBag()->add('success', 'Le compte a bien été édité.');
             return $this->redirectToRoute('homepage');
         }
 
@@ -52,11 +50,9 @@ class DefaultController extends Controller
         ));
     }
 
-    public function deleteUserAction(Request $request, $id)
+    public function deleteUserAction(Request $request, UserCount $userCount)
     {
         $em = $this->getDoctrine()->getManager();
-        $userCount = $em->getRepository('UserBundle:UserCount')->find($id);
-
         $em->remove($userCount);
         $em->flush();
         $request->getSession()->getFlashBag()->add('success', 'Le compte a bien été supprimé.');

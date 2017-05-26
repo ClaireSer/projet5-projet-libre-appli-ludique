@@ -50,10 +50,9 @@ class GamerController extends Controller
         ));
     }
 
-    public function editAction(Request $request, $id)
+    public function editAction(Request $request, Gamer $gamer)
     {
         $em = $this->getDoctrine()->getManager();
-        $gamer = $em->getRepository('UserBundle:Gamer')->find($id);
         $form = $this->createForm(GamerType::class, $gamer);
         $formRequest = $form->handleRequest($request);
         if ($formRequest->isSubmitted() && $formRequest->isValid()) {
@@ -73,11 +72,9 @@ class GamerController extends Controller
         ));
     }
 
-    public function deleteAction(Request $request, $id)
+    public function deleteAction(Request $request, Gamer $gamer)
     {
         $em = $this->getDoctrine()->getManager();
-        $gamer = $em->getRepository('UserBundle:Gamer')->find($id);
-
         $em->remove($gamer);
         $em->flush();
         $request->getSession()->getFlashBag()->add('success', 'Le joueur a bien été supprimée.');

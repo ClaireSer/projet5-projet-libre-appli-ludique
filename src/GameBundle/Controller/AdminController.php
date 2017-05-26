@@ -5,12 +5,13 @@ namespace GameBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Config\Definition\Exception\Exception;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use GameBundle\Form\QuestionType;
 use GameBundle\Form\TopicType;
 use GameBundle\Form\ThemeType;
 use GameBundle\Entity\Question;
 use GameBundle\Entity\Topic;
-use Symfony\Component\HttpFoundation\JsonResponse;
+use GameBundle\Entity\Subject;
 
 
 class AdminController extends Controller
@@ -38,7 +39,7 @@ class AdminController extends Controller
             $em = $this->getDoctrine()->getManager();
             $em->persist($question);
             $em->flush();
-            $request->getSession()->getFlashBag()->add('success', 'Question bien enregistrée.');
+            $request->getSession()->getFlashBag()->add('success', 'La question a bien été enregistrée.');
             return $this->redirectToRoute('homepage');
         }
         return $this->render('GameBundle:Default:form_question.html.twig', array(
@@ -86,33 +87,31 @@ class AdminController extends Controller
         ));   
     }
     
-    public function validateQuestionAction(Request $request, $id)
+    public function validateQuestionAction(Request $request, Question $question)
     {
         $em = $this->getDoctrine()->getManager();
-        $notValidQuestion = $em->getRepository('GameBundle:Question')->getQuestionById($id);
-        $form = $this->createForm(QuestionType::class, $notValidQuestion);
+        $form = $this->createForm(QuestionType::class, $question);
         $formRequest = $form->handleRequest($request);
         
         if ($formRequest->isSubmitted() && $formRequest->isValid()) {
-            $notValidQuestion->setIsValid(true);
+            $question->setIsValid(true);
 
-            foreach($notValidQuestion->getAnswers() as $answer) {
-                $answer->setQuestion($notValidQuestion);
+            foreach($question->getAnswers() as $answer) {
+                $answer->setQuestion($question);
             }
-            $firstAnswer = $notValidQuestion->getAnswers()->first();
+            $firstAnswer = $question->getAnswers()->first();
             $firstAnswer->setIsRight(true);
             
-            $topic = $notValidQuestion->getTopic();
-            $topic->addQuestion($notValidQuestion);
+            $topic = $question->getTopic();
+            $topic->addQuestion($question);
 
-            $schoolClass = $notValidQuestion->getSchoolClass();
-            $schoolClass->addQuestion($notValidQuestion);
+            $schoolClass = $question->getSchoolClass();
+            $schoolClass->addQuestion($question);
 
             $em = $this->getDoctrine()->getManager();
-            $em->persist($notValidQuestion);
+            $em->persist($question);
             $em->flush();
             $request->getSession()->getFlashBag()->add('success', 'La question a bien été validée.');
-
             return $this->redirectToRoute('moderate_question');
         }
 
@@ -133,15 +132,14 @@ class AdminController extends Controller
                 $em->flush();
                 return new JsonResponse();
             }
+            throw new Exception('L\'élément n\'a pas été trouvé.');
         }
         throw new Exception('Aucune requête n\'a été transmise.');
     }
 
-    public function deleteQuestionAction(Request $request, $id)
+    public function deleteQuestionAction(Request $request, Question $question)
     {
         $em = $this->getDoctrine()->getManager();
-        $question = $em->getRepository('GameBundle:Question')->getQuestionById($id);
-
         $em->remove($question);
         $em->flush();
         $request->getSession()->getFlashBag()->add('success', 'La question a bien été supprimée.');
@@ -188,22 +186,18 @@ class AdminController extends Controller
         ));
     }
 
-    public function deleteTopicAction(Request $request, $id)
+    public function deleteTopicAction(Request $request, Topic $topic)
     {
         $em = $this->getDoctrine()->getManager();
-        $topic = $em->getRepository('GameBundle:Topic')->find($id);
-
         $em->remove($topic);
         $em->flush();
         $request->getSession()->getFlashBag()->add('success', 'La sous-matière a bien été supprimée.');
         return $this->redirectToRoute('options_question');
     }
 
-        public function deleteSubjectAction(Request $request, $id)
+        public function deleteSubjectAction(Request $request, Subject $subject)
     {
         $em = $this->getDoctrine()->getManager();
-        $subject = $em->getRepository('GameBundle:Subject')->find($id);
-
         $em->remove($subject);
         $em->flush();
         $request->getSession()->getFlashBag()->add('success', 'La matière a bien été supprimée.');

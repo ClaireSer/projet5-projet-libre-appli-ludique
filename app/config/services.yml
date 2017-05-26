@@ -3,7 +3,11 @@
 parameters:
 #    parameter_name: value
 
-# services:
+services:
+    twig.extension.text:
+        class: Twig_Extensions_Extension_Text
+        tags:
+            - { name: twig.extension }
 #     app.webservice_user_provider:
 #         class: UserBundle\Security\User\WebserviceUserProvider
 
