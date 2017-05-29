@@ -36,9 +36,10 @@
                                     </ul>
                                 </li>
                                 {% if is_granted('ROLE_ADMIN') %}
-                                    <li class="dropdown {% if adminUser is defined %}active{% endif %}"><a class="dropdown-toggle" data-toggle="dropdown" href="#">Utilisateurs<span class="caret"></span></a>
+                                    <li class="dropdown {% if (adminUser is defined) or (addUser is defined) %}active{% endif %}"><a class="dropdown-toggle" data-toggle="dropdown" href="#">Utilisateurs<span class="caret"></span></a>
                                         <ul class="dropdown-menu">
                                             <li><a href=" {{ path('admin_users') }} ">Gestion</a></li>
+                                            <li><a href=" {{ path('user_add') }} ">Ajout</a></li>
                                         </ul>
                                     </li>
                                 {% endif %}
@@ -51,7 +52,6 @@
                                         <li><a href=" {{ path('list_scores') }} ">Scores et classements</a></li>
                                     </ul>
                                 </li>
-                                {#<li class="dropdown {% if (formElt is defined) or (notif is defined) %}active{% endif %}"><a class="dropdown-toggle" data-toggle="dropdown" href="#">Vos questions <span class="badge">{% if notif %}{{ notif }}{% endif %}</span><span class="caret"></span></a>#}
                                 <li class="dropdown {% if (formElt is defined) or (notif is defined) %}active{% endif %}"><a class="dropdown-toggle" data-toggle="dropdown" href="#">Vos questions <span class="badge"></span><span class="caret"></span></a>
                                     <ul class="dropdown-menu">
                                         <li><a href=" {{ path('suggest_question') }} ">Proposez des questions !</a></li>

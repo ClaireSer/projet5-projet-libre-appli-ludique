@@ -60,7 +60,7 @@ class SessionController extends Controller
             return $this->redirectToRoute('homepage');
         }
         
-        return $this->render('UserBundle:Default:form_user.html.twig', array(
+        return $this->render('UserBundle:Default:settings.html.twig', array(
             'form'      => $form->createView(),
             'titleTab'  => 'Paramètres',
             'title'     => 'Modification du mot de passe'

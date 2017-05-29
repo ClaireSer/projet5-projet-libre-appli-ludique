@@ -4,6 +4,7 @@ namespace UserBundle\Controller;
 
 use UserBundle\Entity\Gamer;
 use UserBundle\Entity\UserCount;
+use UserBundle\Form\UserCountType;
 use UserBundle\Form\UserCountEditType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -28,6 +29,29 @@ class DefaultController extends Controller
             'teachers'      => $teachers,
             'admins'        => $admins
         ));   
+    }
+
+    public function addUserAction(Request $request)
+    {
+        $userCount = new UserCount();
+        $form = $this->createForm(UserCountType::class, $userCount);
+        $formRequest = $form->handleRequest($request);
+
+        if ($formRequest->isSubmitted() && $formRequest->isValid()) {
+            $password = $this->get('security.password_encoder')->encodePassword($userCount, $userCount->getPassword());
+            $userCount->setPassword($password);
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($userCount);
+            $em->flush();
+            $request->getSession()->getFlashBag()->add('success', 'Le compte a bien été créé.');
+            return $this->redirectToRoute('homepage');
+        }
+
+        return $this->render('UserBundle:Default:form_user.html.twig', array(
+            'form'      => $form->createView(),
+            'title'     => 'Ajout d\'un utilisateur',
+            'titleTab'  => 'Ajout'
+        ));
     }
 
     public function editUserAction(Request $request, UserCount $userCount)

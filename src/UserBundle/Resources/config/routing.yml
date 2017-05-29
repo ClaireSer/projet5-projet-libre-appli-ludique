@@ -16,6 +16,10 @@ admin_users:
    path:    /administration
    defaults: { _controller: UserBundle:Default:manageUsers }
 
+user_add:
+    path:   /admin/user/add
+    defaults: { _controller: UserBundle:Default:addUser }
+
 user_edit:
     path:   /admin/user/edit/{id}
     defaults: { _controller: UserBundle:Default:editUser }
