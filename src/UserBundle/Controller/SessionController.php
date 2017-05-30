@@ -47,6 +47,9 @@ class SessionController extends Controller
         ));
     }
 
+    /**
+     * @Security("user.getId() == userCount.getId()")
+     */
     public function settingsAction(Request $request, UserCount $userCount) {
         $em = $this->getDoctrine()->getManager();
         $form = $this->createForm(UserCountSettingsType::class, $userCount);

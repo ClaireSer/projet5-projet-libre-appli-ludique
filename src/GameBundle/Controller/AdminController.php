@@ -53,7 +53,7 @@ class AdminController extends Controller
     }
 
     /**
-     * @Security("has_role('ROLE_USER') or has_role('ROLE_TEACHER')")
+     * @Security("has_role('ROLE_TEACHER')")
      */
     public function moderateQuestionAction(Request $request)
     {
@@ -95,7 +95,7 @@ class AdminController extends Controller
     }
     
     /**
-     * @Security("has_role('ROLE_TEACHER')")
+     * @Security("has_role('ROLE_USER') or has_role('ROLE_TEACHER')")
      */
     public function validateQuestionAction(Request $request, Question $question)
     {

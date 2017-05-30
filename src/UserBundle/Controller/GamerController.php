@@ -58,8 +58,9 @@ class GamerController extends Controller
     }
 
     /**
-     * @Security("has_role('ROLE_USER')")
+     * @Security("has_role('ROLE_USER') and user.getId() == gamer.getUserCount().getId()")
      */
+
     public function editAction(Request $request, Gamer $gamer)
     {
         $em = $this->getDoctrine()->getManager();

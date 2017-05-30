@@ -6,7 +6,7 @@ remove_answer:
         _method: DELETE
 
 validate_question:
-    path: /admin/validate/{id}
+    path: /validate/{id}
     defaults:
         _controller: GameBundle:Admin:validateQuestion
         id: 1            
