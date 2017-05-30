@@ -4,12 +4,16 @@ namespace GameBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use GameBundle\Form\QuestionType;
 use GameBundle\Entity\Question;
 
 
 class HomeFamilyController extends Controller
 {
+    /**
+     * @Security("has_role('ROLE_USER')")
+     */
     public function suggestQuestionAction(Request $request)
     {
         $question = new Question();
@@ -42,23 +46,27 @@ class HomeFamilyController extends Controller
         ));
     }
 
-    public function getNotificationsAction(Request $request)
+    /**
+     * @Security("has_role('ROLE_USER')")
+     */
+    public function getUserQuestionsAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
         $myValidQuestions = $em->getRepository('GameBundle:Question')->findMyQuestions($this->getUser(), true);
         $myNotValidQuestions = $em->getRepository('GameBundle:Question')->findMyQuestions($this->getUser(), false);
         
-        return $this->render('GameBundle:Default:notifications.html.twig', array(
+        return $this->render('GameBundle:Default:user_questions.html.twig', array(
             'title'         => 'Vos questions',
             'validQuestions'    => $myValidQuestions,
             'notValidQuestions'    => $myNotValidQuestions
         ));
     }
 
-    public function helpAction(Request $request)
-    {
+    /**
+     * @Security("has_role('ROLE_USER') or has_role('ROLE_TEACHER')")
+     */
+    public function helpAction(Request $request) {
         return $this->render('GameBundle:Default:help.html.twig');
-        
     } 
     
 }

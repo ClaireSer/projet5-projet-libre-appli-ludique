@@ -151,6 +151,9 @@ a {
 .formTheme, .formTopic, .toHide {
     display: none; 
 }
+.deleteButton {
+    text-align: center;
+}
 .gamer, .chooseSubject {
     background-color:whitesmoke; 
     display:inline-block; 

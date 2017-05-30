@@ -9,9 +9,13 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 
 class GamerController extends Controller
 {
+    /**
+     * @Security("has_role('ROLE_USER')")
+     */
     public function managerAction(Request $request) 
     {
         $em = $this->getDoctrine()->getManager();
@@ -22,6 +26,9 @@ class GamerController extends Controller
         ));
     }
 
+    /**
+     * @Security("has_role('ROLE_USER')")
+     */
     public function addAction(Request $request)
     {
         $gamer = new Gamer();
@@ -45,11 +52,14 @@ class GamerController extends Controller
         }
 
         return $this->render('UserBundle:Gamer:form_gamer.html.twig', array(
-            'form'  => $form->createView(),
-            'title' => 'Ajouter un joueur'
+            'form'          => $form->createView(),
+            'title'         => 'Ajouter un joueur'
         ));
     }
 
+    /**
+     * @Security("has_role('ROLE_USER')")
+     */
     public function editAction(Request $request, Gamer $gamer)
     {
         $em = $this->getDoctrine()->getManager();
@@ -72,6 +82,9 @@ class GamerController extends Controller
         ));
     }
 
+    /**
+     * @Security("has_role('ROLE_USER')")
+     */
     public function deleteAction(Request $request, Gamer $gamer)
     {
         $em = $this->getDoctrine()->getManager();
@@ -81,6 +94,9 @@ class GamerController extends Controller
         return $this->redirectToRoute('homepage');
     }
 
+    /**
+     * @Security("has_role('ROLE_USER') or has_role('ROLE_TEACHER')")
+     */
     public function listScoresAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
@@ -107,6 +123,9 @@ class GamerController extends Controller
         ));
     }
 
+    /**
+     * @Security("has_role('ROLE_USER')")
+     */
     public function selectAction(Request $request) {
         $em = $this->getDoctrine()->getManager();
         $gamers = $em->getRepository('UserBundle:Gamer')->getGamersByUserCount($this->getUser());

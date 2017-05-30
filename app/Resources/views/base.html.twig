@@ -52,10 +52,10 @@
                                         <li><a href=" {{ path('list_scores') }} ">Scores et classements</a></li>
                                     </ul>
                                 </li>
-                                <li class="dropdown {% if (formElt is defined) or (notif is defined) %}active{% endif %}"><a class="dropdown-toggle" data-toggle="dropdown" href="#">Vos questions <span class="badge"></span><span class="caret"></span></a>
+                                <li class="dropdown {% if (formElt is defined) or (user_questions is defined) %}active{% endif %}"><a class="dropdown-toggle" data-toggle="dropdown" href="#">Vos questions <span class="badge"></span><span class="caret"></span></a>
                                     <ul class="dropdown-menu">
                                         <li><a href=" {{ path('suggest_question') }} ">Proposez des questions !</a></li>
-                                        <li><a href=" {{ path('notifications') }} ">Vos questions <span class="badge"></span></a></li>
+                                        <li><a href=" {{ path('user_questions') }} ">Vos questions <span class="badge"></span></a></li>
                                     </ul>
                                 </li>
                             {% endif %}

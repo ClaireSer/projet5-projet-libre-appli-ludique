@@ -9,6 +9,7 @@ use UserBundle\Form\UserCountEditType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 
 
 class DefaultController extends Controller
@@ -17,6 +18,9 @@ class DefaultController extends Controller
         return $this->render('UserBundle:Default:index.html.twig');
     }
 
+    /**
+     * @Security("has_role('ROLE_ADMIN')")
+     */
     public function manageUsersAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
@@ -31,6 +35,9 @@ class DefaultController extends Controller
         ));   
     }
 
+    /**
+     * @Security("has_role('ROLE_ADMIN')")
+     */
     public function addUserAction(Request $request)
     {
         $userCount = new UserCount();
@@ -48,12 +55,15 @@ class DefaultController extends Controller
         }
 
         return $this->render('UserBundle:Default:form_user.html.twig', array(
-            'form'      => $form->createView(),
-            'title'     => 'Ajout d\'un utilisateur',
-            'titleTab'  => 'Ajout'
+            'form'          => $form->createView(),
+            'title'         => 'Ajout d\'un utilisateur',
+            'titleTab'      => 'Ajout'
         ));
     }
 
+    /**
+     * @Security("has_role('ROLE_ADMIN')")
+     */
     public function editUserAction(Request $request, UserCount $userCount)
     {
         $em = $this->getDoctrine()->getManager();
@@ -74,6 +84,9 @@ class DefaultController extends Controller
         ));
     }
 
+    /**
+     * @Security("has_role('ROLE_ADMIN')")
+     */
     public function deleteUserAction(Request $request, UserCount $userCount)
     {
         $em = $this->getDoctrine()->getManager();

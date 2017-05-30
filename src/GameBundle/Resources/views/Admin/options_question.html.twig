@@ -58,7 +58,7 @@
                 <td rowspan="{{ subject.topics|length }}">
                   {{ subject.nameSubject }} 
                 </td>
-                <td rowspan="{{ subject.topics|length }}">
+                <td rowspan="{{ subject.topics|length }}" class="deleteButton">
                   <a data-toggle="modal" data-target="#modalDeleteSubject{{ subject.id }}"><button class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-remove"></button></a>
                   
                   <!-- Modal -->
@@ -89,7 +89,7 @@
                 <td>
                   {{ topic.nameTopic }} 
                 </td>
-                <td>
+                <td class="deleteButton">
                   <a data-toggle="modal" data-target="#modalDeleteTopic{{ topic.id }}"><button class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-remove"></button></a>
 
                   <!-- Modal -->
@@ -151,7 +151,12 @@
               {{ form_row(formTheme.nameTopic) }}
           </div>
           
-          {{ form_widget(formTheme.save, {'attr': {'class': 'btn btn-primary'}}) }}
+          {{ form_widget(formTheme.save, {
+              'label': 'Ajouter',
+              'attr' : {
+                  'class': 'btn btn-primary'
+              }
+          }) }}
 
           {{ form_rest(formTheme) }}
           {{ form_end(formTheme) }}        
@@ -171,7 +176,12 @@
               {{ form_row(formTopic.nameTopic) }}
           </div>
           
-          {{ form_widget(formTopic.save, {'attr': {'class': 'btn btn-primary'}}) }}
+          {{ form_widget(formTopic.save, {
+              'label': 'Ajouter',
+              'attr' : {
+                  'class': 'btn btn-primary'
+              }
+          }) }}
 
           {{ form_rest(formTopic) }}
           {{ form_end(formTopic) }}  

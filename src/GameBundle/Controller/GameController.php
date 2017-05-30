@@ -7,10 +7,14 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Config\Definition\Exception\Exception;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 
 
 class GameController extends Controller
 {
+    /**
+     * @Security("has_role('ROLE_USER')")
+     */
     public function playAction(Request $request)
     {
         $idGamers = $request->query->get('gamer');
@@ -40,6 +44,9 @@ class GameController extends Controller
         ));
     }
 
+    /**
+     * @Security("has_role('ROLE_USER')")
+     */
     public function getRandomQuestionAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
@@ -69,6 +76,9 @@ class GameController extends Controller
         throw new Exception('Aucune requête n\'a été transmise.');
     }
 
+    /**
+     * @Security("has_role('ROLE_USER')")
+     */
     public function validAnswerAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
@@ -106,6 +116,9 @@ class GameController extends Controller
         throw new Exception('Aucune requête n\'a été transmise.');
     }
 
+    /**
+     * @Security("has_role('ROLE_USER')")
+     */
     public function changeStatsAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();

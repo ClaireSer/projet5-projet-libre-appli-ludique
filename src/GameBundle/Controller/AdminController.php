@@ -6,6 +6,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Config\Definition\Exception\Exception;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use GameBundle\Form\QuestionType;
 use GameBundle\Form\TopicType;
 use GameBundle\Form\ThemeType;
@@ -16,6 +17,9 @@ use GameBundle\Entity\Subject;
 
 class AdminController extends Controller
 {
+    /**
+     * @Security("has_role('ROLE_TEACHER')")
+     */
     public function addQuestionAction(Request $request)
     {
         $question = new Question();
@@ -48,6 +52,9 @@ class AdminController extends Controller
         ));
     }
 
+    /**
+     * @Security("has_role('ROLE_USER') or has_role('ROLE_TEACHER')")
+     */
     public function moderateQuestionAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
@@ -87,6 +94,9 @@ class AdminController extends Controller
         ));   
     }
     
+    /**
+     * @Security("has_role('ROLE_TEACHER')")
+     */
     public function validateQuestionAction(Request $request, Question $question)
     {
         $em = $this->getDoctrine()->getManager();
@@ -121,6 +131,9 @@ class AdminController extends Controller
         ));
     }
 
+    /**
+     * @Security("has_role('ROLE_USER') or has_role('ROLE_TEACHER')")
+     */
     public function removeAnswerAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
@@ -137,6 +150,9 @@ class AdminController extends Controller
         throw new Exception('Aucune requête n\'a été transmise.');
     }
 
+    /**
+     * @Security("has_role('ROLE_USER') or has_role('ROLE_TEACHER')")
+     */
     public function deleteQuestionAction(Request $request, Question $question)
     {
         $em = $this->getDoctrine()->getManager();
@@ -146,6 +162,9 @@ class AdminController extends Controller
         return $this->redirectToRoute('homepage');
     }
 
+    /**
+     * @Security("has_role('ROLE_TEACHER')")
+     */
     public function optionsQuestionAction(Request $request) 
     {
         $em = $this->getDoctrine()->getManager();
@@ -186,6 +205,9 @@ class AdminController extends Controller
         ));
     }
 
+    /**
+     * @Security("has_role('ROLE_TEACHER')")
+     */
     public function deleteTopicAction(Request $request, Topic $topic)
     {
         $em = $this->getDoctrine()->getManager();
@@ -195,6 +217,9 @@ class AdminController extends Controller
         return $this->redirectToRoute('options_question');
     }
 
+    /**
+     * @Security("has_role('ROLE_TEACHER')")
+     */
         public function deleteSubjectAction(Request $request, Subject $subject)
     {
         $em = $this->getDoctrine()->getManager();

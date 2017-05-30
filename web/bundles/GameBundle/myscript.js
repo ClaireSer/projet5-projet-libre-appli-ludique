@@ -120,9 +120,17 @@ $(function () {
                 var that = $(this);
 
                 if ($(this).text() == cumulDiceGamer) {
+                    // cumulDiceGamerArray.forEach(function(value) {
+                    //     if (value == that.text()) {
+                    //         alert(value);
+                    //         that.addClass('multipleGamers');                            
+                    //     }
+                    // })
                     cumulDiceGamerArray[rowGamer] = cumulDiceGamer;
                     $(this).addClass(activeCase);
                     $('.questions').show();
+
+                    
 
                     if ($(this).text() % 4 == 0) {
                         ajaxRandomQuestion(url0, 'red');
@@ -137,9 +145,12 @@ $(function () {
                         ajaxRandomQuestion(url3, 'green');
                     }
                 }
+                // pour chaque case du plateau, on retourne dans un tableau les valeurs des dés cumulés 
+                // de la case sur laquelle le joueur a atterri (that.text()).
                 var listOfCumulDiceGamers = cumulDiceGamerArray.filter(function (cumul) {
                     return that.text() == cumul && cumul != 0;
                 });
+                // on regarde dans ce tableau s'il y a au moins 2 valeurs identiques
                 if (listOfCumulDiceGamers.length > 1) {
                     that.addClass('multipleGamers');
                 }
@@ -238,7 +249,7 @@ $(function () {
                 } else {
                     that.css('background-color', '#f45c6e');
                 }
-                // dice.children().hide();            
+                dice.children().hide();            
 
             },
             error: function () {

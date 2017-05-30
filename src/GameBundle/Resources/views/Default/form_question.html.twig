@@ -39,7 +39,12 @@
                     {{ form_row(form.difficulty) }}
                 </div>
                 
-                {{ form_widget(form.save, {'attr': {'class': 'btn btn-primary'}}) }}
+                {{ form_widget(form.save, {
+                    'label': 'Ajouter',
+                    'attr' : {
+                        'class': 'btn btn-primary'
+                    }
+                }) }}
 
                 {{ form_rest(form) }}
                 {{ form_end(form) }}
