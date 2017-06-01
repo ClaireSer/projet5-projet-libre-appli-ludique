@@ -5,7 +5,6 @@ namespace GameBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Config\Definition\Exception\Exception;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 
@@ -19,7 +18,7 @@ class GameController extends Controller
     {
         $idGamers = $request->query->get('gamer');
         $idSubjects = $request->query->get('subject');
-        if ($idGamers == null || $idSubjects == null) {
+        if ($idGamers === null || $idSubjects === null) {
             throw new Exception('Avant de jouer, vous devez d\'abord sélectionner des joueurs et des thèmes.');
         }
         $em = $this->getDoctrine()->getManager();
@@ -57,7 +56,7 @@ class GameController extends Controller
             $gamer = $em->getRepository('UserBundle:Gamer')->find($gamerId);
             $schoolClass = $gamer->getSchoolClass();
 
-            if ($subjectId != null and $gamerId != null) {
+            if ($subjectId !== null && $gamerId !== null) {
                 $subject = $em->getRepository('GameBundle:Subject')->find($subjectId);
                 $questions = $em->getRepository('GameBundle:Question')->findBySubjectAndBySchoolClass($subject, $schoolClass);
                 $idQuestionList = [];
@@ -91,7 +90,7 @@ class GameController extends Controller
             $scoreQuestion = $dice * $bonusDifficulty;
             $score += $scoreQuestion;
 
-            if ($answerId != null and $gamerId != null) {
+            if ($answerId !== null && $gamerId !== null) {
                 $answerReturn = $em->getRepository('GameBundle:Answer')->find($answerId);
                 $gamerReturn = $em->getRepository('UserBundle:Gamer')->find($gamerId);
 
@@ -175,5 +174,4 @@ class GameController extends Controller
         }
         throw new Exception('Aucune requête n\'a été transmise.');
     }
-
 }

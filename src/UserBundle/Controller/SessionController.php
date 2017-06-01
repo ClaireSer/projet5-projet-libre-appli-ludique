@@ -2,7 +2,6 @@
 
 namespace UserBundle\Controller;
 
-use UserBundle\Entity\Gamer;
 use UserBundle\Entity\UserCount;
 use UserBundle\Form\UserCountSignupType;
 use UserBundle\Form\UserCountSettingsType;

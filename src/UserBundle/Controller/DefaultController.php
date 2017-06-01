@@ -2,13 +2,11 @@
 
 namespace UserBundle\Controller;
 
-use UserBundle\Entity\Gamer;
 use UserBundle\Entity\UserCount;
 use UserBundle\Form\UserCountType;
 use UserBundle\Form\UserCountEditType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 
 

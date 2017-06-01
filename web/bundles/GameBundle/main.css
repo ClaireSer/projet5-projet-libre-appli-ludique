@@ -243,6 +243,16 @@ div.infoQuestion div {
 .infoQuestions a {
     color: inherit;
 }
+.messageOie {
+    background-color: yellow;
+    border: 1px solid dimgray;
+    border-radius: 30px;
+    float: right;
+    margin-right: 100px;
+    margin-top: 30px;
+    padding: 50px;
+    font-family: 'Oswald', sans-serif;
+} 
 
 /*modal*/
 

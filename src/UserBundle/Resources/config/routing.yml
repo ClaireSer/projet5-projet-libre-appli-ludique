@@ -61,3 +61,4 @@ delete_gamer:
 list_scores:
    path:    /scores
    defaults: { _controller: UserBundle:Gamer:listScores }
+   

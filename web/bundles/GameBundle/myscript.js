@@ -138,14 +138,16 @@ $(function () {
                 
             });
             
+            // nécessité de parcourir le plateau une 2e fois pour avoir le tableau 
+            // "cumulDiceGamerArray" mis à jour dans le 1er tour
             $('.board td').each(function () {
                 var that = $(this);
-                // pour chaque case du plateau, on retourne dans un tableau la valeur des dés cumulés (cumul) 
-                // de la case sur laquelle le joueur a atterri (that.text()).
+                // On regarde sur chaque case du tableau s'il y a un joueur. 
+                // Dès lors, on retourne la valeur des dès cumulés du joueur.
                 var listOfCumulDiceGamers = cumulDiceGamerArray.filter(function (cumul) {
                     return that.text() == cumul && cumul != 0;
                 });
-                // on regarde dans ce tableau s'il y a au moins 2 valeurs identiques
+                // On regarde dans l'ensemble des éléments retournés s'il y a au moins 2 valeurs identiques.
                 if (listOfCumulDiceGamers.length > 1) {
                     that.addClass('multipleGamers');
                 }

@@ -139,7 +139,7 @@ class AdminController extends Controller
         $em = $this->getDoctrine()->getManager();
         if ($request->isXmlHttpRequest()) {
             $idAnswer = $request->get('id');
-            if ($idAnswer != null) {
+            if ($idAnswer !== null) {
                 $answer = $em->getRepository('GameBundle:Answer')->find($idAnswer);
                 $em->remove($answer);
                 $em->flush();
