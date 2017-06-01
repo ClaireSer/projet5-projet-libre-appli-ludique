@@ -10,11 +10,9 @@ $(function () {
     }
 
     var firstTime = true;
-    var pathValidAnswerCurrent;
     var randomNumber;
     var bonusDifficulty;
     var gamerId;
-    var exprUrl;
 
     var allGamersId = [];
     $('.stats').each(function (i) {
@@ -120,17 +118,9 @@ $(function () {
                 var that = $(this);
 
                 if ($(this).text() == cumulDiceGamer) {
-                    // cumulDiceGamerArray.forEach(function(value) {
-                    //     if (value == that.text()) {
-                    //         alert(value);
-                    //         that.addClass('multipleGamers');                            
-                    //     }
-                    // })
-                    cumulDiceGamerArray[rowGamer] = cumulDiceGamer;
                     $(this).addClass(activeCase);
+                    cumulDiceGamerArray[rowGamer] = cumulDiceGamer;
                     $('.questions').show();
-
-                    
 
                     if ($(this).text() % 4 == 0) {
                         ajaxRandomQuestion(url0, 'red');
@@ -145,7 +135,12 @@ $(function () {
                         ajaxRandomQuestion(url3, 'green');
                     }
                 }
-                // pour chaque case du plateau, on retourne dans un tableau les valeurs des dés cumulés 
+                
+            });
+            
+            $('.board td').each(function () {
+                var that = $(this);
+                // pour chaque case du plateau, on retourne dans un tableau la valeur des dés cumulés (cumul) 
                 // de la case sur laquelle le joueur a atterri (that.text()).
                 var listOfCumulDiceGamers = cumulDiceGamerArray.filter(function (cumul) {
                     return that.text() == cumul && cumul != 0;
@@ -154,18 +149,19 @@ $(function () {
                 if (listOfCumulDiceGamers.length > 1) {
                     that.addClass('multipleGamers');
                 }
-
-            })
+            });
+            
             $('#modal').delay(1000).fadeIn('slow');
         }
         return rowGamer;
         
     }
 
+
     function ajaxRandomQuestion(urlType, color) {
         $('.infoAnswer').html('');
 
-        exprUrl = /(^\D+\/\d+\/)\d+/;
+        var exprUrl = /(^\D+\/\d+\/)\d+/;
         urlTypeCurrent = urlType.replace(exprUrl, '$1' + gamerId);
 
         $.ajax({
@@ -210,7 +206,7 @@ $(function () {
                 $('div.answer').on('click', function () {
                     var expr = /(^\D+)\d+\/\d+\/\d+\/\d+\/\d+/;
                     var score = parseInt($('.stats:nth(' + rowGamer + ') .panel-title span').text());
-                    pathValidAnswerCurrent = pathValidAnswer.replace(expr, '$1' + $(this).attr('id') + '/' + gamerId + '/' + randomNumber + '/' + score + '/' + bonusDifficulty);
+                    var pathValidAnswerCurrent = pathValidAnswer.replace(expr, '$1' + $(this).attr('id') + '/' + gamerId + '/' + randomNumber + '/' + score + '/' + bonusDifficulty);
                     ajaxValidAnswer(pathValidAnswerCurrent, $(this));
                 })
 
