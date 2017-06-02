@@ -7,7 +7,9 @@ html {
 body {
     min-height: 100%;
     position: relative;
-    padding-bottom: 30px;
+    padding-bottom: 60px;
+    --small-device-border: 5px solid white;
+    --big-device-border: 10px solid white;
 }
 /********************************** Plateau du jeu ***********************************/
 
@@ -92,16 +94,16 @@ table.board td {
     width: 40px;
 }
 .board .borderTop {
-    border-top: 10px solid white;
+    border-top: var(--big-device-border);
 }
 .board .borderBottom {
-    border-bottom: 10px solid white;
+    border-bottom: var(--big-device-border);
 }
 .board .borderRight {
-    border-right: 10px solid white;
+    border-right: var(--big-device-border);
 }
 .board .borderLeft {
-    border-left: 10px solid white;
+    border-left: var(--big-device-border);
 }
 .board .win {
     animation: couleur 5s infinite ease;
@@ -113,7 +115,7 @@ table.board td {
 
 /*Autre*/
 
-h1 {
+h1, h2, h3, h4 {
     text-align: center;
 }
 .accueil .para {
@@ -151,9 +153,12 @@ a {
 .formTheme, .formTopic, .toHide {
     display: none; 
 }
+/*.formQuestion, .formUser, .formGamer, .tab-content {
+    margin-bottom: 50px;
+}*/
 .playButton {
     text-align: center;
-    margin: 20px;
+    margin: 50px;
 }
 .gamer, .chooseSubject {
     background-color:whitesmoke; 
@@ -203,12 +208,13 @@ a {
 .infoQuestion {
     display: flex;
     justify-content: space-between;
+    margin: 10px;
 }
-div.infoQuestion div {
-    padding: 5px;
-    margin: 5px;
+div.infoQuestion span {
+    padding: 0 3px;
     background-color: white;
     border-radius: 6px;
+    font-weight: bold;
 }
 .stats p:last-child {
     display: none;
@@ -237,6 +243,9 @@ div.infoQuestion div {
 }
 .infoQuestions .panel-default {
     border-color: transparent;
+}
+.infoQuestions h4 {
+    text-align: left;
 }
 .infoQuestions a {
     color: inherit;
@@ -291,5 +300,44 @@ footer p {
 
 
 @media screen and (max-width: 610px) {
+    .questionsBySchoolClass .panel-body {
+        padding: 0;            
+    }
+    .table-responsive {
+        margin: 20px 0;
+    }
+    .add .toHide, .delete {
+        display: inline-block;
+    }
+    .add .toShow, .toShow {
+        display: none;
+    }
+    .arrayThemes .table-responsive .array {
+        padding: 0;
+    }
+    
+    .activeCase0, .activeCase1, .activeCase2, .activeCase3, .activeCase4, .activeCase5, .activeCase6, .activeCase7, .activeCase8, .activeCase9, .multipleGamers {
+        background-size: 26px;
+    }
+    .board .borderTop {
+        border-top: var(--small-device-border);
+    }
+    .board .borderBottom {
+        border-bottom: var(--small-device-border);
+    }
+    .board .borderRight {
+        border-right: var(--small-device-border);
+    }
+    .board .borderLeft {
+        border-left: var(--small-device-border);
+    }
+
+    #window {
+        width: 100%;
+        margin-top: 40%;
+    }
+    .infoQuestion {
+        display: inherit;
+    }
 
 }

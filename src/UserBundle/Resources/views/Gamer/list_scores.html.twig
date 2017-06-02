@@ -44,7 +44,7 @@
     <div class="tab-content">
 
     {% if app.user and is_granted('ROLE_USER') %}
-      <div class="row tab-pane fade in active" id="myGamers">
+      <div class="table-responsive row tab-pane fade in active" id="myGamers">
         <table class="table table-striped">
           {% if myGamers %}
             <thead>
@@ -79,9 +79,9 @@
       {% endif %}
 
       {% if app.user and is_granted('ROLE_TEACHER') %}      
-        <div class="row tab-pane fade in active" id="tous">
+        <div class="table-responsive row tab-pane fade in active" id="tous">
       {% else %}
-        <div class="row tab-pane fade" id="tous">
+        <div class="table-responsive row tab-pane fade" id="tous">
       {% endif %}
         <table class="table table-striped">
           {% if gamers %}
@@ -115,7 +115,7 @@
         </table>
       </div>
 
-      <div class="row tab-pane fade" id="cp">
+      <div class="table-responsive row tab-pane fade" id="cp">
         <table class="table table-striped">
           {% if cpGamers %}
             <thead>
@@ -148,7 +148,7 @@
         </table>
       </div>
 
-      <div class="row tab-pane fade" id="ce1">
+      <div class="table-responsive row tab-pane fade" id="ce1">
         <table class="table table-striped">
           {% if ce1Gamers %}
             <thead>
@@ -181,7 +181,7 @@
         </table>
       </div>
 
-      <div class="row tab-pane fade" id="ce2">
+      <div class="table-responsive row tab-pane fade" id="ce2">
         <table class="table table-striped">
           {% if ce2Gamers %}
             <thead>
@@ -214,7 +214,7 @@
         </table>
       </div>
 
-      <div class="row tab-pane fade" id="cm1">
+      <div class="table-responsive row tab-pane fade" id="cm1">
         <table class="table table-striped">
           {% if cm1Gamers %}
             <thead>
@@ -247,7 +247,7 @@
         </table>
       </div>
 
-      <div class="row tab-pane fade" id="cm2">
+      <div class="table-responsive row tab-pane fade" id="cm2">
         <table class="table table-striped">
           {% if cm2Gamers %}
             <thead>
@@ -280,7 +280,7 @@
         </table>
       </div>
 
-      <div class="row tab-pane fade" id="others">
+      <div class="table-responsive row tab-pane fade" id="others">
         <table class="table table-striped">
           {% if otherGamers %}
             <thead>

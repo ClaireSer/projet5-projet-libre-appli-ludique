@@ -19,30 +19,39 @@
       </div>
     {% endfor %}
 
-    <h3>Options des questions</h3>
-    <h4>Choisissez les thèmes des questions</h4>
+    <h3>Les thèmes des questions</h3>
 
-    <div class="row center theme buttons">
+    <div class=" center theme buttons">
+      
       <div class="btn-group themes">
         <button type="button" class="btn btn-default">Voir les thèmes</button>
       </div>
+      
       <div class="btn-group add">
-        <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        <button type="button" class="btn btn-info dropdown-toggle toShow" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
           Ajouter <span class="caret"></span>
+        </button>
+        <button type="button" class="btn btn-info dropdown-toggle toHide" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          <span class="glyphicon glyphicon-plus-sign"></span>
         </button>
         <ul class="dropdown-menu">
           <li><a href="#">Un thème</a></li>
           <li><a href="#">Une catégorie</a></li>
         </ul>
       </div>
-      <div class="btn-group delete">
+      
+      <div class="btn-group delete toShow">
         <button type="button" class="btn btn-danger">Supprimer des éléments</button>
       </div>
+      <div class="btn-group delete toHide">
+        <button type="button" class="btn btn-danger"><span class="glyphicon glyphicon-remove-circle"></span></button>
+      </div>
+
     </div>
 
     <div class="tab-content toHide arrayThemes">
-      <div class="row tab-pane fade in active">
-      <div class="col-sm-offset-3 col-sm-6">
+      <div class="table-responsive row tab-pane fade in active">
+      <div class="col-sm-offset-2 col-sm-8 array">
         <table class="table table-bordered">
           <thead>
             <tr>
@@ -138,7 +147,7 @@
     </div>
 
     <div class="row">
-      <div class="col-sm-offset-4 col-sm-4 formTheme">
+      <div class="col-sm-offset-3 col-sm-6 formTheme">
         <h4>Ajout d'un nouveau thème</h4>
         <div class="well">
           {{ form_start(formTheme, {'attr': {'class': 'form-horizontal'}}) }}
@@ -163,7 +172,7 @@
         </div>
       </div>
 
-      <div class="col-sm-offset-4 col-sm-4 formTopic">
+      <div class="col-sm-offset-3 col-sm-6 formTopic">
         <h4>Ajout d'une nouvelle sous-matière</h4>        
         <div class="well">
           {{ form_start(formTopic, {'attr': {'class': 'form-horizontal'}}) }}

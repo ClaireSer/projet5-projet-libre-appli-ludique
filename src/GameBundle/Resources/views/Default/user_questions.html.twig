@@ -33,13 +33,13 @@
     
   {% if validQuestions or notValidQuestions %}
     <div class="tab-content">
-      <div class="row tab-pane fade in active" id="validQuestions">
+      <div class="table-responsive row tab-pane fade in active" id="validQuestions">
         {% if validQuestions %}
 
         <table class="table table-striped">
           <thead>
             <tr>
-              <th>Question</th>
+              <th>Vos questions</th>
               <th>Réponses</th>
               <th>Matière</th>
               <th>Sous-matière</th>
@@ -69,13 +69,13 @@
         {% endif %}
       </div>
     
-      <div class="row tab-pane fade" id="notValidQuestions">
+      <div class="table-responsive row tab-pane fade" id="notValidQuestions">
         {% if notValidQuestions %}
 
         <table class="table table-striped">
             <thead>
               <tr>
-                <th>Question</th>
+                <th>Vos questions</th>
                 <th>Matière</th>
                 <th>Sous-matière</th>
                 <th>Modifier</th>

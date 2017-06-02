@@ -77,7 +77,7 @@ class GamerController extends Controller
 
         return $this->render('UserBundle:Gamer:form_gamer.html.twig', array(
             'form'  => $form->createView(),
-            'title' => 'Editer un joueur'
+            'title' => 'Éditer un joueur'
         ));
     }
 

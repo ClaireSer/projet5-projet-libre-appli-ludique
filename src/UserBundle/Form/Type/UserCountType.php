@@ -10,7 +10,7 @@ use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
-use UserBundle\Form\StringToArrayTransformer;
+use UserBundle\Form\Type\StringToArrayTransformer;
 
 
 class UserCountType extends AbstractType

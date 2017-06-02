@@ -53,7 +53,7 @@
                 </a>
               </p>
             </div>
-            <div id="collapse{{ key }}" class="panel-collapse collapse">
+            <div id="collapse{{ key }}" class="panel-collapse collapse questionsBySchoolClass">
               <div class="panel-body">
                 {% for nbQuestion in nbQuestions[key] %}
                   {% if loop.index0 == 0 %}
@@ -89,7 +89,7 @@
     {% else %}
 
       <div class="tab-content">
-        <div class="row tab-pane fade in active" id="validQuestions">
+        <div class="table-responsive row tab-pane fade in active" id="validQuestions">
           {% if validQuestions %}        
             <table class="table table-striped">
               <thead>
@@ -155,7 +155,7 @@
           {% endif %}    
         </div>
 
-        <div class="row tab-pane fade" id="notValidQuestions">
+        <div class="table-responsive row tab-pane fade" id="notValidQuestions">
           {% if notValidQuestions %}        
             <table class="table table-striped">
               <thead>
