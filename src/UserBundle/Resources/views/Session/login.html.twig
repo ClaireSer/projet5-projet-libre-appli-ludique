@@ -19,21 +19,21 @@
   {% endif %}
 
   <div class="row">
-    <div class="col-lg-offset-2 col-lg-8">
+    <div class="col-lg-offset-3 col-lg-6 col-sm-offset-1 col-sm-10 formUser">
       <div class="well">
 
         <form action="{{ path('login_check') }}" method="post">
-          <label for="username">Login :</label>
-          <input type="text" id="username" name="_username" value="{{ last_username }}" />
+          <label for="username">Nom d'utilisateur :</label>
+          <input class="form-control" type="text" id="username" name="_username" value="{{ last_username }}" />
           <br />
 
           <label for="password">Mot de passe :</label>
-          <input type="password" id="password" name="_password" />
+          <input class="form-control" type="password" id="password" name="_password" />
           <br />
-          
-          <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}"/>
 
-          <input type="submit" value="Connexion" />
+          <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}"/>
+      
+          <input class="btn btn-primary" type="submit" value="Connexion" />
         </form>
 
       </div>

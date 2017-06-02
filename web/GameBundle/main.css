@@ -153,9 +153,6 @@ a {
 .formTheme, .formTopic, .toHide {
     display: none; 
 }
-/*.formQuestion, .formUser, .formGamer, .tab-content {
-    margin-bottom: 50px;
-}*/
 .playButton {
     text-align: center;
     margin: 50px;
