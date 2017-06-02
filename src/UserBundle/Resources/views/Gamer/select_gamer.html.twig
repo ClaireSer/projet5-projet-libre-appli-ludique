@@ -18,14 +18,14 @@
       </div>
     {% endfor %}
 
-    <div class="row selectGamer">
+    <div class="row">
       <div class="col-lg-offset-3 col-lg-3 col-sm-offset-1 col-sm-5 center">    
         <h3>{{ title1 }}</h3>
         {% if gamers %}
-          <div class="gamer">
+          <div class="gamer select-display">
             {% for gamer in gamers %}
                 <form action=" {{ path('play') }} " method="GET">
-                <p><label><input type="checkbox" name="gamer[]" value="{{ gamer.id }}" /> {{ gamer.username }}</label></p>
+                <p class="select-text"><label><input type="checkbox" name="gamer[]" value="{{ gamer.id }}" /> {{ gamer.username }}</label></p>
             {% endfor %}
           </div>
           <div>
@@ -35,9 +35,9 @@
 
       <div class="col-lg-3 col-sm-5 center">
         <h3>{{ title2 }}</h3>
-        <div class="chooseSubject">
+        <div class="chooseSubject select-display">
           {% for subjectSelected in subjectsSelected %}
-              <p><label><input type="checkbox" name="subject[]" value="{{ subjectSelected.id }}" /> {{ subjectSelected.nameSubject }}</label><br/></p>
+              <p class="select-text"><label><input type="checkbox" name="subject[]" value="{{ subjectSelected.id }}" /> {{ subjectSelected.nameSubject }}</label><br/></p>
 
               {#Voir les questions :#}
               {#{% for topic in subject.topics %}
@@ -57,7 +57,7 @@
 
       </div>
     </div>
-    <div class="alert alert-warning infoQuestions">
+    <div class="alert alert-warning info-questions">
       <h4><strong>Attention</strong></h4>
       <p>Pour garantir le bon déroulement du jeu, il doit y avoir suffisamment de questions.</p>
       <p>Dans l'idéal, pour une matière, il devrait y avoir au moins 10 questions par niveau scolaire.</p><br/>

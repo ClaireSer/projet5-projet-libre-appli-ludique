@@ -10,7 +10,41 @@ body {
     padding-bottom: 60px;
     --small-device-border: 5px solid white;
     --big-device-border: 10px solid white;
+    --couleur-button-play: #ff5314;
 }
+h1, h2, h3, h4 {
+    text-align: center;
+}
+a {
+    cursor: pointer;
+}
+footer {
+    font-style: italic;
+    background-color: lightgrey;
+    color: dimgrey;
+    text-align: center;
+    font-size: 12px;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    padding: 10px;
+}
+footer p {
+    margin: 0;
+}
+
+/*Error page*/
+.error-message {
+    background-color: yellow;
+    border: 1px solid dimgray;
+    border-radius: 30px;
+    float: right;
+    margin-right: 100px;
+    margin-top: 30px;
+    padding: 50px;
+    font-family: 'Oswald', sans-serif;
+} 
+
 /********************************** Plateau du jeu ***********************************/
 
 @keyframes couleur {
@@ -31,63 +65,57 @@ table.board td {
     height: 60px;
     text-align: center;
 }
-.board td.bleu {
+.board td.blue, .blue .question {
    background-color: royalblue; 
 }
-.board td.jaune {
+.board td.yellow, .yellow .question {
    background-color: gold; 
 }
-.board td.vert {
+.board td.green, .green .question {
    background-color: greenyellow; 
 }
-.board td.rouge {
+.board td.red, .red .question {
     background-color: orangered; 
 }
-.activeCase0{
-    background: url("images/emoticon.png") no-repeat center;
+.activeCase0, .activeCase1, .activeCase2, .activeCase3, .activeCase4, .activeCase5, .activeCase6, .activeCase7, .activeCase8, .activeCase9 {
     color: transparent;
+    background: no-repeat center;
+}
+.activeCase0{
+    background-image: url("images/emoticon.png");
 }
 .activeCase1{
-    background: url("images/pion.png") no-repeat center;
-    color: transparent;
+    background-image: url("images/pion.png");
 }
 .activeCase2{
-    background: url("images/rabbit.png") no-repeat center;
-    color: transparent;
+    background-image: url("images/rabbit.png");
 }
 .activeCase3{
-    background: url("images/eiffel.png") no-repeat center;
-    color: transparent;
+    background-image: url("images/eiffel.png");
 }
 .activeCase4{
-    background: url("images/bird.png") no-repeat center;
-    color: transparent;
+    background-image: url("images/bird.png");
 }
 .activeCase5{
-    background: url("images/trefle.png") no-repeat center;
-    color: transparent;
+    background-image: url("images/trefle.png");
 }
 .activeCase6{
-    background: url("images/musique.png") no-repeat center;
-    color: transparent;
+    background-image: url("images/musique.png");
 }
 .activeCase7{
-    background: url("images/coeur.png") no-repeat center;
-    color: transparent;
+    background-image: url("images/coeur.png");
 }
 .activeCase8{
-    background: url("images/oeil.png") no-repeat center;
-    color: transparent;
+    background-image: url("images/oeil.png");
 }
 .activeCase9{
-    background: url("images/etoile.png") no-repeat center;
-    color: transparent;
+    background-image: url("images/etoile.png");
 }
 .multipleGamers{
     background: url("images/multiple.png") no-repeat center !important;
     background-color: white !important;
 }
-.pion {
+.pawn {
     float: left;
     margin: 10px;
     height: 40px;
@@ -113,35 +141,23 @@ table.board td {
 }
 
 
-/*Autre*/
-
-h1, h2, h3, h4 {
-    text-align: center;
-}
-.accueil .para {
+/* Home */
+.home-text {
     text-align: justify;
 }
-.accueil {
+.home {
     margin: 50px 0;
 }
 
-.selectGamer p {
-    text-align: left;
+/* select gamers */
+.select-display {
+    background-color:whitesmoke; 
+    display:inline-block; 
+    padding:20px; 
+    margin: 10px;
 }
 
-.form-horizontal .form-group {
-    margin-right: 0;
-    margin-left: 0;
-}
-.form_subject_topic {
-    display: none;
-}
-a {
-    cursor: pointer;
-}
-.center {
-    text-align: center;
-}
+/*options question*/
 .theme {
     display: inline-block;
     vertical-align: top;
@@ -150,37 +166,33 @@ a {
 .buttons {
     display: block;
 }
-.formTheme, .formTopic, .toHide {
+.toHide {
     display: none; 
 }
-.gamer, .chooseSubject {
-    background-color:whitesmoke; 
-    display:inline-block; 
-    padding:20px; 
-    margin: 10px;
+
+/*play*/
+.play .btn-primary {
+    color: white;
+    border: 1px solid var(--couleur-button-play);
+    background: linear-gradient(orangered, orange);
+}
+.play .btn-primary:hover {
+    color: var(--couleur-button-play);
+    background: white;
+    border: 1px solid var(--couleur-button-play);
 }
 .stats {
     display:inline-block; 
     margin: 10px;
+}
+.gamer-id {
+    display: none;
 }
 .questions {
     display: none;
     background-color:whitesmoke; 
     padding: 50px 20px; 
 }
-.green .question {
-    background-color: greenyellow;
-}
-.blue .question {
-    background-color: royalblue;
-}
-.red .question {
-    background-color: red;
-}
-.yellow .question {
-    background-color: yellow;
-}
-
 .question {
     border-radius: 6px;
     text-align: center;
@@ -198,64 +210,42 @@ a {
     cursor: pointer;
     background-color: grey;
 }
-.infoQuestion {
+.message-info {
+    border-bottom: 5px double darkolivegreen;
+    margin: 20px;
+    padding: 10px;
+}
+.info-question {
     display: flex;
     justify-content: space-between;
     margin: 10px;
 }
-div.infoQuestion span {
+.info-question span {
     padding: 0 3px;
     background-color: white;
     border-radius: 6px;
     font-weight: bold;
 }
-.stats p:last-child {
-    display: none;
-}
-
-.messageInfo, .infoAnswer {
-    font-size: 20px;    
-}
-.table > tbody > tr > td {
-     vertical-align: middle;
-}
-.alert {
-    margin: 20px 0;
-}
-.infoQuestions .panel-heading {
+.info-questions .panel-heading {
     color: inherit;
     background-color: inherit;
     border-color: inherit;
     padding: 5px 15px;
 }
-.infoQuestions .panel {
+.info-questions .panel {
     background-color: inherit;
 }
-.infoQuestions .panel-group {
+.info-questions .panel-group {
     margin-bottom: 0;
 }
-.infoQuestions .panel-default {
+.info-questions .panel-default {
     border-color: transparent;
 }
-.infoQuestions h4 {
-    text-align: left;
-}
-.infoQuestions a {
+.info-questions a {
     color: inherit;
 }
-.messageOie {
-    background-color: yellow;
-    border: 1px solid dimgray;
-    border-radius: 30px;
-    float: right;
-    margin-right: 100px;
-    margin-top: 30px;
-    padding: 50px;
-    font-family: 'Oswald', sans-serif;
-} 
 
 /*modal*/
-
 #modal {
     position: absolute;
     left: 0;
@@ -276,19 +266,25 @@ div.infoQuestion span {
     z-index: 10;    
 }
 
-footer {
-    font-style: italic;
-    background-color: lightgrey;
-    color: dimgrey;
-    text-align: center;
-    font-size: 12px;
-    position: absolute;
-    bottom: 0;
-    width: 100%;
-    padding: 10px;
+/* divers */
+.select-text, .info-questions h4 {
+    text-align: left;
 }
-footer p {
-    margin: 0;
+.form-horizontal .form-group {
+    margin-right: 0;
+    margin-left: 0;
+}
+.center {
+    text-align: center;
+}
+.message-info, .info-validity-answer {
+    font-size: 20px;    
+}
+.table > tbody > tr > td {
+     vertical-align: middle;
+}
+.alert {
+    margin: 20px 0;
 }
 
 
@@ -329,7 +325,7 @@ footer p {
         width: 100%;
         margin-top: 40%;
     }
-    .infoQuestion {
+    .alert-info-question {
         display: inherit;
     }
 

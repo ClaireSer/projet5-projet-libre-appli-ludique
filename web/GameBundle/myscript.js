@@ -23,11 +23,11 @@ $(function () {
 // select a first gamer randomly
     var rowGamer = Math.floor(Math.random() * len);
     var randomGamer = $('.stats:nth(' + rowGamer + ') .panel-title em').text();
-    $('.messageInfo strong').html(randomGamer);
+    $('.message-info strong').html(randomGamer);
 
 // display all pawns 
     $('.stats').each(function (i) {
-        $(this).children('.pion').addClass('activeCase' + i);
+        $(this).children('.pawn').addClass('activeCase' + i);
     });
 
 // throw the dice 
@@ -65,7 +65,7 @@ $(function () {
                 rowGamer++;
             }
             randomGamer = $('.stats:nth(' + rowGamer + ') .panel-title em').text();
-            $('.messageInfo').html('Passe ton tour !').fadeIn().delay(2000).fadeOut().queue(function () {
+            $('.message-info').html('Passe ton tour !').fadeIn().delay(2000).fadeOut().queue(function () {
                 $(this).html('<strong>' + randomGamer + '</strong>, <br/> c\'est maintenant à ton tour.').fadeIn().dequeue();
             });
             $('.stats .panel-collapse').removeClass('in');
@@ -97,7 +97,7 @@ $(function () {
                 }
             });
             var winner = 'Le gagnant de la partie est <strong>' + winnerName + '</strong, avec un score de ' + scoreWinner + ' points.<br/>';
-            $('.messageInfo').html(txtWin).append(winner).fadeIn();
+            $('.message-info').html(txtWin).append(winner).fadeIn();
 
             // update scores
             var exprStatsRegex = /(^\D+)\d+/;
@@ -174,7 +174,7 @@ $(function () {
 
 // get a random question
     function ajaxRandomQuestion(urlType, color) {
-        $('.infoAnswer').html('');
+        $('.info-validity-answer').html('');
 
         var exprUrl = /(^\D+\/\d+\/)\d+/;
         urlTypeCurrent = urlType.replace(exprUrl, '$1' + gamerId);
@@ -192,10 +192,10 @@ $(function () {
                 }
                 $('.questions').addClass(color);
                 $('.questions .question').html(response.question);
-                $('.infoQuestion .difficulty').html(response.difficulty);
-                $('.infoQuestion .topic').html(response.topic.nameTopic);
-                $('.infoQuestion .subject').html(response.topic.subject.nameSubject);
-                $('.infoQuestion .schoolLevel').html(response.schoolClass.schoolClass);
+                $('.info-question .difficulty').html(response.difficulty);
+                $('.info-question .topic').html(response.topic.nameTopic);
+                $('.info-question .subject').html(response.topic.subject.nameSubject);
+                $('.info-question .schoolLevel').html(response.schoolClass.schoolClass);
                 $('.questions .answers').html('');
                 var index = 0;
                 response.answers.forEach(function (data) {
@@ -244,7 +244,7 @@ $(function () {
             success: function (response) {
                 $('.stats:nth(' + rowGamer + ') p:nth(3) span').html(response.rightAnswerNb);
                 $('.stats:nth(' + rowGamer + ') .panel-title span').html(response.score);
-                $('.infoAnswer').html(response.validity);
+                $('.info-validity-answer').html(response.validity);
                 $('.stats .panel-collapse').removeClass('in');
                 $('.stats:nth(' + rowGamer + ') .panel-collapse').addClass('in');
 
@@ -255,10 +255,10 @@ $(function () {
                 }
                 randomGamer = $('.stats:nth(' + rowGamer + ') .panel-title em').text();
                 $('#modal').delay(2000).fadeOut('fast');
-                $('.messageInfo').html('<strong>' + randomGamer + '</strong>, <br/> c\'est maintenant à ton tour.');
+                $('.message-info').html('<strong>' + randomGamer + '</strong>, <br/> c\'est maintenant à ton tour.');
 
                 if (response.infoScore) {
-                    $('.infoAnswer').append('<br/> Tu gagnes ' + response.infoScore + ' points.');
+                    $('.info-validity-answer').append('<br/> Tu gagnes ' + response.infoScore + ' points.');
                     that.css('background-color', 'limegreen');
                 } else {
                     that.css('background-color', '#f45c6e');

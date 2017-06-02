@@ -6,6 +6,8 @@
 {% block title %}{{ parent() }} - {{ titleTab }}{% endblock %}
 
 {% block body %}
+<div class="container-fluid play">
+
     {% for message in app.session.flashbag.get('notice') %}
       <div class="alert alert-danger">
         <p>{{ message }}</p>
@@ -18,11 +20,10 @@
       </div>
     {% endfor %}
 
-
     <div id="modal">
         <div id="window">
             <div class="questions">
-                <div class="infoQuestion center">
+                <div class="info-question center">
                     Difficulté : <span class="difficulty"></span>
                     Thème : <span class="subject"></span>
                     Catégorie : <span class="topic"></span>
@@ -32,17 +33,17 @@
                 </div>
                 <div class="answers center">
                 </div>
-                <div class="infoAnswer center">
+                <div class="info-validity-answer center">
                 </div>
             </div>
         </div>
     </div>
 
     <div class="row">
-        <div class="col-lg-3 center">
+        <div class="col-lg-3 center test">
             <h2>{{ title }}</h2>         
 
-            <div class="messageInfo">
+            <div class="message-info">
                 <p>C'est au joueur <br/><strong></strong><br/> de commencer.</p>
             </div>   
 
@@ -65,86 +66,86 @@
         <div class="col-lg-6">
             <table class="board">
                 <tr class="borderTop">
-                    <td class="jaune borderLeft">22</td>
-                    <td class="bleu borderBottom">21</td>
-                    <td class="rouge borderBottom">20</td>
-                    <td class="vert borderBottom">19</td>
-                    <td class="jaune borderBottom">18</td>
-                    <td class="bleu borderBottom">17</td>
-                    <td class="rouge borderBottom">16</td>
-                    <td class="vert borderRight">15</td>
+                    <td class="yellow borderLeft">22</td>
+                    <td class="blue borderBottom">21</td>
+                    <td class="red borderBottom">20</td>
+                    <td class="green borderBottom">19</td>
+                    <td class="yellow borderBottom">18</td>
+                    <td class="blue borderBottom">17</td>
+                    <td class="red borderBottom">16</td>
+                    <td class="green borderRight">15</td>
                 </tr>
                 <tr>
-                    <td class="vert borderRight borderLeft">23</td>
-                    <td class="rouge">44</td>
-                    <td class="vert borderBottom">43</td>
-                    <td class="jaune borderBottom">42</td>
-                    <td class="bleu borderBottom">41</td>
-                    <td class="rouge borderBottom">40</td>
-                    <td class="vert">39</td>
-                    <td class="jaune borderLeft borderRight">14</td>
+                    <td class="green borderRight borderLeft">23</td>
+                    <td class="red">44</td>
+                    <td class="green borderBottom">43</td>
+                    <td class="yellow borderBottom">42</td>
+                    <td class="blue borderBottom">41</td>
+                    <td class="red borderBottom">40</td>
+                    <td class="green">39</td>
+                    <td class="yellow borderLeft borderRight">14</td>
                 </tr>
                 <tr>
-                    <td class="rouge borderRight borderLeft">24</td>
-                    <td class="bleu borderRight">45</td>
-                    <td class="jaune">58</td>
-                    <td class="bleu borderBottom">57</td>
-                    <td class="rouge borderBottom">56</td>
-                    <td class="vert">55</td>
-                    <td class="jaune borderLeft">38</td>
-                    <td class="bleu borderLeft borderRight">13</td>
+                    <td class="red borderRight borderLeft">24</td>
+                    <td class="blue borderRight">45</td>
+                    <td class="yellow">58</td>
+                    <td class="blue borderBottom">57</td>
+                    <td class="red borderBottom">56</td>
+                    <td class="green">55</td>
+                    <td class="yellow borderLeft">38</td>
+                    <td class="blue borderLeft borderRight">13</td>
                 </tr>
                 <tr>
-                    <td class="bleu borderRight borderLeft">25</td>
-                    <td class="jaune borderRight">46</td>
-                    <td class="vert borderRight">59</td>
+                    <td class="blue borderRight borderLeft">25</td>
+                    <td class="yellow borderRight">46</td>
+                    <td class="green borderRight">59</td>
                     <!-- case win -->
                     <td class="win"><span class="glyphicon glyphicon-flag"></span></td> 
                     <!-- case win -->                
-                    <td class="vert">63</td>
-                    <td class="jaune borderLeft">54</td>
-                    <td class="bleu borderLeft">37</td>
-                    <td class="rouge borderLeft borderRight">12</td>
+                    <td class="green">63</td>
+                    <td class="yellow borderLeft">54</td>
+                    <td class="blue borderLeft">37</td>
+                    <td class="red borderLeft borderRight">12</td>
                 </tr>
                 <tr>
-                    <td class="jaune borderRight borderLeft">26</td>
-                    <td class="vert borderRight">47</td>
-                    <td class="rouge">60</td>
-                    <td class="bleu borderTop">61</td>
-                    <td class="jaune">62</td>
-                    <td class="bleu borderLeft">53</td>
-                    <td class="rouge borderLeft">36</td>
-                    <td class="vert borderLeft borderRight">11</td>
+                    <td class="yellow borderRight borderLeft">26</td>
+                    <td class="green borderRight">47</td>
+                    <td class="red">60</td>
+                    <td class="blue borderTop">61</td>
+                    <td class="yellow">62</td>
+                    <td class="blue borderLeft">53</td>
+                    <td class="red borderLeft">36</td>
+                    <td class="green borderLeft borderRight">11</td>
                 </tr>
                 <tr>
-                    <td class="vert borderRight borderLeft">27</td>
-                    <td class="rouge">48</td>
-                    <td class="bleu borderTop">49</td>
-                    <td class="jaune borderTop">50</td>
-                    <td class="vert borderTop">51</td>
-                    <td class="rouge">52</td>
-                    <td class="vert borderLeft">35</td>
-                    <td class="jaune borderLeft borderRight">10</td>
+                    <td class="green borderRight borderLeft">27</td>
+                    <td class="red">48</td>
+                    <td class="blue borderTop">49</td>
+                    <td class="yellow borderTop">50</td>
+                    <td class="green borderTop">51</td>
+                    <td class="red">52</td>
+                    <td class="green borderLeft">35</td>
+                    <td class="yellow borderLeft borderRight">10</td>
                 </tr>
                 <tr>
-                    <td class="rouge borderLeft">28</td>
-                    <td class="bleu borderTop">29</td>
-                    <td class="jaune borderTop">30</td>
-                    <td class="vert borderTop">31</td>
-                    <td class="rouge borderTop">32</td>
-                    <td class="bleu borderTop">33</td>
-                    <td class="jaune">34</td>
-                    <td class="bleu borderLeft borderRight">9</td>
+                    <td class="red borderLeft">28</td>
+                    <td class="blue borderTop">29</td>
+                    <td class="yellow borderTop">30</td>
+                    <td class="green borderTop">31</td>
+                    <td class="red borderTop">32</td>
+                    <td class="blue borderTop">33</td>
+                    <td class="yellow">34</td>
+                    <td class="blue borderLeft borderRight">9</td>
                 </tr>
                 <tr class="borderBottom">
-                    <td class="bleu borderTop">1</td>
-                    <td class="jaune borderTop">2</td>
-                    <td class="vert borderTop">3</td>
-                    <td class="rouge borderTop">4</td>
-                    <td class="bleu borderTop">5</td>
-                    <td class="jaune borderTop">6</td>
-                    <td class="vert borderTop">7</td>
-                    <td class="rouge borderRight">8</td>
+                    <td class="blue borderTop">1</td>
+                    <td class="yellow borderTop">2</td>
+                    <td class="green borderTop">3</td>
+                    <td class="red borderTop">4</td>
+                    <td class="blue borderTop">5</td>
+                    <td class="yellow borderTop">6</td>
+                    <td class="green borderTop">7</td>
+                    <td class="red borderRight">8</td>
                 </tr>
             </table>
         </div>
@@ -155,7 +156,7 @@
             {% for gamer in gamers %}
                 <div class="panel panel-default stats">
     
-                    <div class="pion"></div>
+                    <div class="pawn"></div>
                     <div class="panel-heading">
                         <h4 class="panel-title">
                             <a data-toggle="collapse" data-parent="#accordion" href="#accordion{{ gamer.id }}">
@@ -171,7 +172,7 @@
                             <p>Nombre de parties gagnées : <span>{{ gamer.gameWonNb }}</span> / <span>{{ gamer.gamePlayedNb }}</span></p>
                             <p>Nombre de bonnes réponses : <span>{{ gamer.rightAnswerNb }}</span></p>
                             <p>Niveau : <span>{{ gamer.level }}</span></p>
-                            <p>{{ gamer.id }}</p>
+                            <p class="gamer-id">{{ gamer.id }}</p>
                         </div>
                     </div>
                     
@@ -180,6 +181,7 @@
             </div>
         </div>
     </div>
+</div>
 
 
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
