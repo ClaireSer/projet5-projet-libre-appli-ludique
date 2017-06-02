@@ -3,8 +3,8 @@
 namespace UserBundle\Controller;
 
 use UserBundle\Entity\UserCount;
-use UserBundle\Form\UserCountType;
-use UserBundle\Form\UserCountEditType;
+use UserBundle\Form\Type\UserCountType;
+use UserBundle\Form\Type\UserCountEditType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;

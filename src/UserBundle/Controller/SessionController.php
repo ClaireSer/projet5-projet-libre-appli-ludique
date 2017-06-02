@@ -3,8 +3,8 @@
 namespace UserBundle\Controller;
 
 use UserBundle\Entity\UserCount;
-use UserBundle\Form\UserCountSignupType;
-use UserBundle\Form\UserCountSettingsType;
+use UserBundle\Form\Type\UserCountSignupType;
+use UserBundle\Form\Type\UserCountSettingsType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;

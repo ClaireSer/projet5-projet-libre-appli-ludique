@@ -3,7 +3,7 @@
 namespace UserBundle\Controller;
 
 use UserBundle\Entity\Gamer;
-use UserBundle\Form\GamerType;
+use UserBundle\Form\Type\GamerType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
