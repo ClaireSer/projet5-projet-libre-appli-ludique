@@ -1,11 +1,7 @@
 $(function () {
-    var minNumber = 1;
-    var maxNumber = 6;
-    var dice = $('.dice');
-
     var cumulDiceGamerArray = [];
     var len = $('.stats').length;
-    for (i = 0; i < len; i++) {
+    for (var i = 0; i < len; i++) {
         cumulDiceGamerArray[i] = 0;
     }
 
@@ -14,42 +10,55 @@ $(function () {
     var bonusDifficulty;
     var gamerId;
 
+// get all gamers id
     var allGamersId = [];
     $('.stats').each(function (i) {
         allGamersId[i] = $(this).children().children().children('p:last').text();
-    })
-    
+    });
+
+// hide the dice
+    var dice = $('.dice');    
     dice.children().hide();
 
+// select a first gamer randomly
     var rowGamer = Math.floor(Math.random() * len);
     var randomGamer = $('.stats:nth(' + rowGamer + ') .panel-title em').text();
     $('.messageInfo strong').html(randomGamer);
 
+// display all pawns 
     $('.stats').each(function (i) {
         $(this).children('.pion').addClass('activeCase' + i);
-    })
+    });
 
+// throw the dice 
     $('.buttonDice').on('click', function (e) {
         e.preventDefault();
-
+    // get id of random gamer
         $('.stats').each(function () {
             var that = $(this);
             if (that.children().children().children().children('em').text() == randomGamer) {
                 gamerId = that.children().children().children('p:last').text();
             }
-        })
-
+        });
+    // get a random number from the dice
+        var minNumber = 1;
+        var maxNumber = 6;
         randomNumber = Math.floor(Math.random() * maxNumber) + minNumber;
         dice.children().hide();
         $('.dice .die' + randomNumber).show();
 
+    // let's play
         rowGamer = Game(rowGamer, 'activeCase' + rowGamer);        
-    })
+    });
+
+
 
     function Game(rowGamer, activeCase) { 
         var cumulDiceGamer = cumulDiceGamerArray[rowGamer] + randomNumber; 
 
         if (cumulDiceGamer > 64) {
+        
+        // call next gamer
             if (rowGamer == len - 1) {
                 rowGamer = 0;
             } else {
@@ -62,6 +71,8 @@ $(function () {
             $('.stats .panel-collapse').removeClass('in');
 
         } else if (cumulDiceGamer == 64) {
+        
+        // end of game
             $('.board td').removeClass(activeCase);
             $('.board .win').addClass(activeCase);
             $('.buttonDice').addClass('disabled');
@@ -74,7 +85,7 @@ $(function () {
             var finalScores = [];
             $('.stats').each(function (i) {
                 finalScores[i] = $(this).children('.panel-heading').children().children().children('span').text();
-            })
+            });
 
             var txtWin = 'Bravo ! <br/>Tu as fini la partie en premier. <br/>Tu bénéficies d\'un bonus de 30 points.<br/>';
             var scoreWinner = Math.max($('.stats:nth(0) .panel-title span').text(), $('.stats:nth(1) .panel-title span').text(), $('.stats:nth(2) .panel-title span').text());
@@ -82,15 +93,15 @@ $(function () {
             $('.stats').each(function () {
                 if ($(this).children('.panel-heading').children().children().children('span').text() == scoreWinner) {
                     winnerName = $(this).children('.panel-heading').children().children().children('em').text();
-                    winnerId = $(this).children('.panel-collapse').children().children('p:last').text()
+                    winnerId = $(this).children('.panel-collapse').children().children('p:last').text();
                 }
-            })
+            });
             var winner = 'Le gagnant de la partie est <strong>' + winnerName + '</strong, avec un score de ' + scoreWinner + ' points.<br/>';
             $('.messageInfo').html(txtWin).append(winner).fadeIn();
 
+            // update scores
             var exprStatsRegex = /(^\D+)\d+/;
             pathStatsCurrent = pathStats.replace(exprStatsRegex, '$1' + winnerId);
-
             $.ajax({
                 url: pathStatsCurrent,
                 type: 'POST',
@@ -104,7 +115,7 @@ $(function () {
                         $('.stats:nth(' + gamer + ') p:nth(2) span:nth(0)').html(data[0].gameWonNb);
                         $('.stats:nth(' + gamer + ') p:nth(2) span:nth(1)').html(data[0].gamePlayedNb);
                         $('.stats:nth(' + gamer + ') p:nth(4) span').html(data[0].level);
-                    })
+                    });
                 },
                 error: function () {
                     alert('erreur score');
@@ -112,16 +123,18 @@ $(function () {
             });
 
         } else {
+        
+        // we play
             $('.board td').each(function () {
                 $(this).removeClass(activeCase);
                 $(this).removeClass('multipleGamers');
-                var that = $(this);
 
                 if ($(this).text() == cumulDiceGamer) {
                     $(this).addClass(activeCase);
                     cumulDiceGamerArray[rowGamer] = cumulDiceGamer;
                     $('.questions').show();
 
+                // get a question by number of case (ie class level)
                     if ($(this).text() % 4 == 0) {
                         ajaxRandomQuestion(url0, 'red');
 
@@ -138,16 +151,16 @@ $(function () {
                 
             });
             
-            // nécessité de parcourir le plateau une 2e fois pour avoir le tableau 
-            // "cumulDiceGamerArray" mis à jour dans le 1er tour
+        // case where 2 gamers on one case : 
+        // browse cases twice to get "cumulDiceGamerArray" updated at first time
+        // on parcourt toutes les cases une nouvelle fois après avoir récupéré "cumulDiceGamerArray" mis à jour juste avant
             $('.board td').each(function () {
                 var that = $(this);
-                // On regarde sur chaque case du tableau s'il y a un joueur. 
-                // Dès lors, on retourne la valeur des dès cumulés du joueur.
+                // return value of cases where there are gamers
                 var listOfCumulDiceGamers = cumulDiceGamerArray.filter(function (cumul) {
                     return that.text() == cumul && cumul != 0;
                 });
-                // On regarde dans l'ensemble des éléments retournés s'il y a au moins 2 valeurs identiques.
+                // check if there are at least 2 identical values
                 if (listOfCumulDiceGamers.length > 1) {
                     that.addClass('multipleGamers');
                 }
@@ -159,7 +172,7 @@ $(function () {
         
     }
 
-
+// get a random question
     function ajaxRandomQuestion(urlType, color) {
         $('.infoAnswer').html('');
 
@@ -188,13 +201,15 @@ $(function () {
                 response.answers.forEach(function (data) {
                     $('.questions .answers').append('<div id="' + data.id + '" class="answer answer' + index + '">' + data.answer + '</div>');
                     index++;
-                })
-
+                });
+            
+            // mix answers
                 var parent = $('.questions .answers');
                 var divsAnswer = parent.children();
                 while (divsAnswer.length) {
                     parent.append(divsAnswer.splice(Math.floor(Math.random() * divsAnswer.length), 1));
                 }
+
                 firstTime = false;
 
                 if (response.difficulty == 'facile') {
@@ -205,12 +220,13 @@ $(function () {
                     bonusDifficulty = 15;
                 }
 
+            // check validity of the answer
                 $('div.answer').on('click', function () {
                     var expr = /(^\D+)\d+\/\d+\/\d+\/\d+\/\d+/;
                     var score = parseInt($('.stats:nth(' + rowGamer + ') .panel-title span').text());
                     var pathValidAnswerCurrent = pathValidAnswer.replace(expr, '$1' + $(this).attr('id') + '/' + gamerId + '/' + randomNumber + '/' + score + '/' + bonusDifficulty);
                     ajaxValidAnswer(pathValidAnswerCurrent, $(this));
-                })
+                });
 
             },
             error: function () {
@@ -219,7 +235,7 @@ $(function () {
         });
     }
 
-
+// check validity of the answer
     function ajaxValidAnswer(path, that) {
         $.ajax({
             url: path,
