@@ -99,26 +99,33 @@ class GamerController extends Controller
     public function listScoresAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
+        $schoolClass = $em->getRepository('GameBundle:SchoolClass')->findAll();
+        $schoolClassIds = [];
+        $schoolClassTitles = [];
+        foreach ($schoolClass as $schoolClass) {
+            $schoolClassIds[] = $schoolClass->getId();
+            $schoolClassTitles[] = $schoolClass->getSchoolClass();
+        }
+        
+
         $myGamers = $em->getRepository('UserBundle:Gamer')->getGamersByUserCount($this->getUser());
         $gamers = $em->getRepository('UserBundle:Gamer')->getGamers();
-        $cpGamers = $em->getRepository('UserBundle:Gamer')->getGamersBySchoolClass('CP');
-        $ce1Gamers = $em->getRepository('UserBundle:Gamer')->getGamersBySchoolClass('CE1');
-        $ce2Gamers = $em->getRepository('UserBundle:Gamer')->getGamersBySchoolClass('CE2');
-        $cm1Gamers = $em->getRepository('UserBundle:Gamer')->getGamersBySchoolClass('CM1');
-        $cm2Gamers = $em->getRepository('UserBundle:Gamer')->getGamersBySchoolClass('CM2');
+
+        $gamersBySchoolClass = [];
+        foreach ($schoolClassIds as $id) {
+            $gamersBySchoolClass[] = $em->getRepository('UserBundle:Gamer')->getGamersBySchoolClass($id);
+        }
+
         $otherGamers = $em->getRepository('UserBundle:Gamer')->getOtherGamers();
         
         return $this->render('UserBundle:Gamer:list_scores.html.twig', array(
-            'title'         => 'Scores des joueurs selon les niveaux',
-            'titleTab'      => 'Scores',
-            'myGamers'      => $myGamers,
-            'gamers'        => $gamers,
-            'cpGamers'      => $cpGamers,
-            'ce1Gamers'     => $ce1Gamers,
-            'ce2Gamers'     => $ce2Gamers,
-            'cm1Gamers'     => $cm1Gamers,
-            'cm2Gamers'     => $cm2Gamers,
-            'otherGamers'   => $otherGamers
+            'title'                 => 'Scores des joueurs selon les niveaux',
+            'titleTab'              => 'Scores',
+            'myGamers'              => $myGamers,
+            'gamers'                => $gamers,
+            'gamersBySchoolClass'   => $gamersBySchoolClass,
+            'schoolClassTitles'     => $schoolClassTitles,
+            'otherGamers'           => $otherGamers
         ));
     }
 

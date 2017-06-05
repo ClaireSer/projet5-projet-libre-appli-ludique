@@ -31,11 +31,11 @@
           {% if app.user and is_granted('ROLE_TEACHER') %}
             <li role="presentation" class="active"><a href="#tous" data-toggle="pill">Tous</a></li>
           {% endif %}
-          <li role="presentation"><a href="#cp" data-toggle="pill">CP</a></li>
-          <li role="presentation"><a href="#ce1" data-toggle="pill">CE1</a></li>
-          <li role="presentation"><a href="#ce2" data-toggle="pill">CE2</a></li>
-          <li role="presentation"><a href="#cm1" data-toggle="pill">CM1</a></li>
-          <li role="presentation"><a href="#cm2" data-toggle="pill">CM2</a></li>
+          <li role="presentation"><a href="#CP" data-toggle="pill">CP</a></li>
+          <li role="presentation"><a href="#CE1" data-toggle="pill">CE1</a></li>
+          <li role="presentation"><a href="#CE2" data-toggle="pill">CE2</a></li>
+          <li role="presentation"><a href="#CM1" data-toggle="pill">CM1</a></li>
+          <li role="presentation"><a href="#CM2" data-toggle="pill">CM2</a></li>
           <li role="presentation"><a href="#others" data-toggle="pill">Autre</a></li>
         </ul>
       </div>
@@ -115,170 +115,40 @@
         </table>
       </div>
 
-      <div class="table-responsive row tab-pane fade" id="cp">
-        <table class="table table-striped">
-          {% if cpGamers %}
-            <thead>
-              <tr>
-                <th>Pseudo</th>
-                <th>Prénom</th>
-                <th>Nom de famille</th>
-                <th>Meilleur score</th>
-                <th>Nombre de parties gagnées</th>
-                <th>Nombre de bonnes réponses</th>
-                <th>Niveau</th>
-              </tr>
-            </thead>            
-            <tbody>
-              {% for cpGamer in cpGamers %}
+      {% for gamerBySchoolClass in gamersBySchoolClass %}
+        <div class="table-responsive row tab-pane fade" id="{{ schoolClassTitles[loop.index0] }}">
+          <table class="table table-striped">
+            {% if gamerBySchoolClass %}
+              <thead>
                 <tr>
-                  <td>{{ cpGamer.username }}</td>
-                  <td>{{ cpGamer.firstname }}</td>
-                  <td>{{ cpGamer.usercount.username }}</td>
-                  <td>{{ cpGamer.bestScore }}</td>
-                  <td>{{ cpGamer.gameWonNb }}</td>
-                  <td>{{ cpGamer.rightAnswerNb }}</td>
-                  <td>{{ cpGamer.level }}</td>
+                  <th>Pseudo</th>
+                  <th>Prénom</th>
+                  <th>Nom de famille</th>
+                  <th>Meilleur score</th>
+                  <th>Nombre de parties gagnées</th>
+                  <th>Nombre de bonnes réponses</th>
+                  <th>Niveau</th>
                 </tr>
-              {% endfor %}
-            </tbody>
-          {% else %}
-            <p>Il n'y a pas encore de joueurs.</p>      
-          {% endif %}
-        </table>
-      </div>
-
-      <div class="table-responsive row tab-pane fade" id="ce1">
-        <table class="table table-striped">
-          {% if ce1Gamers %}
-            <thead>
-              <tr>
-                <th>Pseudo</th>
-                <th>Prénom</th>
-                <th>Nom de famille</th>
-                <th>Meilleur score</th>
-                <th>Nombre de parties gagnées</th>
-                <th>Nombre de bonnes réponses</th>
-                <th>Niveau</th>
-              </tr>
-            </thead>            
-            <tbody>
-              {% for ce1Gamer in ce1Gamers %}
-                <tr>
-                  <td>{{ ce1Gamer.username }}</td>
-                  <td>{{ ce1Gamer.firstname }}</td>
-                  <td>{{ ce1Gamer.usercount.username }}</td>
-                  <td>{{ ce1Gamer.bestScore }}</td>
-                  <td>{{ ce1Gamer.gameWonNb }}</td>
-                  <td>{{ ce1Gamer.rightAnswerNb }}</td>
-                  <td>{{ ce1Gamer.level }}</td>
-                </tr>
-              {% endfor %}
-            </tbody>
-          {% else %}
-            <p>Il n'y a pas encore de joueurs.</p>      
-          {% endif %}
-        </table>
-      </div>
-
-      <div class="table-responsive row tab-pane fade" id="ce2">
-        <table class="table table-striped">
-          {% if ce2Gamers %}
-            <thead>
-              <tr>
-                <th>Pseudo</th>
-                <th>Prénom</th>
-                <th>Nom de famille</th>
-                <th>Meilleur score</th>
-                <th>Nombre de parties gagnées</th>
-                <th>Nombre de bonnes réponses</th>
-                <th>Niveau</th>
-              </tr>
-            </thead>            
-            <tbody>
-              {% for ce2Gamer in ce2Gamers %}
-                <tr>
-                  <td>{{ ce2Gamer.username }}</td>
-                  <td>{{ ce2Gamer.firstname }}</td>
-                  <td>{{ ce2Gamer.usercount.username }}</td>
-                  <td>{{ ce2Gamer.bestScore }}</td>
-                  <td>{{ ce2Gamer.gameWonNb }}</td>
-                  <td>{{ ce2Gamer.rightAnswerNb }}</td>
-                  <td>{{ ce2Gamer.level }}</td>
-                </tr>
-              {% endfor %}
-            </tbody>
-          {% else %}
-            <p>Il n'y a pas encore de joueurs.</p>      
-          {% endif %}
-        </table>
-      </div>
-
-      <div class="table-responsive row tab-pane fade" id="cm1">
-        <table class="table table-striped">
-          {% if cm1Gamers %}
-            <thead>
-              <tr>
-                <th>Pseudo</th>
-                <th>Prénom</th>
-                <th>Nom de famille</th>
-                <th>Meilleur score</th>
-                <th>Nombre de parties gagnées</th>
-                <th>Nombre de bonnes réponses</th>
-                <th>Niveau</th>
-              </tr>
-            </thead>            
-            <tbody>
-              {% for cm1Gamer in cm1Gamers %}
-                <tr>
-                  <td>{{ cm1Gamer.username }}</td>
-                  <td>{{ cm1Gamer.firstname }}</td>
-                  <td>{{ cm1Gamer.usercount.username }}</td>
-                  <td>{{ cm1Gamer.bestScore }}</td>
-                  <td>{{ cm1Gamer.gameWonNb }}</td>
-                  <td>{{ cm1Gamer.rightAnswerNb }}</td>
-                  <td>{{ cm1Gamer.level }}</td>
-                </tr>
-              {% endfor %}
-            </tbody>
-          {% else %}
-            <p>Il n'y a pas encore de joueurs.</p>      
-          {% endif %}
-        </table>
-      </div>
-
-      <div class="table-responsive row tab-pane fade" id="cm2">
-        <table class="table table-striped">
-          {% if cm2Gamers %}
-            <thead>
-              <tr>
-                <th>Pseudo</th>
-                <th>Prénom</th>
-                <th>Nom de famille</th>
-                <th>Meilleur score</th>
-                <th>Nombre de parties gagnées</th>
-                <th>Nombre de bonnes réponses</th>
-                <th>Niveau</th>
-              </tr>
-            </thead>            
-            <tbody>
-              {% for cm2Gamer in cm2Gamers %}
-                <tr>
-                  <td>{{ cm2Gamer.username }}</td>
-                  <td>{{ cm2Gamer.firstname }}</td>
-                  <td>{{ cm2Gamer.usercount.username }}</td>
-                  <td>{{ cm2Gamer.bestScore }}</td>
-                  <td>{{ cm2Gamer.gameWonNb }}</td>
-                  <td>{{ cm2Gamer.rightAnswerNb }}</td>
-                  <td>{{ cm2Gamer.level }}</td>
-                </tr>
-              {% endfor %}
-            </tbody>
-          {% else %}
-            <p>Il n'y a pas encore de joueurs.</p>      
-          {% endif %}
-        </table>
-      </div>
+              </thead>            
+              <tbody>
+                {% for gamer in gamerBySchoolClass %}
+                  <tr>
+                    <td>{{ gamer.username }}</td>
+                    <td>{{ gamer.firstname }}</td>
+                    <td>{{ gamer.usercount.username }}</td>
+                    <td>{{ gamer.bestScore }}</td>
+                    <td>{{ gamer.gameWonNb }}</td>
+                    <td>{{ gamer.rightAnswerNb }}</td>
+                    <td>{{ gamer.level }}</td>
+                  </tr>
+                {% endfor %}
+              </tbody>
+            {% else %}
+              <p>Il n'y a pas encore de joueurs.</p>      
+            {% endif %}
+          </table>
+        </div>
+      {% endfor %}
 
       <div class="table-responsive row tab-pane fade" id="others">
         <table class="table table-striped">

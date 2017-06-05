@@ -30,15 +30,15 @@ class GamerRepository extends \Doctrine\ORM\EntityRepository
 		;
     }
 
-    public function getGamersBySchoolClass($schoolClass) {
+    public function getGamersBySchoolClass($id) {
         return $this->createQueryBuilder('g')
             ->leftJoin('g.userCount', 'u')
             ->leftJoin('g.schoolClass', 's')
             ->addSelect('u')
             ->addSelect('s')
-            ->where('s.schoolClass = :schoolClass')
+            ->where('s.id = :id')
             ->andWhere('g.role = :role')
-            ->setParameter('schoolClass', $schoolClass)
+            ->setParameter('id', $id)
             ->setParameter('role', 'Élève')
             ->getQuery()
             ->getResult()
