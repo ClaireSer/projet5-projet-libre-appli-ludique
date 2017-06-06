@@ -70,9 +70,13 @@ class GameController extends Controller
                     return new JsonResponse('Aucune question n\'a pas été trouvée.');                    
                 }
             }
-            throw new Exception('L\'élément n\'a pas été trouvé : id null.');            
+            return $this->render('TwigBundle:Exception:error.html.twig', array(
+                'status_text'      => 'L\'élément n\'a pas été trouvé : id null.'
+            ));
         }
-        throw new Exception('Aucune requête n\'a été transmise.');
+        return $this->render('TwigBundle:Exception:error.html.twig', array(
+            'status_text'      => 'Aucune requête n\'a été transmise.'
+        ));
     }
 
     /**
@@ -110,9 +114,13 @@ class GameController extends Controller
                     ));                    
                 }
             }
-            throw new Exception('L\'élément n\'a pas été trouvé : id null.');
+            return $this->render('TwigBundle:Exception:error.html.twig', array(
+                'status_text'      => 'L\'élément n\'a pas été trouvé : id null.'
+            ));
         }
-        throw new Exception('Aucune requête n\'a été transmise.');
+        return $this->render('TwigBundle:Exception:error.html.twig', array(
+            'status_text'      => 'Aucune requête n\'a été transmise.'
+        ));
     }
 
     /**
@@ -172,6 +180,8 @@ class GameController extends Controller
             }
             return new JsonResponse($gamers);
         }
-        throw new Exception('Aucune requête n\'a été transmise.');
+        return $this->render('TwigBundle:Exception:error.html.twig', array(
+            'status_text'      => 'Aucune requête n\'a été transmise.'
+        ));        
     }
 }

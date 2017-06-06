@@ -34,13 +34,15 @@ footer p {
 }
 
 /*Error page*/
+.error-page {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
 .error-message {
-    background-color: yellow;
-    border: 1px solid dimgray;
-    border-radius: 30px;
-    float: right;
-    margin-right: 100px;
-    margin-top: 30px;
+    border-bottom: 5px double dimgray;
+    border-top: 5px double dimgray;
+    max-width: 600px;
     padding: 50px;
     font-family: 'Oswald', sans-serif;
 } 
@@ -226,24 +228,6 @@ table.board td {
     border-radius: 6px;
     font-weight: bold;
 }
-.info-questions .panel-heading {
-    color: inherit;
-    background-color: inherit;
-    border-color: inherit;
-    padding: 5px 15px;
-}
-.info-questions .panel {
-    background-color: inherit;
-}
-.info-questions .panel-group {
-    margin-bottom: 0;
-}
-.info-questions .panel-default {
-    border-color: transparent;
-}
-.info-questions a {
-    color: inherit;
-}
 
 /*modal*/
 #modal {
@@ -264,6 +248,26 @@ table.board td {
     border-radius: 10px;
     background-color: rgba(255, 255, 255, 0.8);
     z-index: 10;    
+}
+
+/*message alert about questions*/
+.alert-info-questions .panel-heading {
+    color: inherit;
+    background-color: inherit;
+    border-color: inherit;
+    padding: 5px 15px;
+}
+.alert-info-questions .panel {
+    background-color: inherit;
+}
+.alert-info-questions .panel-group {
+    margin-bottom: 0;
+}
+.alert-info-questions .panel-default {
+    border-color: transparent;
+}
+.alert-info-questions a {
+    color: inherit;
 }
 
 /* divers */
@@ -327,6 +331,11 @@ table.board td {
     }
     .alert-info-question {
         display: inherit;
+    }
+}
+@media screen and (max-width: 960px) {
+    .error-page img {
+        display: none;
     }
 
 }

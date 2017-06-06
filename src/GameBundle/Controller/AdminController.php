@@ -145,9 +145,13 @@ class AdminController extends Controller
                 $em->flush();
                 return new JsonResponse();
             }
-            throw new Exception('L\'élément n\'a pas été trouvé.');
+            return $this->render('TwigBundle:Exception:error.html.twig', array(
+                'status_text'      => 'L\'élément n\'a pas été trouvé.'
+            ));
         }
-        throw new Exception('Aucune requête n\'a été transmise.');
+        return $this->render('TwigBundle:Exception:error.html.twig', array(
+            'status_text'      => 'Aucune requête n\'a été transmise.'
+        ));        
     }
 
     /**

@@ -5,7 +5,6 @@ namespace GameBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 use UserBundle\Entity\UserCount;
-use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints as Assert;
 
 
@@ -14,7 +13,6 @@ use Symfony\Component\Validator\Constraints as Assert;
  *
  * @ORM\Table(name="question")
  * @ORM\Entity(repositoryClass="GameBundle\Repository\QuestionRepository")
- * @UniqueEntity(fields="question", message="L'intitulé de la question existe déjà.")
  */
 class Question
 {

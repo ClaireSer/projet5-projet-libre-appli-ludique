@@ -52,7 +52,9 @@ $(function () {
     });
 
 
-
+// move pawn gamer on the board
+// display question
+// update scores
     function Game(rowGamer, activeCase) { 
         var cumulDiceGamer = cumulDiceGamerArray[rowGamer] + randomNumber; 
 
