@@ -19,3 +19,18 @@ monolog:
             level: debug
         console:
             type:  console
+
+        # grouped:
+        #     type:               group
+        #     members:            [nested, swift]
+        # swift:
+        #     type:               swift_mailer
+        #     from_email:         FQN@foo.com
+        #     to_email:           webmaster@company.com
+        #     subject:            "OOps"
+        #     level:              debug
+        # login:
+        #     type:               stream
+        #     path:               "%kernel.logs_dir%/auth.log"
+        #     level:              info
+        #     channels:           security

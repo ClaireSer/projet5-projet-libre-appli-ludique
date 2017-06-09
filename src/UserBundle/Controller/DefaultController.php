@@ -12,11 +12,16 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 
 class DefaultController extends Controller
 {
+    /**
+     * display home page
+     */
     public function indexAction() {
         return $this->render('UserBundle:Default:index.html.twig');
     }
 
     /**
+     * display usercounts
+     *
      * @Security("has_role('ROLE_ADMIN')")
      */
     public function manageUsersAction(Request $request)
@@ -34,6 +39,8 @@ class DefaultController extends Controller
     }
 
     /**
+     * add user
+     *
      * @Security("has_role('ROLE_ADMIN')")
      */
     public function addUserAction(Request $request)
@@ -60,6 +67,8 @@ class DefaultController extends Controller
     }
 
     /**
+     * edit user
+     *
      * @Security("has_role('ROLE_ADMIN')")
      */
     public function editUserAction(Request $request, UserCount $userCount)
@@ -83,6 +92,8 @@ class DefaultController extends Controller
     }
 
     /**
+     * delete user
+     *
      * @Security("has_role('ROLE_ADMIN')")
      */
     public function deleteUserAction(Request $request, UserCount $userCount)

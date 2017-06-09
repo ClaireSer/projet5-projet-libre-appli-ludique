@@ -13,6 +13,9 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 
 class SessionController extends Controller
 {
+    /**
+     * display registration form
+     */
     public function signupAction(Request $request) {
         $userCount = new UserCount();
         $form = $this->createForm(UserCountSignupType::class, $userCount);
@@ -34,6 +37,9 @@ class SessionController extends Controller
         ));
     }
 
+    /**
+     * display login form
+     */
     public function loginAction(Request $request) {
         if ($this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
             $request->getSession()->getFlashBag()->add('success', 'Vous êtes bien connecté(e).');            
@@ -47,6 +53,8 @@ class SessionController extends Controller
     }
 
     /**
+     * set new info usercount
+     *
      * @Security("user.getId() == userCount.getId()")
      */
     public function settingsAction(Request $request, UserCount $userCount) {

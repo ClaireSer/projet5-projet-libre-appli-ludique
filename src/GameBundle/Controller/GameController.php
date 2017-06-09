@@ -12,6 +12,8 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 class GameController extends Controller
 {
     /**
+     * get selected gamers et subjects and display board game
+     *
      * @Security("has_role('ROLE_USER')")
      */
     public function playAction(Request $request)
@@ -19,7 +21,9 @@ class GameController extends Controller
         $idGamers = $request->query->get('gamer');
         $idSubjects = $request->query->get('subject');
         if ($idGamers === null || $idSubjects === null) {
-            throw new Exception('Avant de jouer, vous devez d\'abord sélectionner des joueurs et des thèmes.');
+            return $this->render('TwigBundle:Exception:error.html.twig', array(
+                'status_text'      => 'Avant de jouer, vous devez d\'abord sélectionner des joueurs et des thèmes.'
+            ));
         }
         $em = $this->getDoctrine()->getManager();
         
@@ -44,6 +48,8 @@ class GameController extends Controller
     }
 
     /**
+     * get a random question by gamer et subject given
+     *
      * @Security("has_role('ROLE_USER')")
      */
     public function getRandomQuestionAction(Request $request)
@@ -80,12 +86,14 @@ class GameController extends Controller
     }
 
     /**
+     * check if answer is valid and update gamers main scores
+     *
      * @Security("has_role('ROLE_USER')")
      */
     public function validAnswerAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
-        if($request->isXmlHttpRequest()) {
+        if ($request->isXmlHttpRequest()) {
             $answerId = $request->get('answerId');
             $gamerId = $request->get('gamerId');
             $dice = $request->get('dice');
@@ -124,6 +132,8 @@ class GameController extends Controller
     }
 
     /**
+     * once the game is done, change stats
+     *
      * @Security("has_role('ROLE_USER')")
      */
     public function changeStatsAction(Request $request)

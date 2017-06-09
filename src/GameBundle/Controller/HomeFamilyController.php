@@ -12,6 +12,8 @@ use GameBundle\Entity\Question;
 class HomeFamilyController extends Controller
 {
     /**
+     * suggest question (for users)
+     *
      * @Security("has_role('ROLE_USER')")
      */
     public function suggestQuestionAction(Request $request)
@@ -47,6 +49,8 @@ class HomeFamilyController extends Controller
     }
 
     /**
+     * get questions from usercount
+     *
      * @Security("has_role('ROLE_USER')")
      */
     public function getUserQuestionsAction(Request $request)
@@ -63,6 +67,8 @@ class HomeFamilyController extends Controller
     }
 
     /**
+     * display help to play
+     *
      * @Security("has_role('ROLE_USER') or has_role('ROLE_TEACHER')")
      */
     public function helpAction(Request $request) {

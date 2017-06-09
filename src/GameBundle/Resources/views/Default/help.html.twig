@@ -8,15 +8,69 @@
 {% block body %}
 <div class="container-fluid">
 
-    <h2 style="text-align:center;">Aide</h2>
+    <h2>Aide et règles du jeu</h2>
 
-    <h3>Règles du jeu</h3>
-        <h4>Objectif</h4>
-        <h4>Les couleurs du plateau</h4>
+        <h3>Objectif</h3>
+        <p>
+            Le principe du jeu est le même que celui du jeu de l’oie, mais avec des questions pour chaque case.
+            L'objectif ici est d'acquérir un score supérieur aux autres joueurs. A chaque lancé de dé, vous atterrissez 
+            sur une case, et une question s'affichera. C'est en répondant juste à la question que vous gagnez les points. 
+        </p>
+        <p>
+            Le gagnant est celui qui aura réalisé le meilleur score de la partie parmi les joueurs. Un joueur peut également 
+            jouer seul. La partie ne pourra pas être gagnée à proprement dit, mais le joueur aura amélioré son score.
+        </p>
+        <p>
+            A chaque case du plateau est associé un thème (ou matière scolaire) représenté par une couleur. Les thèmes sont ceux
+            que vous aurez choisi au préalable dans l'interface qui précède le jeu. Le thème de la question dépendra 
+            donc de la case sur laquelle vous tomberez.
+        </p>
+        <p>
+            Aussi, les questions qui s'afficheront prendront en compte le niveau scolaire du joueur.
+            Ainsi, un joueur de niveau CP peut tout à fait jouer avec un joueur de niveau CM2 de manière équitable.
+        </p>
 
-    <h3>Explication du score</h3>
-    <h3>Votre participation compte !</h3>
-    
+        <h3>Le score et les points</h3>
+        <p>
+            Pour une question donnée, les points obtenus dépendent de deux critères : de la difficulté de la question, et du résultat
+            du dé lancé. Les points obtenus pour une question sont obtenus comme ceci : <br/>
+            <span class="center">score = difficulté x n° du dé. </span><br/>
+            Une question difficile vaut 15 points, une question moyenne, 10 points, et une question facile, 5 points.
+        </p>
+        <p>
+            Plus le résultat du dé est élevé et plus la question est difficile, alors plus il est donc dans votre intérêt de répondre 
+            juste à la question !
+        </p>
+        <p>
+            Le jeu est fini dès qu'un joueur a réussi à atteindre la dernière case, la case 64. Ce joueur pourra alors bénéficier d'un 
+            bonus de 30 points, mais il ne sera pas nécessairement le gagnant de la partie. Si un joueur dépasse la case 64, il passe son tour.
+        </p>
+        <p>
+            Chaque joueur aura des statistiques par rapport aux parties qu’il aura jouées : <br/>
+            - son meilleur score parmi toutes les parties réalisées <br/>
+            - le nombre de parties gagnées sur le nombre de parties jouées <br/>
+            - le nombre de questions bien répondues sur le nombre total de questions <br/>
+            - le niveau atteint <br/>
+            En effet, les joueurs pourront atteindre un certain niveau qui dépendra de l’accumulation des scores obtenus à 
+            chaque partie. Ils démarrent au niveau 0 et tous les 1500 points (environ toutes les 3 parties), ils pourront 
+            atteindre le niveau supérieur.
+        </p>
+
+        <h3>Comment jouer ?</h3>
+        <p>
+            Pour commencer, l’un des joueurs doit lancer le dé qui, lui, génère un numéro entre 1 et 6 au hasard.
+            Le pion du joueur avance sur le plateau à la case correspondante, et une question, accompagnée de plusieurs 
+            réponses apparaît. Le joueur a tout le temps qu’il veut pour répondre. Il lui suffit de cliquer 
+            sur la réponse qui lui semble correcte. Si la réponse est bonne, son score est mis à jour, sinon, il n’a pas 
+            de point supplémentaire. C’est alors au joueur suivant de jouer. Et ainsi de suite.
+        </p>
+
+        <h3>Votre participation compte !</h3>
+        <p>
+            Si vous souhaitez participer davantage à la vie du jeu, n'hésitez pas à ajouter vos propres questions.
+            Elles seront modérées d'abord par un enseignant avant d'être validées et insérées dans le jeu.
+            En effet, plus il y a de questions, moins les joueurs tomberont sur les mêmes. Et c'est donc plus amusant.
+        </p>
     
 </div>
 {% endblock %}

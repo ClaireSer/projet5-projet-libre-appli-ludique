@@ -10,7 +10,11 @@ body {
     padding-bottom: 60px;
     --small-device-border: 5px solid white;
     --big-device-border: 10px solid white;
-    --color-button-play: orangered;
+    --color-button-play: orangered;    
+    --color-1: gold;    
+    --color-2: #26d07c;    
+    --color-3: #6ad1e3;    
+    --color-4: #f7835d;    
 }
 h1, h2, h3, h4 {
     text-align: center;
@@ -67,17 +71,17 @@ table.board td {
     height: 60px;
     text-align: center;
 }
-.board td.blue, .blue .question {
-   background-color: royalblue; 
+.board td.yellow, .yellow .question, .yellow {
+   background-color: var(--color-1); 
 }
-.board td.yellow, .yellow .question {
-   background-color: gold; 
+.board td.green, .green .question, .green {
+   background-color: var(--color-2); 
 }
-.board td.green, .green .question {
-   background-color: greenyellow; 
+.board td.blue, .blue .question, .blue {
+   background-color: var(--color-3); 
 }
-.board td.red, .red .question {
-    background-color: orangered; 
+.board td.red, .red .question, .red {
+    background-color: var(--color-4); 
 }
 .activeCase0, .activeCase1, .activeCase2, .activeCase3, .activeCase4, .activeCase5, .activeCase6, .activeCase7, .activeCase8, .activeCase9 {
     color: transparent;
@@ -149,6 +153,45 @@ table.board td {
 }
 .home {
     margin: 50px 0;
+}
+
+.blocks {
+    display: flex;
+    flex-wrap: wrap;
+    font-family: 'Vibur', cursive;   
+}
+.blocks div {
+    margin: 10px;
+    text-align: center;
+    font-size: 24px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 200px;
+}
+.blocks a {
+    color: inherit;
+    text-decoration: none;    
+}
+.color-hover {
+    width: 100%;
+}
+.blocks a:hover .color-hover {
+    background-color: rgba(0, 0, 0, 0.2);
+    color: white;
+    margin: 0;
+}
+.blocks-admin .first-line {
+    width: 100%;
+}
+.blocks-user .first-line, .blocks-admin .second-line, .blocks-admin .third-line {
+    width: 33.3%;
+}
+.blocks-user .second-line, .blocks-user .third-line {
+    width: 50%;
+}
+.blocks a:hover {
+    text-decoration: none;
 }
 
 /* select gamers */

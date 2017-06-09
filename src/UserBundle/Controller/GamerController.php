@@ -12,6 +12,8 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 class GamerController extends Controller
 {
     /**
+     * display gamers of current usercount
+     *
      * @Security("has_role('ROLE_USER')")
      */
     public function managerAction(Request $request) 
@@ -25,6 +27,8 @@ class GamerController extends Controller
     }
 
     /**
+     * add gamer
+     *
      * @Security("has_role('ROLE_USER')")
      */
     public function addAction(Request $request)
@@ -56,6 +60,8 @@ class GamerController extends Controller
     }
 
     /**
+     * edit gamer
+     *
      * @Security("has_role('ROLE_USER') and user.getId() == gamer.getUserCount().getId()")
      */
 
@@ -82,6 +88,8 @@ class GamerController extends Controller
     }
 
     /**
+     * delete gamer
+     *
      * @Security("has_role('ROLE_USER')")
      */
     public function deleteAction(Request $request, Gamer $gamer)
@@ -94,6 +102,8 @@ class GamerController extends Controller
     }
 
     /**
+     * display scores of all gamers
+     *
      * @Security("has_role('ROLE_USER') or has_role('ROLE_TEACHER')")
      */
     public function listScoresAction(Request $request)
@@ -106,7 +116,6 @@ class GamerController extends Controller
             $schoolClassIds[] = $schoolClass->getId();
             $schoolClassTitles[] = $schoolClass->getSchoolClass();
         }
-        
 
         $myGamers = $em->getRepository('UserBundle:Gamer')->getGamersByUserCount($this->getUser());
         $gamers = $em->getRepository('UserBundle:Gamer')->getGamers();
@@ -130,6 +139,8 @@ class GamerController extends Controller
     }
 
     /**
+     * display gamers and subjects, and informations about questions stats
+     *
      * @Security("has_role('ROLE_USER')")
      */
     public function selectAction(Request $request) {

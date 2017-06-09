@@ -18,6 +18,8 @@ use GameBundle\Entity\Subject;
 class AdminController extends Controller
 {
     /**
+     * add question
+     *
      * @Security("has_role('ROLE_TEACHER')")
      */
     public function addQuestionAction(Request $request)
@@ -53,6 +55,8 @@ class AdminController extends Controller
     }
 
     /**
+     * display all questions and informations about question stats
+     *
      * @Security("has_role('ROLE_TEACHER')")
      */
     public function moderateQuestionAction(Request $request)
@@ -95,6 +99,8 @@ class AdminController extends Controller
     }
     
     /**
+     * validate a question
+     *
      * @Security("has_role('ROLE_USER') or has_role('ROLE_TEACHER')")
      */
     public function validateQuestionAction(Request $request, Question $question)
@@ -132,6 +138,8 @@ class AdminController extends Controller
     }
 
     /**
+     * ajax call to remove an answer on the form
+     *
      * @Security("has_role('ROLE_USER') or has_role('ROLE_TEACHER')")
      */
     public function removeAnswerAction(Request $request)
@@ -155,6 +163,8 @@ class AdminController extends Controller
     }
 
     /**
+     * delete question
+     *
      * @Security("has_role('ROLE_USER') or has_role('ROLE_TEACHER')")
      */
     public function deleteQuestionAction(Request $request, Question $question)
@@ -167,6 +177,8 @@ class AdminController extends Controller
     }
 
     /**
+     * add subject or add topic
+     *
      * @Security("has_role('ROLE_TEACHER')")
      */
     public function optionsQuestionAction(Request $request) 
@@ -210,6 +222,8 @@ class AdminController extends Controller
     }
 
     /**
+     * delete topic
+     *
      * @Security("has_role('ROLE_TEACHER')")
      */
     public function deleteTopicAction(Request $request, Topic $topic)
@@ -222,6 +236,8 @@ class AdminController extends Controller
     }
 
     /**
+     * delete subject
+     *
      * @Security("has_role('ROLE_TEACHER')")
      */
         public function deleteSubjectAction(Request $request, Subject $subject)

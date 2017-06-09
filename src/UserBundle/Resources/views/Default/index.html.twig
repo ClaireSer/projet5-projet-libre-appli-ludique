@@ -17,37 +17,61 @@
       </div>
     {% endfor %}
  
+    {% if not is_granted('IS_AUTHENTICATED_ANONYMOUSLY') %} 
     <h1>Bienvenue sur la plateforme du </br>jeu de l'oie... érudit</h1>
+    {% endif %}
 
     {% if app.user and is_granted('ROLE_USER') %}
-      <p><a href=" {{ path('select_gamers') }} ">JOUER</a></p>
-      <p><a href=" {{ path('admin_gamers') }} ">VOS JOUEURS</a></p>
-      <p><a href=" {{ path('list_scores') }} ">SCORES ET CLASSEMENTS</a></p>
-      <p><a href=" {{ path('suggest_question') }} ">PROPOSER DES QUESTIONS</a></p>
-      <p><a href=" {{ path('settings_user', { 'id': app.user.id }) }} ">PARAMÈTRES DU COMPTE</a></p>
-    
+      <div class="blocks blocks-user">
+        <a class="first-line" href=" {{ path('select_gamers') }} "><div class="blue"><div class="color-hover">JOUER</div></div></a>
+        <a class="first-line" href=" {{ path('admin_gamers') }} "><div class="red"><div class="color-hover">VOS JOUEURS</div></div></a>
+        <a class="first-line" href=" {{ path('list_scores') }} "><div class="yellow"><div class="color-hover">SCORES ET CLASSEMENTS</div></div></a>
+        
+        <a class="second-line" href=" {{ path('suggest_question') }} "><div class="yellow"><div class="color-hover">PROPOSER DES QUESTIONS</div></div></a>
+        <a class="second-line" href=" {{ path('user_questions') }} "><div class="green"><div class="color-hover">VOS QUESTIONS</div></div></a>
+        
+        <a class="third-line" href=" {{ path('settings_user', { 'id': app.user.id }) }} "><div class="red"><div class="color-hover">PARAMÈTRES DU COMPTE</div></div></a>
+        <a class="third-line" href=" {{ path('help') }} "><div class="blue"><div class="color-hover">AIDE</div></div></a>
+      </div>
+
     {% elseif app.user and is_granted('ROLE_TEACHER') %}
+      <div class="blocks blocks-admin">
         {% if is_granted('ROLE_ADMIN') %}
-          <p><a href=" {{ path('admin_users') }} ">GÉRER LES COMPTES UTILISATEURS</a></p>
+          <a class="first-line" href=" {{ path('admin_users') }} "><div class="red"><div class="color-hover">GÉRER LES COMPTES UTILISATEURS</div></div></a>
         {% endif %}
-        <p><a href=" {{ path('add_question') }} ">AJOUTER DES QUESTIONS</a></p>
-        <p><a href=" {{ path('moderate_question') }} ">MODÉRER LES QUESTIONS</a></p>
-        <p><a href=" {{ path('options_question') }} ">OPTIONS DES QUESTIONS</a></p>
-        <p><a href=" {{ path('list_scores') }} ">CONSULTER LES SCORES</a></p>
+        <a class="second-line" href=" {{ path('add_question') }} "><div class="green"><div class="color-hover">AJOUTER DES QUESTIONS</div></div></a>
+        <a class="second-line" href=" {{ path('moderate_question') }} "><div class="blue"><div class="color-hover">MODÉRER LES QUESTIONS</div></div></a>
+        <a class="second-line" href=" {{ path('options_question') }} "><div class="yellow"><div class="color-hover">OPTIONS DES QUESTIONS</div></div></a>
+        <a class="third-line" href=" {{ path('list_scores') }} "><div class="red"><div class="color-hover">SCORES ET CLASSEMENTS</div></div></a>
+        <a class="third-line" href=" {{ path('settings_user', { 'id': app.user.id }) }} "><div class="yellow"><div class="color-hover">PARAMÈTRES DU COMPTE</div></div></a>
+        <a class="third-line" href=" {{ path('help') }} "><div class="green"><div class="color-hover">AIDE</div></div></a>
+      </div>
     
     {% else %}
       <div class="row home">
         <div class="col-sm-offset-2 col-sm-2 home-text">
           <h4>Vous êtes élève ?</h4>
-          <p>Et eodem impetu Domitianum praecipitem per scalas itidem funibus constrinxerunt, eosque coniunctos per ampla spatia civitatis acri raptavere discursu. iamque artuum et membrorum divulsa conpage superscandentes corpora mortuorum ad ultimam truncata deformitatem velut exsaturati mox abiecerunt in flumen.</p>
+          <p>
+            Et si on changeait un peu des devoirs à la maison ? Vérifie que tu as bien retenu la leçon, 
+            et fais le en t'amusant, grâce au jeu de l'oie érudit. Chez toi, joue avec tes amis ou ta famille, et réponds bien aux questions
+            pour pouvoir améliorer ton score et le comparer aux autres joueurs. Et si tu veux, tu peux toi aussi insérer tes propres 
+            questions !
+          </p>
         </div>
         <div class="col-sm-offset-1 col-sm-2 home-text">
           <h4>Vous êtes parent ?</h4>
-          <p>Et eodem impetu Domitianum praecipitem per scalas itidem funibus constrinxerunt, eosque coniunctos per ampla spatia civitatis acri raptavere discursu. iamque artuum et membrorum divulsa conpage superscandentes corpora mortuorum ad ultimam truncata deformitatem velut exsaturati mox abiecerunt in flumen.</p>
+          <p>
+            Et si vous accompagniez votre enfant à apprendre en s'amusant ? Vérifiez qu'il a bien appris 
+            la leçon, et suivez régulièrement ses acquis en jouant avec lui. 
+            A l'occasion, soyez aussi au courant des leçons du moment.
+          </p>
         </div>
         <div class="col-sm-offset-1 col-sm-2 home-text">
           <h4>Vous êtes enseignant ?</h4>
-          <p>Et eodem impetu Domitianum praecipitem per scalas itidem funibus constrinxerunt, eosque coniunctos per ampla spatia civitatis acri raptavere discursu. iamque artuum et membrorum divulsa conpage superscandentes corpora mortuorum ad ultimam truncata deformitatem velut exsaturati mox abiecerunt in flumen.</p>
+          <p>
+            Continuez à être l'acteur principal de l'apprentissage de vos élèves en participant à la vie du jeu. Vous insérez les questions 
+            selon la thématique du moment de votre classe, et vos élèves auront fait leur devoir... pour une fois !
+          </p>
         </div>
       </div>
     {% endif %}
