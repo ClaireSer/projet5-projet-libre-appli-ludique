@@ -17,7 +17,7 @@
       </div>
     {% endfor %}
  
-    {% if not is_granted('IS_AUTHENTICATED_ANONYMOUSLY') %} 
+    {% if not is_granted('IS_AUTHENTICATED_REMEMBERED') %} 
     <h1>Bienvenue sur la plateforme du </br>jeu de l'oie... érudit</h1>
     {% endif %}
 
@@ -36,15 +36,18 @@
 
     {% elseif app.user and is_granted('ROLE_TEACHER') %}
       <div class="blocks blocks-admin">
+        <a class="first-line" href=" {{ path('add_question') }} "><div class="green"><div class="color-hover">AJOUTER DES QUESTIONS</div></div></a>
+        <a class="first-line" href=" {{ path('moderate_question') }} "><div class="blue"><div class="color-hover">MODÉRER LES QUESTIONS</div></div></a>
+        <a class="first-line" href=" {{ path('options_question') }} "><div class="yellow"><div class="color-hover">OPTIONS DES QUESTIONS</div></div></a>
+        
         {% if is_granted('ROLE_ADMIN') %}
-          <a class="first-line" href=" {{ path('admin_users') }} "><div class="red"><div class="color-hover">GÉRER LES COMPTES UTILISATEURS</div></div></a>
+          <a class="second-line" href=" {{ path('admin_users') }} "><div class="yellow"><div class="color-hover">GÉRER LES COMPTES UTILISATEURS</div></div></a>
+          <a class="second-line" href=" {{ path('user_add') }} "><div class="red"><div class="color-hover">AJOUTER DES COMPTES UTILISATEURS</div></div></a>
         {% endif %}
-        <a class="second-line" href=" {{ path('add_question') }} "><div class="green"><div class="color-hover">AJOUTER DES QUESTIONS</div></div></a>
-        <a class="second-line" href=" {{ path('moderate_question') }} "><div class="blue"><div class="color-hover">MODÉRER LES QUESTIONS</div></div></a>
-        <a class="second-line" href=" {{ path('options_question') }} "><div class="yellow"><div class="color-hover">OPTIONS DES QUESTIONS</div></div></a>
+        
         <a class="third-line" href=" {{ path('list_scores') }} "><div class="red"><div class="color-hover">SCORES ET CLASSEMENTS</div></div></a>
-        <a class="third-line" href=" {{ path('settings_user', { 'id': app.user.id }) }} "><div class="yellow"><div class="color-hover">PARAMÈTRES DU COMPTE</div></div></a>
-        <a class="third-line" href=" {{ path('help') }} "><div class="green"><div class="color-hover">AIDE</div></div></a>
+        <a class="third-line" href=" {{ path('settings_user', { 'id': app.user.id }) }} "><div class="green"><div class="color-hover">PARAMÈTRES DU COMPTE</div></div></a>
+        <a class="third-line" href=" {{ path('help') }} "><div class="yellow"><div class="color-hover">AIDE</div></div></a>
       </div>
     
     {% else %}

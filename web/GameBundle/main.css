@@ -181,13 +181,10 @@ table.board td {
     color: white;
     margin: 0;
 }
-.blocks-admin .first-line {
-    width: 100%;
-}
-.blocks-user .first-line, .blocks-admin .second-line, .blocks-admin .third-line {
+.blocks-user .first-line, .blocks-admin .first-line, .blocks-admin .third-line {
     width: 33.3%;
 }
-.blocks-user .second-line, .blocks-user .third-line {
+.blocks-user .second-line, .blocks-user .third-line, .blocks-admin .second-line {
     width: 50%;
 }
 .blocks a:hover {
@@ -332,6 +329,10 @@ table.board td {
 }
 .alert {
     margin: 20px 0;
+}
+.help p {
+    text-align: justify;
+    font-size: 17px;
 }
 
 
