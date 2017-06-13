@@ -72,12 +72,6 @@ class AdminController extends Controller
             $firstAnswer = $question->getAnswers()->first();
             $firstAnswer->setIsRight(true);
             
-            // $topic = $question->getTopic();
-            // $topic->addQuestion($question);
-
-            // $schoolClass = $question->getSchoolClass();
-            // $schoolClass->addQuestion($question);
-
             $em = $this->getDoctrine()->getManager();
             $em->persist($question);
             $em->flush();
@@ -118,13 +112,15 @@ class AdminController extends Controller
         $schoolClassBySubject = [];
         $nbQuestions = [];
         foreach ($subjectIds as $key=>$id0) {
+            // count number of schoolLevels by subject
             $nbSchoolClassBySubject[] = $em->getRepository('GameBundle:SchoolClass')->countBySubject($id0);
+            // get schoolClass by subject
             $schoolClassBySubject[] = $em->getRepository('GameBundle:SchoolClass')->getBySubject($id0);
+            // count number of questions by schoolLevel and by subject
             foreach ($schoolClassIds as $id1) {
                 $nbQuestions[$key][] = $em->getRepository('GameBundle:Question')->count($id0, $id1);
             }
         }
-
         return $this->render('GameBundle:Admin:moderate_question.html.twig', array(
             'notValidQuestions'     => $notValidQuestions,
             'validQuestions'        => $validQuestions,

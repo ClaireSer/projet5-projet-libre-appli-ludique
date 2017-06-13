@@ -8,6 +8,10 @@ services:
         class: Twig_Extensions_Extension_Text
         tags:
             - { name: twig.extension }
+    
+    update.gamer:
+        class: GameBundle\Controller\StatsGamer
+
 #     app.webservice_user_provider:
 #         class: UserBundle\Security\User\WebserviceUserProvider
 

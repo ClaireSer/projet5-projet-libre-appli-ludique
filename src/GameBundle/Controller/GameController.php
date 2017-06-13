@@ -27,11 +27,12 @@ class GameController extends Controller
         }
         $em = $this->getDoctrine()->getManager();
         
-        // get gamers selected
+        // get gamers selected and put in session
         $gamers = [];
         foreach ($idGamers as $id) {
-            $gamers[] = $em->getRepository('UserBundle:Gamer')->find($id);
+            $gamers[$id] = $em->getRepository('UserBundle:Gamer')->find($id);
         }
+        $request->getSession()->set("gamers", $gamers);
 
         // get subjects selected
         $subjects = [];
@@ -101,9 +102,12 @@ class GameController extends Controller
             $bonusDifficulty = $request->get('bonus');
             $scoreQuestion = $dice * $bonusDifficulty;
             $score += $scoreQuestion;
+            
 
             if ($answerId !== null && $gamerId !== null) {
                 $answerReturn = $em->getRepository('GameBundle:Answer')->find($answerId);
+                $gamers = $request->getSession()->get("gamers");
+                // $gamerReturn = $gamers[$gamerId];
                 $gamerReturn = $em->getRepository('UserBundle:Gamer')->find($gamerId);
 
                 if ($answerReturn->getIsRight()) {
@@ -162,24 +166,8 @@ class GameController extends Controller
                 $gamers[] = $em->getRepository('UserBundle:Gamer')->find($id);
             }
             foreach ($gamers as $key=>$gamer) {
-                $cumulScore = $gamer->getCumulScore();
-                $cumulScore += $finalScores[$key];
-                $gamer->setCumulScore($cumulScore);
-
-                $bestScore = $gamer->getBestScore();
-                if ($finalScores[$key] > $bestScore) {
-                    $gamer->setBestScore($finalScores[$key]);
-                }
-
-                $gamePlayedNb = $gamer->getGamePlayedNb();
-                $gamePlayedNb++;
-                $gamer->setGamePlayedNb($gamePlayedNb);
-
-                $level = $gamer->getLevel();
-                if ($cumulScore > 1500 * ($level + 1)) {
-                    $level++;
-                    $gamer->setLevel($level);
-                }
+                $updating = $this->container->get('update.gamer');
+                $updating->update($gamer, $finalScores[$key]);
                 $em->persist($gamer);
             }
             $em->flush();
