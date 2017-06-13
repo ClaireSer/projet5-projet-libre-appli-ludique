@@ -20,7 +20,7 @@ class AdminController extends Controller
     /**
      * add question
      *
-     * @Security("has_role('ROLE_TEACHER')")
+     * @Security("has_role('ROLE_TEACHER') or has_role('ROLE_USER')")
      */
     public function addQuestionAction(Request $request)
     {
@@ -28,19 +28,17 @@ class AdminController extends Controller
         $form = $this->createForm(QuestionType::class, $question);
         $formRequest = $form->handleRequest($request);
         if ($formRequest->isSubmitted() && $formRequest->isValid()) {
-            $question->setIsValid(true);
+            if ($this->get('security.authorization_checker')->isGranted('ROLE_USER')) {
+                $question->setIsValid(false);
+            } else {
+                $question->setIsValid(true);                
+            }
             $question->setUserCount($this->getUser());
             foreach($question->getAnswers() as $answer) {
                 $answer->setQuestion($question);
             }
             $firstAnswer = $question->getAnswers()->first();
             $firstAnswer->setIsRight(true);
-            
-            $topic = $question->getTopic();
-            $topic->addQuestion($question);
-
-            $schoolClass = $question->getSchoolClass();
-            $schoolClass->addQuestion($question);
 
             $em = $this->getDoctrine()->getManager();
             $em->persist($question);
@@ -51,6 +49,45 @@ class AdminController extends Controller
         return $this->render('GameBundle:Default:form_question.html.twig', array(
             'form'  => $form->createView(),
             'title' => 'Ajoutez vos questions'
+        ));
+    }
+
+    /**
+     * validate a question
+     *
+     * @Security("has_role('ROLE_USER') or has_role('ROLE_TEACHER')")
+     */
+    public function validateQuestionAction(Request $request, Question $question)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $form = $this->createForm(QuestionType::class, $question);
+        $formRequest = $form->handleRequest($request);
+        
+        if ($formRequest->isSubmitted() && $formRequest->isValid()) {
+            $question->setIsValid(true);
+
+            foreach($question->getAnswers() as $answer) {
+                $answer->setQuestion($question);
+            }
+            $firstAnswer = $question->getAnswers()->first();
+            $firstAnswer->setIsRight(true);
+            
+            // $topic = $question->getTopic();
+            // $topic->addQuestion($question);
+
+            // $schoolClass = $question->getSchoolClass();
+            // $schoolClass->addQuestion($question);
+
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($question);
+            $em->flush();
+            $request->getSession()->getFlashBag()->add('success', 'La question a bien été validée.');
+            return $this->redirectToRoute('moderate_question');
+        }
+
+        return $this->render('GameBundle:Default:form_question.html.twig', array(
+            'form'  => $form->createView(),
+            'title' => 'Validation de questions'
         ));
     }
 
@@ -98,45 +135,6 @@ class AdminController extends Controller
         ));   
     }
     
-    /**
-     * validate a question
-     *
-     * @Security("has_role('ROLE_USER') or has_role('ROLE_TEACHER')")
-     */
-    public function validateQuestionAction(Request $request, Question $question)
-    {
-        $em = $this->getDoctrine()->getManager();
-        $form = $this->createForm(QuestionType::class, $question);
-        $formRequest = $form->handleRequest($request);
-        
-        if ($formRequest->isSubmitted() && $formRequest->isValid()) {
-            $question->setIsValid(true);
-
-            foreach($question->getAnswers() as $answer) {
-                $answer->setQuestion($question);
-            }
-            $firstAnswer = $question->getAnswers()->first();
-            $firstAnswer->setIsRight(true);
-            
-            $topic = $question->getTopic();
-            $topic->addQuestion($question);
-
-            $schoolClass = $question->getSchoolClass();
-            $schoolClass->addQuestion($question);
-
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($question);
-            $em->flush();
-            $request->getSession()->getFlashBag()->add('success', 'La question a bien été validée.');
-            return $this->redirectToRoute('moderate_question');
-        }
-
-        return $this->render('GameBundle:Default:form_question.html.twig', array(
-            'form'  => $form->createView(),
-            'title' => 'Validation de questions'
-        ));
-    }
-
     /**
      * ajax call to remove an answer on the form
      *
@@ -190,25 +188,14 @@ class AdminController extends Controller
         $formThemeRequest = $formTheme->handleRequest($request);
         $formTopicRequest = $formTopic->handleRequest($request);
 
-        if ($formThemeRequest->isSubmitted() && $formThemeRequest->isValid()) {
+        if (($formThemeRequest->isSubmitted() && $formThemeRequest->isValid()) || ($formTopicRequest->isSubmitted() && $formTopicRequest->isValid())) {
             $subject = $topic->getSubject();
             $subject->addTopic($topic);
 
             $em = $this->getDoctrine()->getManager();
             $em->persist($topic);
             $em->flush();
-            $request->getSession()->getFlashBag()->add('success', 'Le nouveau thème a bien été enregistré.');
-            return $this->redirectToRoute('options_question');
-        }
-
-        if ($formTopicRequest->isSubmitted() && $formTopicRequest->isValid()) {
-            $subject = $topic->getSubject();
-            $subject->addTopic($topic);
-
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($topic);
-            $em->flush();
-            $request->getSession()->getFlashBag()->add('success', 'La nouvelle catégorie a bien été enregistrée.');
+            $request->getSession()->getFlashBag()->add('success', 'Le nouvel élément a bien été enregistré.');
             return $this->redirectToRoute('options_question');
         }
 

@@ -13,16 +13,16 @@ validate_question:
     requirements:
         id: \d+
 
-suggest_question:
-   path:    /suggest
-   defaults: { _controller: GameBundle:HomeFamily:suggestQuestion }
-
 user_questions:
    path:    /user/questions
    defaults: { _controller: GameBundle:HomeFamily:getUserQuestions }
 
 add_question:
     path:    /admin/question/add
+    defaults: { _controller: GameBundle:Admin:addQuestion }
+
+suggest_question:
+    path:    /suggest
     defaults: { _controller: GameBundle:Admin:addQuestion }
 
 moderate_question:

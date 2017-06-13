@@ -40,6 +40,7 @@ class GamerController extends Controller
             $gamer->setCumulScore(0);
             $gamer->setBestScore(0);
             $gamer->setGameWonNb(0);
+            $gamer->setGamePlayedNb(0);
             $gamer->setRightAnswerNb(0);
             $gamer->setLevel(0);
             $gamer->setUserCount($this->getUser());

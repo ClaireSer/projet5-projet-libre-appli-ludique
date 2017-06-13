@@ -12,43 +12,6 @@ use GameBundle\Entity\Question;
 class HomeFamilyController extends Controller
 {
     /**
-     * suggest question (for users)
-     *
-     * @Security("has_role('ROLE_USER')")
-     */
-    public function suggestQuestionAction(Request $request)
-    {
-        $question = new Question();
-        $form = $this->createForm(QuestionType::class, $question);
-        $formRequest = $form->handleRequest($request);
-        if ($formRequest->isSubmitted() && $formRequest->isValid()) {
-            $question->setIsValid(false);
-            $question->setUserCount($this->getUser());
-            foreach($question->getAnswers() as $answer) {
-                $answer->setQuestion($question);
-            }
-            $firstAnswer = $question->getAnswers()->first();
-            $firstAnswer->setIsRight(true);
-            
-            $topic = $question->getTopic();
-            $topic->addQuestion($question);
-
-            $schoolClass = $question->getSchoolClass();
-            $schoolClass->addQuestion($question);
-            
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($question);
-            $em->flush();
-            $request->getSession()->getFlashBag()->add('success', 'La question a bien été enregistrée.');
-            return $this->redirectToRoute('homepage');
-        }
-        return $this->render('GameBundle:Default:form_question.html.twig', array(
-            'form'  => $form->createView(),
-            'title' => 'Proposez vos questions'
-        ));
-    }
-
-    /**
      * get questions from usercount
      *
      * @Security("has_role('ROLE_USER')")
@@ -60,9 +23,9 @@ class HomeFamilyController extends Controller
         $myNotValidQuestions = $em->getRepository('GameBundle:Question')->findMyQuestions($this->getUser(), false);
         
         return $this->render('GameBundle:Default:user_questions.html.twig', array(
-            'title'         => 'Vos questions',
-            'validQuestions'    => $myValidQuestions,
-            'notValidQuestions'    => $myNotValidQuestions
+            'title'                 => 'Vos questions',
+            'validQuestions'        => $myValidQuestions,
+            'notValidQuestions'     => $myNotValidQuestions
         ));
     }
 

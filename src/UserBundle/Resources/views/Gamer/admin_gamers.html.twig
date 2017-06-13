@@ -47,7 +47,7 @@
                   <td>{{ gamer.role }}</td>
                   <td>{{ gamer.schoolClass.schoolClass }}</th>
                   <td>{{ gamer.bestScore }}</td>
-                  <td>{{ gamer.gameWonNb }}</td>
+                  <td>{{ gamer.gameWonNb }} / {{ gamer.gamePlayedNb }} </td>
                   <td>{{ gamer.rightAnswerNb }}</td>
                   <td>{{ gamer.level }}</td>
                   <td><a href="{{ path('edit_gamer', { 'id': gamer.id }) }}"><span class="glyphicon glyphicon-wrench"></span></a></td>
