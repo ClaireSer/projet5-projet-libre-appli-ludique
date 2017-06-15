@@ -3,7 +3,7 @@
 {% extends "GameBundle::layout.html.twig" %}
 {% set select_gamer = true %}
 
-{% block title %}{{ parent() }} - {{ titleTab }}{% endblock %}
+{% block title %}{{ parent() }} - Le jeu{% endblock %}
 
 {% block body %}
     {% for message in app.session.flashbag.get('notice') %}
@@ -20,7 +20,7 @@
 
     <div class="row">
       <div class="col-lg-offset-3 col-lg-3 col-sm-offset-1 col-sm-5 center">    
-        <h3>{{ title1 }}</h3>
+        <h3> Choisissez vos joueurs </h3>
         {% if gamers %}
           <div class="gamer select-display">
             {% for gamer in gamers %}
@@ -34,7 +34,7 @@
       </div>
 
       <div class="col-lg-3 col-sm-5 center">
-        <h3>{{ title2 }}</h3>
+        <h3> Choisissez quatre thèmes </h3>
         <div class="chooseSubject select-display">
           {% for subjectSelected in subjectsSelected %}
               <p class="select-text"><label><input type="checkbox" name="subject[]" value="{{ subjectSelected.id }}" /> {{ subjectSelected.nameSubject }}</label><br/></p>

@@ -7,7 +7,6 @@ use UserBundle\Form\Type\UserCountSignupType;
 use UserBundle\Form\Type\UserCountSettingsType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 
 

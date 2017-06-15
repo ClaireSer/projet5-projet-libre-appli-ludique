@@ -5,8 +5,6 @@ namespace GameBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
-use GameBundle\Form\Type\QuestionType;
-use GameBundle\Entity\Question;
 
 
 class HomeFamilyController extends Controller

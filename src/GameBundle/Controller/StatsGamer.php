@@ -2,15 +2,11 @@
 
 namespace GameBundle\Controller;
 
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\Config\Definition\Exception\Exception;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 
 
 class StatsGamer
 {
-    public function update($gamer, $finalScore) {
+    public function update(Gamer $gamer, $finalScore) {
         $cumulScore = $gamer->getCumulScore();
         $cumulScore += $finalScore;
         $gamer->setCumulScore($cumulScore);

@@ -2,7 +2,6 @@
 namespace UserBundle\Form\Type;
 
 use Symfony\Component\Form\DataTransformerInterface;
-use Symfony\Component\Form\Exception\TransformationFailedException;
 
 class StringToArrayTransformer implements DataTransformerInterface
 {

@@ -12,6 +12,9 @@ services:
     update.gamer:
         class: GameBundle\Controller\StatsGamer
 
+    stats.question:
+        class: GameBundle\Controller\StatsQuestion
+
 #     app.webservice_user_provider:
 #         class: UserBundle\Security\User\WebserviceUserProvider
 

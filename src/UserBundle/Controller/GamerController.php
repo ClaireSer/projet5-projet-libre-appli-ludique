@@ -6,7 +6,6 @@ use UserBundle\Entity\Gamer;
 use UserBundle\Form\Type\GamerType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 
 class GamerController extends Controller
@@ -129,8 +128,6 @@ class GamerController extends Controller
         $otherGamers = $em->getRepository('UserBundle:Gamer')->getOtherGamers();
         
         return $this->render('UserBundle:Gamer:list_scores.html.twig', array(
-            'title'                 => 'Scores des joueurs selon les niveaux',
-            'titleTab'              => 'Scores',
             'myGamers'              => $myGamers,
             'gamers'                => $gamers,
             'gamersBySchoolClass'   => $gamersBySchoolClass,
@@ -165,8 +162,11 @@ class GamerController extends Controller
         $schoolClassBySubject = [];
         $nbQuestions = [];
         foreach ($subjectIds as $key=>$id0) {
+            // count number of schoolLevels by subject
             $nbSchoolClassBySubject[] = $em->getRepository('GameBundle:SchoolClass')->countBySubject($id0);
+            // get schoolClass by subject
             $schoolClassBySubject[] = $em->getRepository('GameBundle:SchoolClass')->getBySubject($id0);
+            // count number of questions by schoolLevel and by subject
             foreach ($schoolClassIds as $id1) {
                 $nbQuestions[$key][] = $em->getRepository('GameBundle:Question')->count($id0, $id1);
             }
@@ -178,10 +178,7 @@ class GamerController extends Controller
             'subjectsSelected'  => $subjectsSelected,
             'nbSchoolLevels'    => $nbSchoolClassBySubject,
             'schoolLevels'      => $schoolClassBySubject,
-            'nbQuestions'       => $nbQuestions,
-            'title1'            => 'Choisissez vos joueurs',
-            'title2'            => 'Choisissez quatre thèmes',
-            'titleTab'          => 'Le jeu'
+            'nbQuestions'       => $nbQuestions
         ));
     }
 }

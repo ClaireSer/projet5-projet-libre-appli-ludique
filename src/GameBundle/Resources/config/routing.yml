@@ -86,4 +86,3 @@ change_stats:
 help:
     path:    /help
     defaults: { _controller: GameBundle:HomeFamily:help }
-    
