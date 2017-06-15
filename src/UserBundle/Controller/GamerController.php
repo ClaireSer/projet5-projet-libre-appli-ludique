@@ -145,40 +145,17 @@ class GamerController extends Controller
         $em = $this->getDoctrine()->getManager();
         $gamers = $em->getRepository('UserBundle:Gamer')->getGamersByUserCount($this->getUser());
         $subjectsSelected = $em->getRepository('GameBundle:Subject')->findByCountingSchoolClass();
-        $subjects = $em->getRepository('GameBundle:Subject')->findAll();
 
-        $subjectIds = [];
-        foreach ($subjects as $subject) {
-            $subjectIds[] = $subject->getId();
-        }
-
-        $allSchoolClass = $em->getRepository('GameBundle:SchoolClass')->findAll();
-        $schoolClassIds = [];
-        foreach ($allSchoolClass as $schoolClass) {
-            $schoolClassIds[] = $schoolClass->getId();
-        }
-
-        $nbSchoolClassBySubject = [];
-        $schoolClassBySubject = [];
-        $nbQuestions = [];
-        foreach ($subjectIds as $key=>$id0) {
-            // count number of schoolLevels by subject
-            $nbSchoolClassBySubject[] = $em->getRepository('GameBundle:SchoolClass')->countBySubject($id0);
-            // get schoolClass by subject
-            $schoolClassBySubject[] = $em->getRepository('GameBundle:SchoolClass')->getBySubject($id0);
-            // count number of questions by schoolLevel and by subject
-            foreach ($schoolClassIds as $id1) {
-                $nbQuestions[$key][] = $em->getRepository('GameBundle:Question')->count($id0, $id1);
-            }
-        }
+        $infos = $this->get('stats.question');
+        $arrayInfos = $infos->getInfo();
 
         return $this->render('UserBundle:Gamer:select_gamer.html.twig', array(
             'gamers'            => $gamers,
-            'subjects'          => $subjects,
             'subjectsSelected'  => $subjectsSelected,
-            'nbSchoolLevels'    => $nbSchoolClassBySubject,
-            'schoolLevels'      => $schoolClassBySubject,
-            'nbQuestions'       => $nbQuestions
+            'subjects'          => $arrayInfos['subjects'],
+            'nbSchoolLevels'    => $arrayInfos['nbSchoolClassBySubject'],
+            'schoolLevels'      => $arrayInfos['schoolClassBySubject'],
+            'nbQuestions'       => $arrayInfos['nbQuestions']
         ));
     }
 }

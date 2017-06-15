@@ -7,18 +7,25 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Config\Definition\Exception\Exception;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
+use Doctrine\ORM\EntityManager;
 
 
-class StatsQuestion extends Controller
+class StatsQuestion
 {
-    public function getInfo($em) {
-        $subjects = $em->getRepository('GameBundle:Subject')->findAll();
+    private $em;
+
+    public function __construct(EntityManager $em) {
+        $this->em = $em;
+    }
+    
+    public function getInfo() {
+        $subjects = $this->em->getRepository('GameBundle:Subject')->findAll();
         $subjectIds = [];
         foreach ($subjects as $subject) {
             $subjectIds[] = $subject->getId();
         }
         
-        $allSchoolClass = $em->getRepository('GameBundle:SchoolClass')->findAll();
+        $allSchoolClass = $this->em->getRepository('GameBundle:SchoolClass')->findAll();
         $schoolClassIds = [];
         foreach ($allSchoolClass as $schoolClass) {
             $schoolClassIds[] = $schoolClass->getId();
@@ -29,14 +36,19 @@ class StatsQuestion extends Controller
         $nbQuestions = [];
         foreach ($subjectIds as $key=>$id0) {
             // count number of schoolLevels by subject
-            $nbSchoolClassBySubject[] = $em->getRepository('GameBundle:SchoolClass')->countBySubject($id0);
+            $nbSchoolClassBySubject[] = $this->em->getRepository('GameBundle:SchoolClass')->countBySubject($id0);
             // get schoolClass by subject
-            $schoolClassBySubject[] = $em->getRepository('GameBundle:SchoolClass')->getBySubject($id0);
+            $schoolClassBySubject[] = $this->em->getRepository('GameBundle:SchoolClass')->getBySubject($id0);
             // count number of questions by schoolLevel and by subject
             foreach ($schoolClassIds as $id1) {
-                $nbQuestions[$key][] = $em->getRepository('GameBundle:Question')->count($id0, $id1);
+                $nbQuestions[$key][] = $this->em->getRepository('GameBundle:Question')->count($id0, $id1);
             }
         }
-        return 2;
+        return array(
+            'subjects'                  => $subjects, 
+            'nbSchoolClassBySubject'    => $nbSchoolClassBySubject, 
+            'schoolClassBySubject'      => $schoolClassBySubject, 
+            'nbQuestions'               => $nbQuestions
+        );
     }
 }

@@ -14,6 +14,7 @@ services:
 
     stats.question:
         class: GameBundle\Controller\StatsQuestion
+        arguments: [ '@doctrine.orm.entity_manager']
 
 #     app.webservice_user_provider:
 #         class: UserBundle\Security\User\WebserviceUserProvider
