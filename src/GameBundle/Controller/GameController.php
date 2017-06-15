@@ -94,7 +94,6 @@ class GameController extends Controller
             $bonusDifficulty = $request->get('bonus');
             $scoreQuestion = $dice * $bonusDifficulty;
             $score += $scoreQuestion;
-            
 
             if ($answerId !== null && $gamerId !== null) {
                 $answerReturn = $em->getRepository('GameBundle:Answer')->find($answerId);
@@ -118,13 +117,9 @@ class GameController extends Controller
                     ));                    
                 }
             }
-            return $this->render('TwigBundle:Exception:error.html.twig', array(
-                'status_text'      => 'L\'élément n\'a pas été trouvé : id null.'
-            ));
+            return $this->render('TwigBundle:Exception:error.html.twig', array('status_text' => 'L\'élément n\'a pas été trouvé : id null.'));
         }
-        return $this->render('TwigBundle:Exception:error.html.twig', array(
-            'status_text'      => 'Aucune requête n\'a été transmise.'
-        ));
+        return $this->render('TwigBundle:Exception:error.html.twig', array('status_text' => 'Aucune requête n\'a été transmise.'));
     }
 
     /**
@@ -168,8 +163,6 @@ class GameController extends Controller
             }
             return new JsonResponse($gamers);
         }
-        return $this->render('TwigBundle:Exception:error.html.twig', array(
-            'status_text'      => 'Aucune requête n\'a été transmise.'
-        ));        
+        return $this->render('TwigBundle:Exception:error.html.twig', array('status_text' => 'Aucune requête n\'a été transmise.'));        
     }
 }
