@@ -4,6 +4,7 @@ namespace GameBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use GameBundle\Form\Type\QuestionType;
@@ -25,6 +26,7 @@ class AdminController extends Controller
     {
         $question = new Question();
         $form = $this->createForm(QuestionType::class, $question);
+        
         $formRequest = $form->handleRequest($request);
         if ($formRequest->isSubmitted() && $formRequest->isValid()) {
             if ($this->get('security.authorization_checker')->isGranted('ROLE_USER')) {
@@ -56,32 +58,33 @@ class AdminController extends Controller
      *
      * @Security("has_role('ROLE_USER') or has_role('ROLE_TEACHER')")
      */
-    public function validateQuestionAction(Request $request, Question $question)
+    public function validateQuestionAction(RequestStack $request, Question $question)
     {
-        $em = $this->getDoctrine()->getManager();
         $form = $this->createForm(QuestionType::class, $question);
-        $formRequest = $form->handleRequest($request);
-        
-        if ($formRequest->isSubmitted() && $formRequest->isValid()) {
-            $question->setIsValid(true);
 
-            foreach($question->getAnswers() as $answer) {
-                $answer->setQuestion($question);
-            }
-            $firstAnswer = $question->getAnswers()->first();
-            $firstAnswer->setIsRight(true);
+        // $formRequest = $form->handleRequest($request);
+        // if ($formRequest->isSubmitted() && $formRequest->isValid()) {
+        //     $question->setIsValid(true);
+
+        //     foreach($question->getAnswers() as $answer) {
+        //         $answer->setQuestion($question);
+        //     }
+        //     $firstAnswer = $question->getAnswers()->first();
+        //     $firstAnswer->setIsRight(true);
             
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($question);
-            $em->flush();
-            $request->getSession()->getFlashBag()->add('success', 'La question a bien été validée.');
-            return $this->redirectToRoute('moderate_question');
-        }
+        //     $em = $this->getDoctrine()->getManager();
+        //     $em->persist($question);
+        //     $em->flush();
+        //     $request->getSession()->getFlashBag()->add('success', 'La question a bien été validée.');
+        //     return $this->redirectToRoute('moderate_question');
+        // }
 
-        return $this->render('GameBundle:Default:form_question.html.twig', array(
-            'form'  => $form->createView(),
-            'title' => 'Validation de questions'
-        ));
+        // return $this->render('GameBundle:Default:form_question.html.twig', array(
+        //     'form'  => $form->createView(),
+        //     'title' => 'Validation de questions'
+        // ));
+        $saving = $this->get('save.question');
+        $saving->save($question, $form, $request);
     }
 
     /**

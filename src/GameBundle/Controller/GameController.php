@@ -58,31 +58,24 @@ class GameController extends Controller
         if ($request->isXmlHttpRequest()) {
             $subjectId = $request->get('subjectId');
             $gamerId = $request->get('gamerId');
-
             $gamer = $em->getRepository('UserBundle:Gamer')->find($gamerId);
-            $schoolClass = $gamer->getSchoolClass();
 
             if ($subjectId !== null && $gamerId !== null) {
                 $subject = $em->getRepository('GameBundle:Subject')->find($subjectId);
-                $questions = $em->getRepository('GameBundle:Question')->findBySubjectAndBySchoolClass($subject, $schoolClass);
+                $questions = $em->getRepository('GameBundle:Question')->findBySubjectAndBySchoolClass($subject, $gamer->getSchoolClass());
                 $idQuestionList = [];
                 foreach($questions as $question) {
                     $idQuestionList[] = $question->getId();
                 }
                 $randomQuestion = $em->getRepository('GameBundle:Question')->getRandomQuestion($idQuestionList);
-                if ($randomQuestion != null) {
-                    return new JsonResponse($randomQuestion);
-                } else {
+                if ($randomQuestion == null) {
                     return new JsonResponse('Aucune question n\'a pas été trouvée.');                    
                 }
+                return new JsonResponse($randomQuestion);
             }
-            return $this->render('TwigBundle:Exception:error.html.twig', array(
-                'status_text'      => 'L\'élément n\'a pas été trouvé : id null.'
-            ));
+            return $this->render('TwigBundle:Exception:error.html.twig', array('status_text' => 'L\'élément n\'a pas été trouvé : id null.'));
         }
-        return $this->render('TwigBundle:Exception:error.html.twig', array(
-            'status_text'      => 'Aucune requête n\'a été transmise.'
-        ));
+        return $this->render('TwigBundle:Exception:error.html.twig', array('status_text' => 'Aucune requête n\'a été transmise.'));
     }
 
     /**
@@ -146,9 +139,7 @@ class GameController extends Controller
 
             $winnerId = $request->get('winnerId');
             $gamerReturn = $em->getRepository('UserBundle:Gamer')->find($winnerId);
-            $gameWonNb = $gamerReturn->getGameWonNb();
-            $gameWonNb++;
-            $gamerReturn->setGameWonNb($gameWonNb);
+            $gamerReturn->setGameWonNb($gamerReturn->getGameWonNb() + 1);
             $em->persist($gamerReturn);
             
             $allGamersId = array();

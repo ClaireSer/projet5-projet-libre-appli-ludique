@@ -34,4 +34,3 @@ monolog:
         #     path:               "%kernel.logs_dir%/auth.log"
         #     level:              info
         #     channels:           security
-        

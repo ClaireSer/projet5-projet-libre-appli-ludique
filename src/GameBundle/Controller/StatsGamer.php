@@ -2,7 +2,7 @@
 
 namespace GameBundle\Controller;
 
-
+use UserBundle\Entity\Gamer;
 
 class StatsGamer
 {
