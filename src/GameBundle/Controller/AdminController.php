@@ -26,7 +26,6 @@ class AdminController extends Controller
     {
         $question = new Question();
         $form = $this->createForm(QuestionType::class, $question);
-        
         $formRequest = $form->handleRequest($request);
         if ($formRequest->isSubmitted() && $formRequest->isValid()) {
             if ($this->get('security.authorization_checker')->isGranted('ROLE_USER')) {
@@ -61,30 +60,24 @@ class AdminController extends Controller
     public function validateQuestionAction(RequestStack $request, Question $question)
     {
         $form = $this->createForm(QuestionType::class, $question);
+        $formRequest = $form->handleRequest($request);
+        if ($formRequest->isSubmitted() && $formRequest->isValid()) {
+            if ($this->get('security.authorization_checker')->isGranted('ROLE_USER')) {
+                $question->setIsValid(false);
+            } else {
+                $question->setIsValid(true);                
+            }
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($question);
+            $em->flush();
+            $request->getSession()->getFlashBag()->add('success', 'La question a bien été validée.');
+            return $this->redirectToRoute('moderate_question');
+        }
 
-        // $formRequest = $form->handleRequest($request);
-        // if ($formRequest->isSubmitted() && $formRequest->isValid()) {
-        //     $question->setIsValid(true);
-
-        //     foreach($question->getAnswers() as $answer) {
-        //         $answer->setQuestion($question);
-        //     }
-        //     $firstAnswer = $question->getAnswers()->first();
-        //     $firstAnswer->setIsRight(true);
-            
-        //     $em = $this->getDoctrine()->getManager();
-        //     $em->persist($question);
-        //     $em->flush();
-        //     $request->getSession()->getFlashBag()->add('success', 'La question a bien été validée.');
-        //     return $this->redirectToRoute('moderate_question');
-        // }
-
-        // return $this->render('GameBundle:Default:form_question.html.twig', array(
-        //     'form'  => $form->createView(),
-        //     'title' => 'Validation de questions'
-        // ));
-        $saving = $this->get('save.question');
-        $saving->save($question, $form, $request);
+        return $this->render('GameBundle:Default:form_question.html.twig', array(
+            'form'  => $form->createView(),
+            'title' => 'Validation de questions'
+        ));
     }
 
     /**
@@ -127,13 +120,9 @@ class AdminController extends Controller
                 $em->flush();
                 return new JsonResponse();
             }
-            return $this->render('TwigBundle:Exception:error.html.twig', array(
-                'status_text'      => 'L\'élément n\'a pas été trouvé.'
-            ));
+            return $this->render('TwigBundle:Exception:error.html.twig', array('status_text' => 'L\'élément n\'a pas été trouvé.'));
         }
-        return $this->render('TwigBundle:Exception:error.html.twig', array(
-            'status_text'      => 'Aucune requête n\'a été transmise.'
-        ));        
+        return $this->render('TwigBundle:Exception:error.html.twig', array('status_text' => 'Aucune requête n\'a été transmise.'));        
     }
 
     /**

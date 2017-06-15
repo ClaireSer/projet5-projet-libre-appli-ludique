@@ -16,10 +16,6 @@ services:
         class: GameBundle\Controller\StatsQuestion
         arguments: ['@doctrine.orm.entity_manager']
 
-    save.question:
-        class: GameBundle\Controller\SaveQuestion
-        arguments: ['@request_stack']
-
 
 #     app.webservice_user_provider:
 #         class: UserBundle\Security\User\WebserviceUserProvider
