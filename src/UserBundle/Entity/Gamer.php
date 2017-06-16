@@ -111,6 +111,7 @@ class Gamer
     public function setUserCount(UserCount $userCount)
     {
         $this->userCount = $userCount;
+        $userCount->addGamer($this);
 
         return $this;
     }
@@ -135,6 +136,7 @@ class Gamer
     public function setSchoolClass(SchoolClass $schoolClass)
     {
         $this->schoolClass = $schoolClass;
+        $schoolClass->addGamer($this);
 
         return $this;
     }

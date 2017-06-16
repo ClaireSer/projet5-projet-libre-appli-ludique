@@ -52,8 +52,6 @@ class Topic
     {
         $this->questions[] = $question;
 
-        $question->setTopic($this);
-
         return $this;
     }
 

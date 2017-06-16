@@ -149,8 +149,6 @@ class UserCount implements UserInterface
     {
         $this->gamers[] = $gamer;
         
-        $gamer->setUserCount($this);
-
         return $this;
     }
 
@@ -184,8 +182,6 @@ class UserCount implements UserInterface
     public function addQuestion(Question $question)
     {
         $this->questions[] = $question;
-
-        $question->setUserCount($this);        
 
         return $this;
     }

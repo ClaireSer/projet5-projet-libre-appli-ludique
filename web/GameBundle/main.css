@@ -376,6 +376,16 @@ table.board td {
     .alert-info-question {
         display: inherit;
     }
+
+    .blocks-user .first-line, .blocks-admin .first-line, .blocks-admin .third-line {
+        width: 100%;
+    }
+    .blocks-user .second-line, .blocks-user .third-line, .blocks-admin .second-line {
+        width: 100%;
+    }
+    .blocks div {
+        height: 100px;
+    }
 }
 @media screen and (max-width: 960px) {
     .error-page img {

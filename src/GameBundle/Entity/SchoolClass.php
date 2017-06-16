@@ -105,7 +105,6 @@ class SchoolClass
     public function addQuestion(\GameBundle\Entity\Question $question)
     {
         $this->questions[] = $question;
-        $question->setSchoolClass($this);
 
         return $this;
     }
@@ -140,8 +139,6 @@ class SchoolClass
     public function addGamer(\UserBundle\Entity\Gamer $gamer)
     {
         $this->gamers[] = $gamer;
-        
-        $gamer->setSchoolClass($this);        
 
         return $this;
     }

@@ -28,7 +28,7 @@ class UserCountType extends AbstractType
             'type'            => PasswordType::class,
             'invalid_message' => 'Les mots de passe doivent être identiques.',
             'options'         => array('required' => true),
-            'first_options'   => array('label' => 'Mot de passe'),
+            'first_options'   => array('label' => 'Nouveau mot de passe'),
             'second_options'  => array('label' => 'Répétez le mot de passe'),
         ))
         ->add('roles',     ChoiceType::class, array(

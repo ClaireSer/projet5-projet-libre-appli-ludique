@@ -20,6 +20,10 @@ class GamerController extends Controller
         $em = $this->getDoctrine()->getManager();
         $userCount = $this->getUser();
         $gamers = $em->getRepository('UserBundle:Gamer')->getGamersByUserCount($userCount);
+        // $var=[];
+        // foreach($gamers as $gamer) {
+        //     $var[] = $gamer->getSchoolClass();
+        // }
         return $this->render('UserBundle:Gamer:admin_gamers.html.twig', array(
             'gamers'    => $gamers
         ));
@@ -43,8 +47,6 @@ class GamerController extends Controller
             $gamer->setRightAnswerNb(0);
             $gamer->setLevel(0);
             $gamer->setUserCount($this->getUser());
-            $schoolClass = $gamer->getSchoolClass();
-            $schoolClass->addGamer($gamer);
 
             $em = $this->getDoctrine()->getManager();
             $em->persist($gamer);
@@ -71,10 +73,6 @@ class GamerController extends Controller
         $form = $this->createForm(GamerType::class, $gamer);
         $formRequest = $form->handleRequest($request);
         if ($formRequest->isSubmitted() && $formRequest->isValid()) {
-            
-            $schoolClass = $gamer->getSchoolClass();
-            $schoolClass->addGamer($gamer);
-
             $em->persist($gamer);
             $em->flush();
             $request->getSession()->getFlashBag()->add('success', 'Les informations du joueur ont bien été modifiées.');
@@ -110,6 +108,7 @@ class GamerController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
         $schoolClass = $em->getRepository('GameBundle:SchoolClass')->findAll();
+
         $schoolClassIds = [];
         $schoolClassTitles = [];
         foreach ($schoolClass as $schoolClass) {
@@ -141,7 +140,8 @@ class GamerController extends Controller
      *
      * @Security("has_role('ROLE_USER')")
      */
-    public function selectAction(Request $request) {
+    public function selectAction(Request $request)
+    {
         $em = $this->getDoctrine()->getManager();
         $gamers = $em->getRepository('UserBundle:Gamer')->getGamersByUserCount($this->getUser());
         $subjectsSelected = $em->getRepository('GameBundle:Subject')->findByCountingSchoolClass();

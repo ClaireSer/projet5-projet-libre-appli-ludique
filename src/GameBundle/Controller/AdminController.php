@@ -4,7 +4,6 @@ namespace GameBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use GameBundle\Form\Type\QuestionType;
@@ -53,31 +52,24 @@ class AdminController extends Controller
     }
 
     /**
-     * validate a question
+     * ajax call to remove an answer from the form
      *
      * @Security("has_role('ROLE_USER') or has_role('ROLE_TEACHER')")
      */
-    public function validateQuestionAction(RequestStack $request, Question $question)
+    public function removeAnswerAction(Request $request)
     {
-        $form = $this->createForm(QuestionType::class, $question);
-        $formRequest = $form->handleRequest($request);
-        if ($formRequest->isSubmitted() && $formRequest->isValid()) {
-            if ($this->get('security.authorization_checker')->isGranted('ROLE_USER')) {
-                $question->setIsValid(false);
-            } else {
-                $question->setIsValid(true);                
+        $em = $this->getDoctrine()->getManager();
+        if ($request->isXmlHttpRequest()) {
+            $idAnswer = $request->get('id');
+            if ($idAnswer !== null) {
+                $answer = $em->getRepository('GameBundle:Answer')->find($idAnswer);
+                $em->remove($answer);
+                $em->flush();
+                return new JsonResponse();
             }
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($question);
-            $em->flush();
-            $request->getSession()->getFlashBag()->add('success', 'La question a bien été validée.');
-            return $this->redirectToRoute('moderate_question');
+            return $this->render('TwigBundle:Exception:error.html.twig', array('status_text' => 'L\'élément n\'a pas été trouvé.'));
         }
-
-        return $this->render('GameBundle:Default:form_question.html.twig', array(
-            'form'  => $form->createView(),
-            'title' => 'Validation de questions'
-        ));
+        return $this->render('TwigBundle:Exception:error.html.twig', array('status_text' => 'Aucune requête n\'a été transmise.'));        
     }
 
     /**
@@ -105,24 +97,34 @@ class AdminController extends Controller
     }
     
     /**
-     * ajax call to remove an answer on the form
+     * validate a question
      *
      * @Security("has_role('ROLE_USER') or has_role('ROLE_TEACHER')")
      */
-    public function removeAnswerAction(Request $request)
+    public function validateQuestionAction(Request $request, Question $question)
     {
-        $em = $this->getDoctrine()->getManager();
-        if ($request->isXmlHttpRequest()) {
-            $idAnswer = $request->get('id');
-            if ($idAnswer !== null) {
-                $answer = $em->getRepository('GameBundle:Answer')->find($idAnswer);
-                $em->remove($answer);
-                $em->flush();
-                return new JsonResponse();
+        $form = $this->createForm(QuestionType::class, $question);
+        $formRequest = $form->handleRequest($request);
+        if ($formRequest->isSubmitted() && $formRequest->isValid()) {
+            if ($this->get('security.authorization_checker')->isGranted('ROLE_USER')) {
+                $question->setIsValid(false);
+            } else {
+                $question->setIsValid(true);                
             }
-            return $this->render('TwigBundle:Exception:error.html.twig', array('status_text' => 'L\'élément n\'a pas été trouvé.'));
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($question);
+            $em->flush();
+            $request->getSession()->getFlashBag()->add('success', 'La question a bien été enregistrée.');
+            if ($this->get('security.authorization_checker')->isGranted('ROLE_USER')) {
+                return $this->redirectToRoute('user_questions');
+            }
+            return $this->redirectToRoute('moderate_question');            
         }
-        return $this->render('TwigBundle:Exception:error.html.twig', array('status_text' => 'Aucune requête n\'a été transmise.'));        
+
+        return $this->render('GameBundle:Default:form_question.html.twig', array(
+            'form'  => $form->createView(),
+            'title' => 'Validation de questions'
+        ));
     }
 
     /**
@@ -136,7 +138,10 @@ class AdminController extends Controller
         $em->remove($question);
         $em->flush();
         $request->getSession()->getFlashBag()->add('success', 'La question a bien été supprimée.');
-        return $this->redirectToRoute('homepage');
+        if ($this->get('security.authorization_checker')->isGranted('ROLE_USER')) {
+            return $this->redirectToRoute('user_questions');
+        }
+        return $this->redirectToRoute('moderate_question');
     }
 
     /**

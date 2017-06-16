@@ -179,6 +179,7 @@ class Question
     public function setUserCount(UserCount $userCount)
     {
         $this->userCount = $userCount;
+        $userCount->addQuestion($this);
 
         return $this;
     }
@@ -246,6 +247,7 @@ class Question
     public function setTopic(Topic $topic)
     {
         $this->topic = $topic;
+        $topic->addQuestion($this);
 
         return $this;
     }
@@ -270,6 +272,7 @@ class Question
     public function setSchoolClass(SchoolClass $schoolClass)
     {
         $this->schoolClass = $schoolClass;
+        $schoolClass->addQuestion($this);
 
         return $this;
     }
