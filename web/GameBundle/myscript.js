@@ -48,14 +48,14 @@ $(function () {
         $('.dice .die' + randomNumber).show();
 
     // let's play
-        rowGamer = Game(rowGamer, 'activeCase' + rowGamer);        
+        rowGamer = game(rowGamer, 'activeCase' + rowGamer);        
     });
 
 
 // move pawn gamer on the board
 // display question
 // update scores
-    function Game(rowGamer, activeCase) { 
+    function game(rowGamer, activeCase) { 
         var cumulDiceGamer = cumulDiceGamerArray[rowGamer] + randomNumber; 
 
         if (cumulDiceGamer > 64) {

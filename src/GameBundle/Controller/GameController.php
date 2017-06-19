@@ -6,9 +6,6 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
-use Symfony\Component\HttpFoundation\Session\Session;
-use Symfony\Component\HttpFoundation\Session\Storage\PhpBridgeSessionStorage;
-
 
 
 class GameController extends Controller
@@ -29,12 +26,11 @@ class GameController extends Controller
         }
         $em = $this->getDoctrine()->getManager();
         
-        // get gamers selected and put in session
+        // get gamers selected
         $gamers = [];
         foreach ($idGamers as $id) {
             $gamers[$id] = $em->getRepository('UserBundle:Gamer')->find($id);
         }
-        $request->getSession()->set('gamers', $gamers);
 
         // get subjects selected
         $subjects = [];
@@ -62,9 +58,6 @@ class GameController extends Controller
             $subjectId = $request->get('subjectId');
             $gamerId = $request->get('gamerId');
             $gamer = $em->getRepository('UserBundle:Gamer')->find($gamerId);
-            
-            $gamers = $request->getSession()->get('gamers');
-            // $gamerReturn = $gamers[$gamerId];
 
             if ($subjectId !== null && $gamerId !== null) {
                 $subject = $em->getRepository('GameBundle:Subject')->find($subjectId);
@@ -103,9 +96,6 @@ class GameController extends Controller
 
             if ($answerId !== null && $gamerId !== null) {
                 $answerReturn = $em->getRepository('GameBundle:Answer')->find($answerId);
-                // $gamers = $request->getSession()->get('gamers');
-                // $gamerReturn = $gamers[$gamerId];
-                
                 $gamerReturn = $em->getRepository('UserBundle:Gamer')->find($gamerId);
 
                 if ($answerReturn->getIsRight()) {

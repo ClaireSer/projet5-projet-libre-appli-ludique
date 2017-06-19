@@ -20,10 +20,6 @@ class GamerController extends Controller
         $em = $this->getDoctrine()->getManager();
         $userCount = $this->getUser();
         $gamers = $em->getRepository('UserBundle:Gamer')->getGamersByUserCount($userCount);
-        // $var=[];
-        // foreach($gamers as $gamer) {
-        //     $var[] = $gamer->getSchoolClass();
-        // }
         return $this->render('UserBundle:Gamer:admin_gamers.html.twig', array(
             'gamers'    => $gamers
         ));
@@ -78,7 +74,6 @@ class GamerController extends Controller
             $request->getSession()->getFlashBag()->add('success', 'Les informations du joueur ont bien été modifiées.');
             return $this->redirectToRoute('homepage');
         }
-
         return $this->render('UserBundle:Gamer:form_gamer.html.twig', array(
             'form'  => $form->createView(),
             'title' => 'Éditer un joueur'
@@ -115,7 +110,6 @@ class GamerController extends Controller
             $schoolClassIds[] = $schoolClass->getId();
             $schoolClassTitles[] = $schoolClass->getSchoolClass();
         }
-
         $myGamers = $em->getRepository('UserBundle:Gamer')->getGamersByUserCount($this->getUser());
         $gamers = $em->getRepository('UserBundle:Gamer')->getGamers();
 
