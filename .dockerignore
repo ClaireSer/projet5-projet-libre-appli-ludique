@@ -22,7 +22,6 @@
 **/values.dev.yaml
 README.md
 **/docker
-**/docker/*
 **/vendor
 **/var/cache
 **/app/config/parameters.yml

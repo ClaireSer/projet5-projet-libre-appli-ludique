@@ -2,12 +2,12 @@ version: '3.4'
 
 services:
   app:
-    image: jeudeloie_app:v2
+    image: claireserra/jeudeloie:v1
     container_name: app
     depends_on:
       - db
     volumes: 
-      - "./var/logs:/var/logs"
+      - "./var/logs:/var/logs:ro"
       - "./:/var/www/html"
 
   db:

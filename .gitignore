@@ -14,5 +14,5 @@
 !var/SymfonyRequirements.php
 /vendor/
 /docker/.env
-/docker/nginx/*
+/docker/nginx/logs
 /docker/db/*
