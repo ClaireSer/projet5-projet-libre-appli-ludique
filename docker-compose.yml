@@ -1,0 +1,41 @@
+version: '3.4'
+
+services:
+  app:
+    image: jeudeloie_app:v2
+    container_name: app
+    depends_on:
+      - db
+    volumes: 
+      - "./var/logs:/var/logs"
+      - "./:/var/www/html"
+
+  db:
+    image: mysql:5.7
+    command: --default-authentication-plugin=mysql_native_password
+    container_name: mysql
+    ports: 
+      - "3306:3306"
+    volumes: 
+      - ./docker/db:/docker-entrypoint-initdb.d
+    env_file: ./docker/.env
+    restart: always
+
+  adminer:
+    image: adminer
+    container_name: adminer
+    restart: always
+    ports:
+      - 8080:8080
+
+  nginx:
+    image: nginx:latest
+    container_name: nginx
+    ports: 
+      - "80:80"
+    depends_on:
+      - app
+    volumes: 
+      - ./docker/nginx:/etc/nginx/conf.d
+      - ./docker/nginx/logs:/var/log/nginx
+      - "./:/var/www/html:ro"

@@ -80,7 +80,7 @@ class QuestionRepository extends \Doctrine\ORM\EntityRepository
 		;
     }
 
-    public function count($subjectId, $schoolLevelId) {
+    public function countBySubjectAndLevel($subjectId, $schoolLevelId) {
 		return $this->createQueryBuilder('q')
 		    ->select('COUNT(q)')
             ->leftJoin('q.schoolClass', 'sc')

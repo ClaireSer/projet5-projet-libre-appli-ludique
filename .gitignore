@@ -13,3 +13,6 @@
 !var/sessions/.gitkeep
 !var/SymfonyRequirements.php
 /vendor/
+/docker/.env
+/docker/nginx/*
+/docker/db/*

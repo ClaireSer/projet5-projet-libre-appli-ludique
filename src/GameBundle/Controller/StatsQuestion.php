@@ -36,7 +36,7 @@ class StatsQuestion
             $schoolClassBySubject[] = $this->em->getRepository('GameBundle:SchoolClass')->getBySubject($id0);
             // count number of questions by schoolLevel and by subject
             foreach ($schoolClassIds as $id1) {
-                $nbQuestions[$key][] = $this->em->getRepository('GameBundle:Question')->count($id0, $id1);
+                $nbQuestions[$key][] = $this->em->getRepository('GameBundle:Question')->countBySubjectAndLevel($id0, $id1);
             }
         }
         return array(

@@ -15,12 +15,3 @@ services:
     stats.question:
         class: GameBundle\Controller\StatsQuestion
         arguments: ['@doctrine.orm.entity_manager']
-
-
-#     app.webservice_user_provider:
-#         class: UserBundle\Security\User\WebserviceUserProvider
-
-# services:
-#    service_name:
-#        class: AppBundle\Directory\ClassName
-#        arguments: ["@another_service_name", "plain_value", "%parameter_name%"]
